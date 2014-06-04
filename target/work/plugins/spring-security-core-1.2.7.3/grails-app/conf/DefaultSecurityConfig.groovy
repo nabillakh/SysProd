@@ -57,7 +57,7 @@ security {
 	cacheUsers = false
 
 	// user and role class properties
-	userLookup.userDomainClassName = 'Person'
+	userLookup.userDomainClassName = 'application.RH.Effectif'
 	userLookup.usernamePropertyName = 'username'
 	userLookup.enabledPropertyName = 'enabled'
 	userLookup.passwordPropertyName = 'password'
@@ -65,8 +65,8 @@ security {
 	userLookup.accountExpiredPropertyName = 'accountExpired'
 	userLookup.accountLockedPropertyName = 'accountLocked'
 	userLookup.passwordExpiredPropertyName = 'passwordExpired'
-	userLookup.authorityJoinClassName = 'PersonAuthority'
-	authority.className = 'Authority'
+	userLookup.authorityJoinClassName = 'application.RH.EffectifDroit'
+	authority.className = 'application.RH.Droit'
 	authority.nameField = 'authority'
 
 	/** authenticationProcessingFilter */

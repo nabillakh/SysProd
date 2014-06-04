@@ -60,6 +60,7 @@ class EventService {
      // liste d'event concernant le principal
      
     private Event[] mesEvent() {
+        println("dans service")
         def lesEventEffectif = [] 
         def lesEvent = [] 
         def per = Effectif.get(springSecurityService.principal.id)

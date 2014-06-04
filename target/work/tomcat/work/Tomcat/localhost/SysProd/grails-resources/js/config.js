@@ -545,7 +545,7 @@
                             eventSources: [
                             // source pour obtenir mes données 
                                     {
-                                        url: '/application/event/list',
+                                        url: '/SysProd/event/list',
                                         type: 'POST',
                                         formulaireType: 'json',
                                         formulaire: {
@@ -611,7 +611,7 @@ buttonText: {
                   if (confirm("confirmez-vous le changement ?")) {
             
                     $.ajax({
-                        url: '/application/event/eventResize',
+                        url: '/SysProd/event/eventResize',
                         type: 'POST',
                         format: 'json',
                         data: {
@@ -637,7 +637,7 @@ buttonText: {
            if (confirm("confirmez-vous le changement ?")) {
           
                     $.ajax({
-                        url: '/application/event/eventResize',
+                        url: '/SysProd/event/eventResize',
                         type: 'POST',
                         format: 'json',
                         data: {
@@ -676,7 +676,7 @@ buttonText: {
                          
         
            $.ajax({
-                        url: '/application/event/showPopup',
+                        url: '/SysProd/event/showPopup',
                         type: 'GET',
                         format: 'json',
                         data: {
@@ -709,7 +709,7 @@ buttonText: {
         
         
         $.ajax({
-        url: '/application/event/delete',
+        url: '/SysProd/event/delete',
         type: 'POST',
         format: 'json',
         data: {
@@ -779,7 +779,7 @@ buttonText: {
 						true // make the event "stick"
 					),
                                             $.ajax({
-                                                url: '/application/event/nouveauEvent',
+                                                url: '/SysProd/event/nouveauEvent',
                                                 type: 'POST',
                                                 format: 'json',
                                                 data: {
@@ -823,7 +823,7 @@ buttonText: {
 				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
                             // persistence de l'event    
                             $.ajax({
-                                                url: '/application/event/nouveauEventKanban',
+                                                url: '/SysProd/event/nouveauEventKanban',
                                                 type: 'POST',
                                                 format: 'json',
                                                 data: {
@@ -2642,7 +2642,7 @@ buttonText: {
                                                 var monId = $('#monId').val();
                                                 var nomKanban = $('#nomKanban').val();
                                                     $.ajax({
-                                                        url: '/application/activite/nouveauKanban',
+                                                        url: '/SysProd/activite/nouveauKanban',
                                                         type: 'POST',
                                                         data: {
                                                             monId: monId,
@@ -2695,7 +2695,7 @@ buttonText: {
         // apporte la liste de kanban au wizard
         function listeKanban() {
             $.ajax({
-                url: '/application/activite/listeKanban',
+                url: '/SysProd/activite/listeKanban',
                 success: function(rep){
                     $('#listeKanbans').html(rep);
                     
@@ -2724,7 +2724,7 @@ buttonText: {
         
         function obtenirOF(monId) {
             $.ajax({
-                url: '/application/activite/obtenirOF',
+                url: '/SysProd/activite/obtenirOF',
                 data : {monId:monId},
                 success: function(rep){
                     $('#gestionOF').html(rep); // rafraichi toute ta DIV "bien sur il lui faut un id "

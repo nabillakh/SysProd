@@ -4,7 +4,7 @@
                var json;
                $.ajax({
                    type:'GET',
-                   url: '/application/activite/chargePIC',
+                   url: '/SysProd/activite/chargePIC',
                    async: false,
                    global: false,
                    success: function(data) {
@@ -24,7 +24,7 @@
                var json;
                $.ajax({
                    type:'GET',
-                   url: '/application/activite/listeFamille',
+                   url: '/SysProd/activite/listeFamille',
                    async: false,
                    global: false,
                    success: function(data) {
@@ -42,8 +42,8 @@
         // charge issue du pic
         
        if ($('#chargePIC').length){
-           $.getJSON( "/application/activite/chargePIC", function( data ) {
-               $.getJSON( "/application/activite/listeFamille", function( fam ) {
+           $.getJSON( "/SysProd/activite/chargePIC", function( data ) {
+               $.getJSON( "/SysProd/activite/listeFamille", function( fam ) {
                Morris.Bar({
 		  element: 'chargePIC',
 		  axes: false,
@@ -65,7 +65,7 @@
                var json;
                $.ajax({
                    type:'GET',
-                   url: '/application/kanban/chargeOF',
+                   url: '/SysProd/kanban/chargeOF',
                    async: false,
                    global: false,
                    success: function(data) {
@@ -83,7 +83,7 @@
                var json;
                $.ajax({
                    type:'GET',
-                   url: '/application/kanban/listeOF',
+                   url: '/SysProd/kanban/listeOF',
                    async: false,
                    global: false,
                    success: function(data) {
@@ -103,8 +103,8 @@
         
        if ($('#avancementOf').length){
            
-           $.getJSON( "/application/kanban/chargeOF", function( data ) {
-               $.getJSON( "/application/kanban/listeOF", function( fam ) {
+           $.getJSON( "/SysProd/kanban/chargeOF", function( data ) {
+               $.getJSON( "/SysProd/kanban/listeOF", function( fam ) {
                Morris.Bar({
 		  element: 'avancementOf',
 		  axes: false,
@@ -124,6 +124,7 @@
        
        
        if ($('#indicateurKanban').length){
+           
            var nomKanban = $('#monKanban').val();
                Morris.Bar({
 		  element: 'indicateurKanban',
@@ -147,8 +148,8 @@
        if ($('#deltaChargeCapa').length){
            
            var nomKanban = $('#monKanban').val();
-           $.getJSON( "/application/activite/deltaCharge", function(data) {
-               $.getJSON( "/application/activite/listeFamille", function(fam) {
+           $.getJSON( "/SysProd/activite/deltaCharge", function(data) {
+               $.getJSON( "/SysProd/activite/listeFamille", function(fam) {
                Morris.Bar({
 		  element: 'deltaChargeCapa',
 		  axes: true,
@@ -167,7 +168,7 @@
                var json;
                $.ajax({
                    type:'GET',
-                   url: '/application/activite/barPIC',
+                   url: '/SysProd/activite/barPIC',
                    async: false,
                    global: false,
                    success: function(data) {
@@ -474,7 +475,7 @@ if ($('#avancementKanban').length) {
     
     var chartData2 = $.ajax({
                    type:'GET',
-                   url: '/application/kanban/avancement',
+                   url: '/SysProd/kanban/avancement',
                    data : {
                      monId : monId, 
                    },
