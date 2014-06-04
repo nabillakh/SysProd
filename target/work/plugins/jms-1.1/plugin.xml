@@ -1,0 +1,1132 @@
+<plugin name='jms' version='1.1' grailsVersion='1.2.0 &gt; *'>
+  <author>Grails Plugin Collective</author>
+  <authorEmail>grails.plugin.collective@gmail.com</authorEmail>
+  <title>JMS integration for Grails</title>
+  <resources>
+    <resource>BuildConfig</resource>
+    <resource>Config</resource>
+    <resource>UrlMappings</resource>
+    <resource>spring.resources</resource>
+    <resource>grails.plugin.jms.test.Person</resource>
+    <resource>grails.plugin.jms.test.Thing</resource>
+    <resource>grails.plugin.jms.JmsService</resource>
+    <resource>grails.plugin.jms.test.TestListeningServiceSupport</resource>
+    <resource>grails.plugin.jms.test.config.OtherListenerService</resource>
+    <resource>grails.plugin.jms.test.domain.DomainService</resource>
+    <resource>grails.plugin.jms.test.reply.ReplyingListenerService</resource>
+    <resource>grails.plugin.jms.test.servicelevel.ServiceMethodListeningService</resource>
+    <resource>grails.plugin.jms.test.simple.SimpleQueueBrowserService</resource>
+    <resource>grails.plugin.jms.test.simple.SimpleReceivingSelectedService</resource>
+    <resource>grails.plugin.jms.test.simple.SimpleReceivingService</resource>
+    <resource>grails.plugin.jms.test.simple.SimpleSendingService</resource>
+    <resource>DefaultJmsBeans</resource>
+  </resources>
+  <dependencies>
+    <resolvers>
+      <resolver type='grailsPlugins' name='grailsPlugins' />
+      <resolver type='mavenCentral' />
+      <resolver type='mavenLocal' />
+    </resolvers>
+    <dependency group='org.apache.activemq' name='activeio-core' version='3.1.2' conf='test' transitive='true'>
+      <excludes group='*' name='activemq-openwire-generator' />
+      <excludes group='*' name='commons-logging' />
+      <excludes group='*' name='xalan' />
+      <excludes group='*' name='xml-apis' />
+    </dependency>
+    <dependency group='org.apache.geronimo.specs' name='geronimo-jms_1.1_spec' version='1.1.1' conf='compile' transitive='true' />
+    <dependency group='org.apache.activemq' name='activemq-core' version='5.3.0' conf='test' transitive='true'>
+      <excludes group='*' name='activemq-openwire-generator' />
+      <excludes group='*' name='commons-logging' />
+      <excludes group='*' name='xalan' />
+      <excludes group='*' name='xml-apis' />
+    </dependency>
+    <dependency group='org.apache.xbean' name='xbean-spring' version='3.7' conf='test' transitive='true'>
+      <excludes group='*' name='activemq-openwire-generator' />
+      <excludes group='*' name='commons-logging' />
+      <excludes group='*' name='xalan' />
+      <excludes group='*' name='xml-apis' />
+    </dependency>
+  </dependencies>
+  <behavior>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.JmsService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingSelectedService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleReceivingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleQueueBrowserService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.simple.SimpleSendingService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.config.OtherListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.servicelevel.ServiceMethodListeningService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.reply.ReplyingListenerService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendQueueJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendTopicJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='sendPubSubJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='long' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+    <method name='receiveSelectedAsyncJMSMessage' artefact='Service' type='grails.plugin.jms.test.domain.DomainService'>
+      <description />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+      <argument type='java.lang.Object' />
+    </method>
+  </behavior>
+</plugin>

@@ -1,0 +1,34 @@
+<plugin name='activemq' version='0.4.1' grailsVersion='1.2 &gt; *'>
+  <author>Domingo Suarez Torres</author>
+  <authorEmail>domingo.suarez@gmail.com</authorEmail>
+  <title>Grails ActiveMQ Plugin</title>
+  <description>Plugin to integrate ActiveMQ in a Grails application.</description>
+  <documentation>http://grails.org/plugin/activemq</documentation>
+  <type>ActivemqGrailsPlugin</type>
+  <resources>
+    <resource>DefaultActiveMQConfig</resource>
+  </resources>
+  <repositories>
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+    <repository name='grailsCentral' url='http://plugins.grails.org' />
+    <repository name='http://repo.grails.org/grails/plugins' url='http://repo.grails.org/grails/plugins/' />
+    <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
+    <repository name='grailsCore' url='http://svn.codehaus.org/grails/trunk/grails-plugins' />
+    <repository name='http://grails.org/plugins' url='http://grails.org/plugins' />
+    <repository name='http://download.java.net/maven/2/' url='http://download.java.net/maven/2/' />
+    <repository name='http://repository.jboss.org/nexus/content/groups/public-jboss/' url='http://repository.jboss.org/nexus/content/groups/public-jboss/' />
+  </repositories>
+  <dependencies>
+    <compile>
+      <dependency group='org.apache.activemq.protobuf' name='activemq-protobuf' version='1.1' />
+      <dependency group='org.apache.geronimo.specs' name='geronimo-j2ee-management_1.1_spec' version='1.0.1' />
+      <dependency group='org.apache.activemq' name='kahadb' version='5.6.0' />
+      <dependency group='org.apache.activemq' name='activemq-core' version='5.6.0' />
+      <dependency group='org.apache.geronimo.specs' name='geronimo-jms_1.1_spec' version='1.1.1' />
+      <dependency group='org.apache.activemq' name='activeio-core' version='3.1.4' />
+    </compile>
+  </dependencies>
+  <plugins />
+  <runtimePluginRequirements />
+  <behavior />
+</plugin>
