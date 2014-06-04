@@ -1,122 +1,261 @@
+
 <!DOCTYPE html>
-<html>
-	<head>
+
+  <head>
 		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
-		<style type="text/css" media="screen">
-			#status {
-				background-color: #eee;
-				border: .2em solid #fff;
-				margin: 2em 2em 1em;
-				padding: 1em;
-				width: 12em;
-				float: left;
-				-moz-box-shadow: 0px 0px 1.25em #ccc;
-				-webkit-box-shadow: 0px 0px 1.25em #ccc;
-				box-shadow: 0px 0px 1.25em #ccc;
-				-moz-border-radius: 0.6em;
-				-webkit-border-radius: 0.6em;
-				border-radius: 0.6em;
-			}
+		<title>Sysprod</title>
+                <g:javascript library="jquery" plugin="jquery" />
+  </head>
 
-			.ie6 #status {
-				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
-			}
+  
+                                          <sec:ifLoggedIn>
+ <g:render template="/menues/mainleft" />
+   				
+     <!-- main content -->
+				<div id="page-content">
+					<!-- breadcrumb -->
 
-			#status ul {
-				font-size: 0.9em;
-				list-style-type: none;
-				margin-bottom: 0.6em;
-				padding: 0;
-			}
+					<!-- end breadcrumb -->
 
-			#status li {
-				line-height: 1.3;
-			}
+					<!-- page header
+                                        
+                                        <sec:ifLoggedIn>
+					<div class="alert adjusted alert-info">
+						<button class="close" data-dismiss="alert">×</button>
+						<i class="cus-exclamation"></i>
+						<strong>Welcome to  <sec:username/></strong> 
+					</div>
+					</sec:ifLoggedIn> -->
+					<div class="fluid-container">
 
-			#status h1 {
-				text-transform: uppercase;
-				font-size: 1.1em;
-				margin: 0 0 0.3em;
-			}
+						<!-- start icons -->
+						<div id="start">
+							<ul>
+                                                          
+								<li>
+									<g:link   controller="effectif" action="show" id="${sec.loggedInUserInfo(field:"id")}" title="Mon mur">
+										<img src="${request.contextPath}/img/start-icons/pending-message.png" alt="">
+										<span>Mon mur</span>
+									</g:link>
+								</li>
+								<li>
+									<!-- <label></label> -->
+									<g:link controller="kanban" action="obtenirKanbanEffectif" id="${sec.loggedInUserInfo(field:"id")}" title="Projets">
+										<img src="${request.contextPath}/img/start-icons/orders.png" alt="">
+										<span>Projets en cours</span>
+                                                                        </g:link>
+								</li>
+                                                                
+								<li>
+									<!-- <label>new</label> -->
+									<g:link   controller="effectif" action="indicateurEffectif" id="${sec.loggedInUserInfo(field:"id")}" title="Mes indicateurs">
+										<img src="${request.contextPath}/img/start-icons/stats.png" alt="">
+										<span>Indicateurs</span>
+                                                                </g:link>
+								</li>
+							</ul>
 
-			#page-body {
-				margin: 2em 1em 1.25em 18em;
-			}
+						</div>						
+						<!-- end start icons -->
 
-			h2 {
-				margin-top: 1em;
-				margin-bottom: 0.3em;
-				font-size: 1em;
-			}
+						<!-- widget grid -->
+						<section id="widget-grid" class="">
 
-			p {
-				line-height: 1.5;
-				margin: 0.25em 0;
-			}
+							<!-- row-fluid -->
 
-			#controller-list ul {
-				list-style-position: inside;
-			}
+							<div class="row-fluid">
 
-			#controller-list li {
-				line-height: 1.3;
-				list-style-position: inside;
-				margin: 0.25em 0;
-			}
+								<article class="span12">
 
-			@media screen and (max-width: 480px) {
-				#status {
-					display: none;
-				}
+									<!-- new widget -->
+									<div class="jarviswidget" id="widget-id-0">
+									    <header>
+									        <h2>Mon mur</h2>                           
+									    </header>
 
-				#page-body {
-					margin: 0 1em 1em;
-				}
+									    <!-- widget div-->
+									    <div>
+									    	<!-- widget edit box -->
 
-				#page-body h1 {
-					margin-top: 0;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="status" role="complementary">
-			<h1>Application Status</h1>
-			<ul>
-				<li>App version: <g:meta name="app.version"/></li>
-				<li>Grails version: <g:meta name="app.grails.version"/></li>
-				<li>Groovy version: ${GroovySystem.getVersion()}</li>
-				<li>JVM version: ${System.getProperty('java.version')}</li>
-				<li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>
-				<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-				<li>Domains: ${grailsApplication.domainClasses.size()}</li>
-				<li>Services: ${grailsApplication.serviceClasses.size()}</li>
-				<li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-			</ul>
-			<h1>Installed Plugins</h1>
-			<ul>
-				<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-					<li>${plugin.name} - ${plugin.version}</li>
-				</g:each>
-			</ul>
-		</div>
-		<div id="page-body" role="main">
-			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
+									        <!-- content -->	            
+									        <div class="inner-spacer chat-widget widget-content-padding"> 
 
-			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
-				<ul>
-					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
-				</ul>
-			</div>
-		</div>
-	</body>
-</html>
+									        	<!-- chat tabs -->
+												<ul id="myChat" class="nav nav-tabs chat-tabs">
+									              <li class="active">
+									              	<a href="#newsfeed" data-toggle="tab"><i class="online"></i>Principal</a>
+									              	</li>
+									              <li>
+									              	<a href="#activite" data-toggle="tab"><i class="away"></i>Activités</a>
+									              </li>
+									              <li class="pull-right">
+
+													<div id="chat-user-control" class="btn-group hidden-phone">
+                                                                                                          <button class="btn dropdown-toggle btn-small btn-link" data-toggle="dropdown"><i class="cus-status-online"></i></button>
+		                                                <ul class="dropdown-menu btn-small pull-right">
+															<li>
+																<a href="javascript:void(0);"><i class="cus-status-online"></i> Available</a>
+															</li>
+															<li>
+																<a href="javascript:void(0);"><i class="cus-cross-shield-2"></i> Busy</a>
+															</li>
+															<li>
+																<a href="javascript:void(0);"><i class="cus-clock"></i> Away</a>
+															</li>
+															<li class="divider"></li>
+															<li>
+																<a href="javascript:void(0);"><i class="cus-disconnect"></i> Disconnect</a>
+															</li>
+		                                                </ul>
+		                                            </div>
+
+
+									              </li>
+									            </ul>
+									            <!-- end chat tabs -->
+
+									            <!-- chat box -->
+									            <div id="myChatTab" class="tab-content chat-content">
+
+                                                                                      <div class="row-fluid chat-box">
+                                                                                        
+                                                                                      <div class="controls">
+                                                                                        <input type="hidden" id="message_id" name="message_id" value="" />
+																	<div class="input-append span10">  
+                                                                                    <input class="span12 type-effect"  type="text" id="messageBox"  placeholder="Tapez votre message..." name="message" onkeypress="messageKeyPress(this,event);"/> 
+                                                                                      
+                                                                                    <div class="btn-group">
+						                                                    <button class="btn dropdown-toggle medium" data-toggle="dropdown">Action <span class="caret"></span></button>
+						                                                    <ul class="dropdown-menu btn-small pull-right">
+						                                                        <li><a href="javascript:void(0);">Favorite it</a></li>
+						                                                        <li><a href="javascript:void(0);">Reload page</a></li>
+						                                                        <li><a href="javascript:void(0);">Attach something</a></li>
+						                                                    </ul>
+						                                                </div>
+						                                            </div>
+                                            					</div>  
+                                                                                    <g:hiddenField name="kanban" id="monKanban"/>
+                                                                                    <div id="temp"></div>
+                                                                                        
+                                                                                      </div>
+                                                                                      <!-- chat user1 -->	
+                                                                                      <div class="tab-pane fade in active" id="newsfeed">
+                                                                                        
+									              	<!-- chat messages -->
+									              	<div class="newsfeed1"></div>
+									              	<!-- end chat messages -->
+
+									              </div>
+                                                                                      <script type="text/javascript">
+                                                                                        <g:remoteFunction controller="message" action="obtenirMessage" update="newsfeed1"/>;
+                                                                                      </script>
+									              <!-- end chat user1 -->
+
+									              <!-- chat user2 -->
+									              <div class="tab-pane fade" id="activite">
+
+									              	<!-- chat messages -->
+									              	<div class="chat-messages">														
+
+									              	</div>
+									              	<!-- end chat messages -->
+
+									              </div>
+                                                                                      
+									              <!-- end chat user2 -->
+
+									            </div>
+									            <!-- end chat box -->
+
+
+
+
+									        </div>
+									        <!-- end content -->	
+
+									    </div>
+									    <!-- end widget div -->
+									</div>
+                                                                        
+									<!-- end widget -->
+
+								</article>
+
+							</div>
+                                                        
+                                                        <script>
+                                                          function messageKeyPress(field,event) {
+                                                            var theCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+                                                            var message = $('#messageBox').val();
+                                                            if (theCode == 13){
+                                                        <g:remoteFunction controller = "message" action="posterMessage" params="\'message=\'+message" update="temp"/>
+                                                                    $('#messageBox').val('');
+                                                                    return false;
+                                                                  } else {
+                                                                    return true;
+                                                                  }
+                                                                  }
+                                                                  function obtenirMessage() {
+                                                                  // var kanban = $('#monKanban').val()
+                                                                          <g:remoteFunction controller="message" action="obtenirMessage" update="newsfeed"/>
+                                                                        }
+                                                                function maj() {
+                                                                  obtenirMessage();
+                                                                  setTimeout('pollMessages()', 25000);
+                                                                }
+                                                                maj();
+                                                                $(document).ready(function() {
+                                                                  $.ajax({
+                                                                    url: '/application/Effectif/listEffectif',
+                                                                    type: 'GET',
+                                                                    dataType: "json",
+                                                                    success : function(response) {
+                                                                    //Create a map.
+                                                                    var data =
+                                                                            $.map(response, function(item){
+                                                                      console.log("id: " + item.id);
+                                                                      console.log("nom: " + item.nom );
+                                                                      return{
+                                                                        id: item.id,
+                                                                        value: item.nom 
+                                                                      }
+                                                                    });
+                                                                    $("#messageBox").autocomplete({
+
+                                                                    source: data,
+                                                                    beforeRetrieve: function(string){
+                                                                      if (string.indexOf('@') == 0) return "";
+                                                                      return string;
+                                                                    },
+                                                                    select: function (event, ui){
+                                                                      console.log("selected id:" + ui.item.id);
+                                                                      console.log("selected nom:" + ui.item.value);
+                                                                      //change the value of hidden field to the country's id.
+                                                                      $('#message_id').val(ui.item.id);
+                                                                      }
+                                                                            });
+                                                                            }
+                                                                            });
+                                                                            });                                            
+   
+      
+      
+                                                                                                                               
+                                                        </script>
+						</section>
+					</div>		
+				</div>
+
+<g:render template="/menues/mainright" />
+
+
+
+ 
+</sec:ifLoggedIn>
+  
+  
+  
+  
+  <sec:ifNotLoggedIn>
+    <h2> <g:link  action="index" controller="login"> <font size="3" face="georgia" color="red"> Se connecter </font></g:link> <h2>
+  </sec:ifNotLoggedIn>
