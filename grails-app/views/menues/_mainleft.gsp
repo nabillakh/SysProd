@@ -123,7 +123,7 @@
                                                                                 <g:link controller="kanban" action="obtenirKanbanEffectif" id="${sec.loggedInUserInfo(field:"id")}" > Mon activité </g:link>
 									</li>
                                                                         <li>
-                                                                                <g:link  action="index" controller="kanban"> Ajouter un projet </g:link>
+                                                                                <g:link  action="index" controller="kanban"> Portefeuille de projets </g:link>
 									</li>
 							<li class="">
 								<g:link  action="feuilleImputation" controller="imputation">Feuille d'imputation</g:link>

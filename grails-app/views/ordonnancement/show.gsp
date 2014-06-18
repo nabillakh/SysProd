@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="application.MailService" %>
-<%
-    def myService = grailsApplication.classLoader.loadClass('application.MailService').newInstance()
-%>
+
   <head>
 		<meta name="layout" content="main"/>
 		<title>Sysprod</title>

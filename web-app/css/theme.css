@@ -967,7 +967,7 @@
 		
 		aside ul.menu > li > ul > li a {
 			text-indent: 35px;
-			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+			/* text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); permet ici l'ombre dans le menu'*/
 			padding: 2px 0px;
 			font-size:13px;
 		}
@@ -2800,7 +2800,7 @@
 	/* ---------------------------------------------------------------------- */
 	
 	#login-logo {
-		background:url('../img/favicons/apple-touch-icon-retina.png') top left transparent no-repeat;
+		/* background:url('../img/favicons/apple-touch-icon-retina.png') top left transparent no-repeat; */
 		display:block;
 		width:114px;
 		height:82px;

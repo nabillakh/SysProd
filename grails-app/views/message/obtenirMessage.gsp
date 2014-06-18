@@ -8,12 +8,13 @@
   </g:else>
   
   <span class="message">
-    <strong><g:link action="show" controller="Effectif" id="${message.auteur.id}">${message.auteur.nom} ${message.auteur.prenom}</g:link></strong> 
+    <strong><g:link action="show" controller="Effectif" id="${message.auteur.id}"><i class="cus-user-business-boss"></i> ${message.auteur.nom} ${message.auteur.prenom}</g:link></strong> 
      <g:if test="${message.kanban}">
-       <g:link action="show" controller="Kanban" id="${message.kanban.id}"> à propos du projet : ${message.kanban.nomKanban}</g:link>
+       <g:link action="show" controller="Kanban" id="${message.kanban.id}">,  <i class="cus-briefcase"></i> ${message.kanban.nomKanban}</g:link>
        </g:if>
     <span class="message-time"><g:formatDate format="dd-MM-yyyy hh:mm a" date="${message.date}"/></span>
     <span class="message-text">${message.message}</span>
+    
   </span>
 </p>
   
