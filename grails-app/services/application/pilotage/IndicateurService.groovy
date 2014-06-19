@@ -206,8 +206,7 @@ class IndicateurService {
             if((calDebutEvent.compareTo(calFin)<0)) {
                 if((calFinEvent.compareTo(calDeb)>0)) {
                  Float deltaJour = nbJoursKanbanPeriode(calDeb, calFin, calDebutEvent, calFinEvent, kanban) 
-                 println("ok"+ kanban.chargePlanifiee * deltaJour)
-                 println("ok2"+ dureeKanban)
+                 
                 maCharge = (kanban.chargePlanifiee / dureeKanban) * deltaJour
                 }
             }

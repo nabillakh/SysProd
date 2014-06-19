@@ -139,7 +139,10 @@ class ActiviteController {
         def fams = Famille.list()
         def famLists = []
         fams.each{ fam ->
-            famLists << fam.nom.toString()
+            
+            def famList = new LinkedHashMap()
+            famList.put("Nom",fam.nom.toString())
+            famLists << famList
         }
         
         [famInstanceList: famLists]
@@ -183,7 +186,8 @@ class ActiviteController {
                 
             def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
             
-                chargesList.put("charge",maCharge)
+            chargesList.put("charge",maCharge)
+            
                 
                 chargesLists << (chargesList)
                 
@@ -191,6 +195,42 @@ class ActiviteController {
         
         [chargesInstanceList: chargesLists]
         render chargesLists as JSON
+    }
+    
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def chargeCapaFamille = {
+        println("pour linstant ok")
+        def fams = Famille.list()
+        def famLists = []
+            for(Integer i = 1; i<13;i++) {
+                def chargesList = new LinkedHashMap()
+                chargesList.put("mois",i)
+                def fams2 = fams
+        fams2.each{ fam ->
+            
+             def query = Kanban.whereAny {
+                famille == fam
+            }
+            def kanbanList = query.list() // cherche juste la famille
+                
+                def dateDebut = imputationService.premierJourMois(2014, i)
+                def dateFin = imputationService.dernierJourMois(2014, i)
+                
+            def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
+            
+                chargesList.put(fam.nom.toString(),maCharge)
+                
+                
+        }
+                famLists << (chargesList)
+      
+        }
+        
+        println("mon json" + famLists)
+        
+        [famInstanceList: famLists]
+        render famLists as JSON
     }
     
 }
