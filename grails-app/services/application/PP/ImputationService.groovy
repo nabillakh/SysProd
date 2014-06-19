@@ -190,6 +190,18 @@ class ImputationService {
         return premierJour
     }
     
+        def Date premierJourMois(int annee, int mois) {
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.MONTH, mois);
+        calendar.set(Calendar.YEAR, annee);
+        // permet d'avoir le premier jour de la semaine de la date en cours
+        Date premierJour = calendar.getTime();
+        println(premierJour)
+        return premierJour
+    }
+    
     def Date dernierJour(int annee, int semaine) {
         
         Calendar calendar = Calendar.getInstance();
@@ -199,6 +211,20 @@ class ImputationService {
         calendar.add(Calendar.DATE,7)
         // permet d'avoir le premier jour de la semaine de la date en cours
         Date dernierJour = calendar.getTime();
+        return dernierJour
+    }
+    
+    def Date dernierJourMois(int annee, int mois) {
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.MONTH, mois +1);
+        calendar.set(Calendar.YEAR, annee);
+        
+        calendar.add(Calendar.DATE, -1)
+        // permet d'avoir le premier jour de la semaine de la date en cours
+        Date dernierJour = calendar.getTime();
+        println(dernierJour)
         return dernierJour
     }
     

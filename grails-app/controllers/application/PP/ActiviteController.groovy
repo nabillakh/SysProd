@@ -14,6 +14,8 @@ class ActiviteController {
         
 	def springSecurityService
         def kanbanService
+        def indicateurService
+        def imputationService
         
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def activite(Integer max) {
@@ -170,21 +172,25 @@ class ActiviteController {
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def deltaCharge = {
         
-        def familles = Famille.list()
-        // hypothese nbannee = nb pic
-        def familleLists = []
+        def kanbanList = Kanban.list()
+        def chargesLists = []
             for(Integer i = 1; i<13;i++) {
-        familles.each {famille ->
-                def familleList = new LinkedHashMap()
-                familleList.put("mois",i)
-                familleList.put(famille.nom.toString(),6-i)
-                println(familleList)
-                familleLists << (familleList)
-            }
+                
+                def chargesList = new LinkedHashMap()
+                chargesList.put("mois",i)
+                def dateDebut = imputationService.premierJourMois(2014, i)
+                def dateFin = imputationService.dernierJourMois(2014, i)
+                
+            def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
+            
+                chargesList.put("charge",maCharge)
+                
+                chargesLists << (chargesList)
+                
         }
-        println(familleLists)
-        [familleInstanceList: familleLists]
-        render familleLists as JSON
+        
+        [chargesInstanceList: chargesLists]
+        render chargesLists as JSON
     }
     
 }

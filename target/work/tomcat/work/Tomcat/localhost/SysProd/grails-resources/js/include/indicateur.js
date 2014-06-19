@@ -156,8 +156,8 @@
 		  grid: true,
 		  data: data,
 		  xkey: 'mois',
-		  ykeys: fam,
-		  labels: fam,
+		  ykeys: ['charge'],
+		  labels: ['charge'],
 		  stacked: true
 		});
             });});}

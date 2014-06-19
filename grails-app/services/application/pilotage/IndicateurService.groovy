@@ -58,27 +58,27 @@ class IndicateurService {
     def Imputation[] imputations(Kanban kanbanInstance) {
         
         def mesOF = kanbanInstance.of
-        def mesImput = []
+        def mesKanban = []
         mesOF.each() {of ->
             
         def query = Imputation.whereAny {
                 of == of  
             }            
         def imputations = query.list()
-        imputations.each() { imput ->
-            mesImput.add(imput)
+        imputations.each() { kanban ->
+            mesKanban.add(kanban)
         }
         }
         
-        return mesImput
+        return mesKanban
     }
     
-    def Float chargePlanifieJourKanban(Date deb, Imputation[] mesImput) {
+    def Float chargePlanifieJourKanban(Date deb, Imputation[] mesKanban) {
         
         
         // création des jours
             Date maDate = deb
-            Date dateMax = dateMaxAgenda(mesImput)
+            Date dateMax = dateMaxAgenda(mesKanban)
             def charge = 0
             Calendar cal = Calendar.getInstance();
             Calendar cal2 = Calendar.getInstance();
@@ -88,9 +88,9 @@ class IndicateurService {
             
             cal2.add(Calendar.DATE,1)
             Date maDate2 = cal2.getTime()
-            mesImput.each() {imput ->
-                Date debutEvent = imput.eventEffectif.event.startTime
-                Date finEvent = imput.eventEffectif.event.endTime
+            mesKanban.each() {kanban ->
+                Date debutEvent = kanban.eventEffectif.event.startTime
+                Date finEvent = kanban.eventEffectif.event.endTime
                 Calendar calDebutEvent = Calendar.getInstance();
                 Calendar calFinEvent = Calendar.getInstance();
                 Calendar calMax = Calendar.getInstance();
@@ -98,7 +98,7 @@ class IndicateurService {
                 calFinEvent.setTime(finEvent);   
                 calMax.setTime(dateMax);   
                 calMax.add(Calendar.DATE,1)
-                def charge2 = imput.eventEffectif.event.dureeHeures
+                def charge2 = kanban.eventEffectif.event.dureeHeures
             if((calDebutEvent.compareTo(cal2)<0)&&(calFinEvent.compareTo(cal)>0)) {
                     charge += charge2
             }
@@ -111,7 +111,7 @@ class IndicateurService {
         return charge
     }
     
-    def Float chargeRealiseJourKanban(Date deb, Imputation[] mesImput) {
+    def Float chargeRealiseJourKanban(Date deb, Imputation[] mesKanban) {
         
         
         // création des jours
@@ -125,16 +125,16 @@ class IndicateurService {
             
             cal2.add(Calendar.DATE,1)
             Date maDate2 = cal2.getTime()
-            mesImput.each() {imput ->
-                Date debutEvent = imput.eventEffectif.event.startTime
-                Date finEvent = imput.eventEffectif.event.endTime
+            mesKanban.each() {kanban ->
+                Date debutEvent = kanban.eventEffectif.event.startTime
+                Date finEvent = kanban.eventEffectif.event.endTime
                 Calendar calDebutEvent = Calendar.getInstance();
                 Calendar calFinEvent = Calendar.getInstance();
                 calDebutEvent.setTime(debutEvent);
                 calFinEvent.setTime(finEvent);   
-                def charge2 = imput.eventEffectif.event.dureeHeures
-            if((calDebutEvent.compareTo(cal2)<0)&&(calFinEvent.compareTo(cal)>0)&&imput.realise) {
-                    charge += imput.tempsImpute
+                def charge2 = kanban.eventEffectif.event.dureeHeures
+            if((calDebutEvent.compareTo(cal2)<0)&&(calFinEvent.compareTo(cal)>0)&&kanban.realise) {
+                    charge += kanban.tempsImpute
             }
             else {
                 
@@ -144,12 +144,12 @@ class IndicateurService {
         return charge
     }
     
-    def dateMaxAgenda(Imputation[] mesImput) {
+    def dateMaxAgenda(Imputation[] mesKanban) {
         def maDate = new Date()
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-        mesImput.each() {imput ->
-                Date debutEvent = imput.eventEffectif.event.startTime
+        mesKanban.each() {kanban ->
+                Date debutEvent = kanban.eventEffectif.event.startTime
                 cal.setTime(debutEvent);
                 cal2.setTime(maDate);   
                 
@@ -162,16 +162,16 @@ class IndicateurService {
     }
     return maDate}
 
-    def dateMaxRealise(Imputation[] mesImput) {
+    def dateMaxRealise(Imputation[] mesKanban) {
         def maDate = new Date()
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-        mesImput.each() {imput ->
-                Date debutEvent = imput.eventEffectif.event.startTime
+        mesKanban.each() {kanban ->
+                Date debutEvent = kanban.eventEffectif.event.startTime
                 cal.setTime(debutEvent);
                 cal2.setTime(maDate);   
                 
-            if((cal.compareTo(cal2)>0)&&imput.realise) {
+            if((cal.compareTo(cal2)>0)&&kanban.realise) {
                     maDate = debutEvent
             }
             else {
@@ -179,6 +179,58 @@ class IndicateurService {
             }
     }
     return maDate}
+
+    
+    
+    def chargePlanifieeMois(Date dateDebut,Date dateFin, ArrayList kanbanList) {
+        def maCharge
+        Calendar calDeb = Calendar.getInstance();
+            Calendar calFin = Calendar.getInstance();
+            calDeb.setTime(dateDebut);
+            calFin.setTime(dateFin);
+        
+        
+           kanbanList.each() { kanban ->
+            Date debutEvent = kanban.dateLancement
+            Date finEvent = kanban.dateFinPlanifie
+            
+            Calendar calDebutEvent = Calendar.getInstance();
+            Calendar calFinEvent = Calendar.getInstance();
+            calDebutEvent.setTime(debutEvent);
+            calFinEvent.setTime(finEvent);          
+            
+            Float dureeKanban = nbJoursKanbanPeriode(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent, kanban) 
+            
+            
+            
+            if((calDebutEvent.compareTo(calFin)<0)) {
+                if((calFinEvent.compareTo(calDeb)>0)) {
+                 Float deltaJour = nbJoursKanbanPeriode(calDeb, calFin, calDebutEvent, calFinEvent, kanban) 
+                 println("ok"+ kanban.chargePlanifiee * deltaJour)
+                 println("ok2"+ dureeKanban)
+                maCharge = (kanban.chargePlanifiee / dureeKanban) * deltaJour
+                }
+            }
+        }
+        return maCharge
+                    
+    }
+    
+    def nbJoursKanbanPeriode(Calendar calDeb, Calendar calFin, Calendar calDebutEvent, Calendar calFinEvent, Kanban kanban) {
+        
+        if((calDebutEvent.compareTo(calDeb)>0)) { 
+            calDeb = calDebutEvent
+        }
+        if((calFinEvent.compareTo(calFin)<0)) { 
+            calFin = calFinEvent
+        }
+        
+        def delta = calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1
+        
+        return delta
+    }
+    
+    
     
     
 }
