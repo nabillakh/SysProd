@@ -64,12 +64,12 @@ class BootStrap {
                  
         
         def maFamille = new Famille(nom : "Etudes", travaille : true).save(failOnError: true, flush : true)  
-        def maFamille2 = new Famille(nom : "Developpement", travaille : true).save(failOnError: true, flush : true)  
+        def maFamille2 = new Famille(nom : "Projets", travaille : true).save(failOnError: true, flush : true)  
         def maFamille3 = new Famille(nom : "Absence", travaille : false).save(failOnError: true, flush : true)
         
         def monOrdo = new Ordonnancement(nom : "Paramétrage", chargeStandard : 50, famille : maFamille).save(failOnError: true, flush : true) 
         def monOrdo1 = new Ordonnancement(nom : "Nouvelle fonction", chargeStandard : 20, famille : maFamille).save(failOnError: true, flush : true) 
-        def monOrdo2 = new Ordonnancement(nom : "produit2", chargeStandard : 20, famille : maFamille2).save(failOnError: true, flush : true) 
+        def monOrdo2 = new Ordonnancement(nom : "nouveau projet dev.", chargeStandard : 20, famille : maFamille2).save(failOnError: true, flush : true) 
         def monOrdo3 = new Ordonnancement(nom : "Absences", chargeStandard : 5, famille : maFamille3).save(failOnError: true, flush : true) 
         def monOrdo4 = new Ordonnancement(nom : "grille4", chargeStandard : 50, famille : maFamille3).save(failOnError: true, flush : true) 
         
@@ -85,6 +85,14 @@ class BootStrap {
         }
         
         
+        ["Definition du besoin":1, "Cadrage":2, "Developpement":3, "Test":4, "Mise en prod":5].each {nomA,numA -> 
+            def phase = new Phase(nom : nomA,ordre:numA, competence:maCompetence, cleRepartition : 0.2, valeurAjoutee : true)
+            
+            monOrdo2.addToPhases(phase)
+            phase.save(failOnError: true)
+        }
+        
+        
         ["RTT":1, "Congé annuel":2, "Maladie":3].each {nomA,numA -> 
             def phase = new Phase(nom : nomA,ordre:numA, cleRepartition : 1, valeurAjoutee : false)
             monOrdo3.addToPhases(phase)
@@ -95,6 +103,7 @@ class BootStrap {
         monKanban.setOrdo(monOrdo)
         monOrdo.save(failOnError: true)
         monOrdo3.save(failOnError: true)
+        monOrdo2.save(failOnError: true)
         monKanban.save(failOnError: true, flush : true)
         
         

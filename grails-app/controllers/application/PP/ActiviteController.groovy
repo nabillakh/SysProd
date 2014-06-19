@@ -175,7 +175,15 @@ class ActiviteController {
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def deltaCharge = {
         
-        def kanbanList = Kanban.list()
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        def fams = query2.list()
+        fams.each() {fam->
+            def query3 = Kanban.whereAny {
+            famille == fam
+        }
+        def kanbanList = query3.list()
         def chargesLists = []
             for(Integer i = 1; i<13;i++) {
                 
@@ -184,9 +192,13 @@ class ActiviteController {
                 def dateDebut = imputationService.premierJourMois(2014, i)
                 def dateFin = imputationService.dernierJourMois(2014, i)
                 
-            def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
+            def maCharge = 0
+            maCharge += (indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList))
+            def maCapa = 0
+            maCapa += (indicateurService.capacite(dateDebut, dateFin))
+            def charge = maCapa - maCharge
             
-            chargesList.put("charge",maCharge)
+            chargesList.put("charge", charge)
             
                 
                 chargesLists << (chargesList)
@@ -195,12 +207,12 @@ class ActiviteController {
         
         [chargesInstanceList: chargesLists]
         render chargesLists as JSON
-    }
+    }}
     
     // envoie la liste de famille pour parising dans le graphe 1
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def chargeCapaFamille = {
-        println("pour linstant ok")
+        
         def query2 = Famille.whereAny {
             travaille == true
         }
@@ -232,8 +244,6 @@ class ActiviteController {
                 famLists << (chargesList)
       
         }
-        
-        println("mon json" + famLists)
         
         [famInstanceList: famLists]
         render famLists as JSON

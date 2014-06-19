@@ -157,7 +157,7 @@
 		  data: data,
 		  xkey: 'mois',
 		  ykeys: ['charge'],
-		  labels: ['charge'],
+		  labels: ['Capacité disponible'],
 		  stacked: true
 		});
             });});}

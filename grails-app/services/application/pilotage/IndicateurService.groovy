@@ -3,6 +3,7 @@ package application.pilotage
 
 import grails.transaction.Transactional
 import application.PP.*
+import application.RH.*
 
 @Transactional
 class IndicateurService {
@@ -184,7 +185,7 @@ class IndicateurService {
     
     def chargePlanifieeMois(Date dateDebut,Date dateFin, ArrayList kanbanList) {
         
-        def maCharge
+        def maCharge = 0
         Calendar calDeb = Calendar.getInstance();
             Calendar calFin = Calendar.getInstance();
             calDeb.setTime(dateDebut);
@@ -212,12 +213,13 @@ class IndicateurService {
                 }
             }
         }
+        
         return maCharge
                     
     }
     
     def nbJoursKanbanPeriode(Calendar calDeb, Calendar calFin, Calendar calDebutEvent, Calendar calFinEvent, Kanban kanban) {
-        println("dans service kanban")
+        
         if((calDebutEvent.compareTo(calDeb)>0)) { 
             calDeb = calDebutEvent
         }
@@ -226,17 +228,18 @@ class IndicateurService {
         }
         
         def delta = calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1
-        println("mon delta : " + delta)
+        
         return delta
     }
     
     def capacite(Date dateDebut, Date dateFin) {
-        
+                def effectifs = Effectif.list()
                 Calendar calDeb = Calendar.getInstance();
                 Calendar calFin = Calendar.getInstance();
                 calDeb.setTime(dateDebut);
                 calFin.setTime(dateFin);
-                def delta = calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1
+                println(effectifs.size())
+                def delta = (calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1) * effectifs.size()
                 def maCharge = 0
                 def query2 = Famille.whereAny {
                     travaille == false

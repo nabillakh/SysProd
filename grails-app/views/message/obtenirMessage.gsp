@@ -13,7 +13,9 @@
        <g:link action="show" controller="Kanban" id="${message.kanban.id}">,  <i class="cus-briefcase"></i> ${message.kanban.nomKanban}</g:link>
        </g:if>
     <span class="message-time"><g:formatDate format="dd-MM-yyyy hh:mm a" date="${message.date}"/></span>
-    <span class="message-text">${message.message}</span>
+    <span class="message-text">${message.message}
+      <g:link  action="index" controller="kanban"  class="pull-right"><i class="cus-comment"></i></g:link> 
+      
     
   </span>
 </p>
