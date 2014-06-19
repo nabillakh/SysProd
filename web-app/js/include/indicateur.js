@@ -271,6 +271,19 @@ if ($('#chargeCapa').length) {
                 salesAxis.stackType ="regular";
 		salesAxis.axisAlpha = 0;
 		chart.addValueAxis(salesAxis);
+                
+                
+		var durationGraph = new AmCharts.AmGraph();
+		durationGraph.title = "Capacité planifiée";
+		durationGraph.valueField = "capacite";
+		durationGraph.type = "line";
+		durationGraph.valueAxis = salesAxis;
+		// indicate which axis should be used
+		durationGraph.lineColor = "#CC0000";
+		durationGraph.balloonText = "[[title]] : [[value]] j";
+		durationGraph.lineThickness = 1;
+		durationGraph.legendValueText = "[[value]] j";
+		chart.addGraph(durationGraph);
 		
                 for(var i=0;i<fam.length;i++){
                      var obj = fam[i];
@@ -307,11 +320,6 @@ if ($('#chargeCapa').length) {
 		chart.addLegend(legend);
                 
                 
-		var chartScrollbar = new AmCharts.ChartScrollbar();
-		chartScrollbar.scrollbarHeight = 30;
-		chartScrollbar.graph = salesGraph;
-		chartScrollbar.color = "#FFFFFF";
-		chart.addChartScrollbar(chartScrollbar);
 
 		// BAR
 		/* var chartScrollbar = new AmCharts.ChartScrollbar();

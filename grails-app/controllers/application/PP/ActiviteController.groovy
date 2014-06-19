@@ -201,21 +201,26 @@ class ActiviteController {
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def chargeCapaFamille = {
         println("pour linstant ok")
-        def fams = Famille.list()
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        def fams = query2.list()
         def famLists = []
             for(Integer i = 1; i<13;i++) {
                 def chargesList = new LinkedHashMap()
                 chargesList.put("mois",i)
                 def fams2 = fams
-        fams2.each{ fam ->
+                def dateDebut = imputationService.premierJourMois(2014, i)
+                def dateFin = imputationService.dernierJourMois(2014, i)
+                
+                def delta = indicateurService.capacite(dateDebut, dateFin) 
+                chargesList.put("capacite" , delta)
+                fams2.each{ fam ->
             
              def query = Kanban.whereAny {
                 famille == fam
             }
             def kanbanList = query.list() // cherche juste la famille
-                
-                def dateDebut = imputationService.premierJourMois(2014, i)
-                def dateFin = imputationService.dernierJourMois(2014, i)
                 
             def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
             
@@ -223,6 +228,7 @@ class ActiviteController {
                 
                 
         }
+        
                 famLists << (chargesList)
       
         }
