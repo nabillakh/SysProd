@@ -88,39 +88,40 @@
 									    <div>
                                                                               
                                                                               <div class="row-fluid chat-box">
-                                                                                <center> <input class="span10 type-effect" type="text" id="messageBox" name="message" placeholder="Tapez votre message..." onkeypress="messageKeyPress(this,event);"/>   </center> 
+                                                                                <center> <input class="span10 type-effect" type="text" id="messageKanban" name="message" placeholder="Tapez votre message..." onkeypress="messageKanban(this,event);"/>   </center> 
                                                                                         <g:hiddenField name="kanban" id="monKanban" value="${kanbanInstance.id}"/>
                                                                                     <div id="temp"></div>
                                                                                     <!-- script de gestion des messages -->
                                                                                     </div>
-                                                                                    <div id="chatMessages">
+                                                                                    <div id="messagesKanban">
                                                                                     </div>
                                                                                       <script type="text/javascript">
-                                                                                        <g:remoteFunction controller="message" action="obtenirMessage" params="\'kanban=\' + ${kanbanInstance.id}" update="chatMessages"/>;
+                                                                                        <g:remoteFunction controller="message" action="obtenirMessageKanban" params="\'kanban=\' + ${kanbanInstance.id}" update="messagesKanban"/>;
                                                                                       </script>
                                                                                       
                                                                                       
                                                                                     
                                                                                     
                                                                                     <script>
-                                                                                      function messageKeyPress(field,event) {
+                                                                                      function messageKanban(field,event) {
                                                                                         var theCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-                                                                                        var message = $('#messageBox').val();
+                                                                                        var message = $('#messageKanban').val();
                                                                                         var kanban = $('#monKanban').val()
                                                                                         if (theCode == 13){
                                                                                     <g:remoteFunction controller = "message" action="posterMessageKanban" params="\'message=\'+message+ '&kanban=\' + kanban" update="temp"/>
-                                                                                                $('#messageBox').val('');
+                                                                                                $('#messageKanban').val('');
                                                                                                 return false;
                                                                                               } else {
                                                                                                 return true;
                                                                                               }
+                                                                                              obtenirMessageKanban();
                                                                                               }
-                                                                                              function obtenirMessage() {
+                                                                                              function obtenirMessageKanban() {
                                                                                         var kanban = $('#monKanban').val();
-                                                                                              <g:remoteFunction controller = "message" action="obtenirMessage" params="\'kanban=\' + kanban" update="chatMessages"/>
+                                                                                              <g:remoteFunction controller = "message" action="obtenirMessageKanban" params="\'kanban=\' + kanban" update="messagesKanban"/>
                                                                                             }
                                                                                                 function pollMessages() {
-                                                                                                          obtenirMessage();
+                                                                                                          obtenirMessageKanban();
                                                                                                           setTimeout('pollMessages()', 25000);
                                                                                                         }
                                                                                                         pollMessages();                                                                                                       

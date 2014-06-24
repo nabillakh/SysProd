@@ -108,7 +108,7 @@ class MessageController {
     
     
     def posterMessage(String message) {
-        
+        println("dans poster message")
         messageService.posterMessage(message)
         render "<script>obtenirMessage()</script>"
     }
@@ -140,8 +140,25 @@ class MessageController {
         
         println("controleur updateCR" + message + kanban)
         messageService.posterMessageKanban(message , kanban)
-        render "<script>obtenirMessage()</script>"
+        render "<script>obtenirMessageKanban()</script>"
     }
+    
+    def obtenirMessageKanban() {
+        
+            println("dans controller 1")
+            println(params.kanban)
+            def monId = Long.parseLong(params.kanban)
+            println(monId)
+            def monKanban = Kanban.get(monId)
+            println("kanban : " + monKanban.id)
+            def mesMessages = kanbanService.afficherCRKanban(monKanban)
+            
+            println(mesMessages)
+            
+        def moi = messageService.lookupCurrentPerson()
+        [mesMessages:mesMessages.reverse(), moi:moi]
+    }
+    
     
     def obtenirMessageEffectif() {
         def mesMessages = Message.list()

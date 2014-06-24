@@ -238,7 +238,7 @@ class IndicateurService {
                 Calendar calFin = Calendar.getInstance();
                 calDeb.setTime(dateDebut);
                 calFin.setTime(dateFin);
-                println(effectifs.size())
+                
                 def delta = (calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1) * effectifs.size()
                 def maCharge = 0
                 def query2 = Famille.whereAny {
@@ -251,7 +251,7 @@ class IndicateurService {
                 famille == fam
             }
             def kanbanList = query.list() // cherche juste la famille
-                println(kanbanList)
+            
                 kanbanList.each() { kanban ->
             Date debutEvent = kanban.dateLancement
             Date finEvent = kanban.dateFinPlanifie
@@ -264,15 +264,15 @@ class IndicateurService {
             
             
             
+                 println("deltaJour")
             if((calDebutEvent.compareTo(calFin)<0)) {
                 if((calFinEvent.compareTo(calDeb)>0)) {
-                 println("deltaJour")
                  Float deltaJour = nbJoursKanbanPeriode(calDeb, calFin, calDebutEvent, calFinEvent, kanban) 
                 maCharge = (kanban.chargePlanifiee / dureeKanban) * deltaJour
+                println(maCharge)
                 }
             }}
         delta += -maCharge
-            println("mon delta : " + delta)
                 }
                 
                 return delta  

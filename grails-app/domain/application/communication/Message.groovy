@@ -11,7 +11,7 @@ class Message {
     Effectif auteur
     Kanban kanban
     
-    static hasMany = [recepteurs : MessageEffectif]
+    static hasMany = [recepteurs : MessageEffectif, commentaires : Commentaire]
     
     Date date = new Date()
     
@@ -20,8 +20,9 @@ class Message {
     static constraints = {
         recepteurs nullable : true
         kanban nullable : true
+        commentaires nullable : true
     }
     
     
-    static mappedBy = [recepteurs : 'message']
+    static mappedBy = [recepteurs : 'message', commentaires : 'message']
 }
