@@ -198,7 +198,7 @@ class ActiviteController {
             maCapa += (indicateurService.capacite(dateDebut, dateFin))
             def charge = maCapa - maCharge
             
-            chargesList.put("charge", charge)
+            chargesList.put("charge", Math.round(charge * 10) / 10)
             
                 
                 chargesLists << (chargesList)
@@ -226,7 +226,8 @@ class ActiviteController {
                 def dateFin = imputationService.dernierJourMois(2014, i)
                 
                 def delta = indicateurService.capacite(dateDebut, dateFin) 
-                chargesList.put("capacite" , delta)
+                
+                chargesList.put("capacite" , Math.round(delta * 10) / 10)
                 fams2.each{ fam ->
             
              def query = Kanban.whereAny {
@@ -236,7 +237,7 @@ class ActiviteController {
                 
             def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
             
-                chargesList.put(fam.nom.toString(),maCharge)
+                chargesList.put(fam.nom.toString(),Math.round(maCharge * 10) / 10)
                 
                 
         }

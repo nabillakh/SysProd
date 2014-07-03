@@ -1,6 +1,7 @@
 import application.RH.*
 import application.communication.*
 import application.PP.*
+import application.pilotage.*
 import org.joda.time.DateTime
 import static org.joda.time.DateTimeConstants.MONDAY
 import static org.joda.time.DateTimeConstants.WEDNESDAY
@@ -30,6 +31,7 @@ class BootStrap {
     
     private void createData() {
         def kanbanService
+        def picService
         
         def maCompetence= new Competence( nom:"developpeur")
         
@@ -66,12 +68,13 @@ class BootStrap {
         def maFamille = new Famille(nom : "Etudes", travaille : true).save(failOnError: true, flush : true)  
         def maFamille2 = new Famille(nom : "Projets", travaille : true).save(failOnError: true, flush : true)  
         def maFamille3 = new Famille(nom : "Absence", travaille : false).save(failOnError: true, flush : true)
+        def maFamille4 = new Famille(nom : "Management", travaille : true).save(failOnError: true, flush : true)
         
         def monOrdo = new Ordonnancement(nom : "Paramétrage", chargeStandard : 50, famille : maFamille).save(failOnError: true, flush : true) 
         def monOrdo1 = new Ordonnancement(nom : "Nouvelle fonction", chargeStandard : 20, famille : maFamille).save(failOnError: true, flush : true) 
         def monOrdo2 = new Ordonnancement(nom : "nouveau projet dev.", chargeStandard : 20, famille : maFamille2).save(failOnError: true, flush : true) 
         def monOrdo3 = new Ordonnancement(nom : "Absences", chargeStandard : 5, famille : maFamille3).save(failOnError: true, flush : true) 
-        def monOrdo4 = new Ordonnancement(nom : "grille4", chargeStandard : 50, famille : maFamille3).save(failOnError: true, flush : true) 
+        def monOrdo4 = new Ordonnancement(nom : "Management", chargeStandard : 50, famille : maFamille4).save(failOnError: true, flush : true) 
         
         
         def monKanban = new Kanban( nomKanban : "developpement fonction 1" , description : "c'est un kanban", famille : maFamille)
@@ -106,8 +109,34 @@ class BootStrap {
         monOrdo2.save(failOnError: true)
         monKanban.save(failOnError: true, flush : true)
         
+        def pic1 = new Pic(annee : 2013, archive : false, version : 0).save(failOnError: true, flush : true)
         
+        def pic2 = new Pic(annee : 2014, archive : false, version : 0).save(failOnError: true, flush : true)
         
+        def pic3 = new Pic(annee : 2015, archive : false, version : 0).save(failOnError: true, flush : true)
+        
+        def pic4 = new Pic(annee : 2016, archive : false, version : 0).save(failOnError: true, flush : true)
+        
+        def pics = Pic.list()
+        pics.each() { pic -> 
+        def mesFamilles = Ordonnancement.list()
+        println(mesFamilles)
+        mesFamilles.each() {fam ->
+            def picFam = new PicFamille(pic : pic, ordo : fam, uniteActivite : 24).save()
+            def mois = 0
+        while(mois++<12) {
+            def Float unite = picFam.uniteActivite / 12
+            def monPdp = new Pdp(picFamille : picFam , mois : mois, uniteActivite : mois)
+            picFam.addToPdp(monPdp)
+                .save()
+            monPdp.save()
+            
+        }
+            pic.addToPicFamille(picFam)
+            picFam.save()
+        }
+        pic.save()
+        }
         // event
         
         TimeZone.setDefault(TimeZone.getTimeZone('GMT'))

@@ -125,7 +125,8 @@
 												<table class="table table-bordered table-responsive table-condensed " id="just-table">
 													<thead>
 														<tr>
-                                                                                                                        <th class="col-md-4">Annee : </th>
+                                                                                                                        <th class="col-md-2"></th>
+                                                                                                                        
 															<th class="col-md-2">${year-1}</th>
 															<th class="col-md-2">${year}</th>
 															<th class="col-md-2">${year+1}</th>
@@ -135,41 +136,39 @@
 													<tbody class="responsive">
                                                                                                         <g:each in="${mesFamilles}" status="j" var="fam">
                                                                                                             <tr class="alert">
-                                                                                                              <td class="col-md-4"><g:link action="show" controller="Famille" id="${fam.id}">${fieldValue(bean: fam, field: "nom")}</g:link></td>
+                                                                                                              <td class="col-md-2"><g:link action="show" controller="Famille" id="${fam.id}">${fieldValue(bean: fam, field: "nom")}</g:link></td>
+                                                                                                          
                                                                                                           <td class="col-md-2"></td>
                                                                                                           <td class="col-md-2"></td>
                                                                                                           <td class="col-md-2"></td>
                                                                                                           <td class="col-md-2"></td>
                                                                                                           </tr>
-                                                                                                          <g:each in="${fam.ordo}" status="k" var="ordo">
+                                                                                                          <g:each in="${fam.ordo}" status="k" var="ordo2">
                                                                                                           <tr>
-                                                                                                              <td><g:link action="show" controller="Ordonnancement" id="${ordo.id}">${fieldValue(bean: ordo, field: "nom")} <p align="right"> Planifie :</br></p> <p align="right"> Réalisé :</p></g:link></td>
+                                                                                                              <td><g:link action="show" controller="Ordonnancement" id="${ordo2.id}">${fieldValue(bean: ordo2, field: "nom")}</g:link></td>
                                                                                                           <td class="span2">
-                                                                                                            </br>
                                                                                                           <g:each in="${pic1.picFamille}" status="p" var="pf">
-                                                                                                          <g:if test="${pf.ordo == ordo}">
-                                                                                                           ${pf.uniteActivite}
+                                                                                                            
+                                                                                                          <g:if test="${pf.ordo == ordo2}">
+                                                                                                           ${pf.uniteActivite} 1
                                                                                                           </g:if>
                                                                                                           </g:each>
                                                                                                           </td>
                                                                                                           <td class="span2">
-                                                                                                            </br>
-                                                                                                          <g:each in="${pic2.picFamille}" status="p" var="pf">
-                                                                                                          <g:if test="${pf.ordo == ordo}">
+                                                                                                          <g:each in="${pic2.picFamille}" status="p2" var="pf">
+                                                                                                          <g:if test="${pf.ordo == ordo2}">
+                                                                                                           ${pf.uniteActivite} 2
+                                                                                                          </g:if>
+                                                                                                          </g:each></td>
+                                                                                                          <td class="span2">
+                                                                                                          <g:each in="${pic3.picFamille}" status="p3" var="pf">
+                                                                                                          <g:if test="${pf.ordo == ordo2}">
                                                                                                            ${pf.uniteActivite}
                                                                                                           </g:if>
                                                                                                           </g:each></td>
                                                                                                           <td class="span2">
-                                                                                                            </br>
-                                                                                                          <g:each in="${pic3.picFamille}" status="p" var="pf">
-                                                                                                          <g:if test="${pf.ordo == ordo}">
-                                                                                                           ${pf.uniteActivite}
-                                                                                                          </g:if>
-                                                                                                          </g:each></td>
-                                                                                                          <td class="span2">
-                                                                                                            </br>
-                                                                                                          <g:each in="${pic4.picFamille}" status="p" var="pf">
-                                                                                                          <g:if test="${pf.ordo == ordo}">
+                                                                                                          <g:each in="${pic4.picFamille}" status="p4" var="pf">
+                                                                                                          <g:if test="${pf.ordo == ordo2}">
                                                                                                            ${pf.uniteActivite}
                                                                                                           </g:if>
                                                                                                           </g:each></td>
@@ -188,8 +187,10 @@
 									<!-- end widget -->
 								</article>
                                                           <article>
-                                                          <pic:mesPics>
-                                                          </pic:mesPics>
+                                                            <g:each in="${pic2.picFamille}" status="p" var="pf">
+                                                              ${pf.ordo.nom} 
+                                                              ${pf.uniteActivite} </br>
+                                                            </g:each>
                                                           </article>
                                                           
                                                           

@@ -154,8 +154,8 @@ class MessageController {
             def mesMessages = kanbanService.afficherCRKanban(monKanban)
             
             println(mesMessages)
+            def moi = messageService.lookupCurrentPerson()
             
-        def moi = messageService.lookupCurrentPerson()
         [mesMessages:mesMessages.reverse(), moi:moi]
     }
     

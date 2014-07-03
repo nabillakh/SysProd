@@ -6,11 +6,11 @@ import application.PP.*
 
 class Pdp {
     
-    PicFamille picFamille
+    
+    static belongsTo = [picFamille : PicFamille]
     Integer mois
     Float uniteActivite
     Integer version
-    Date dateVersion
     Date dateMaj
     
     
@@ -20,7 +20,6 @@ class Pdp {
     
     static constraints = {
         version nullable : true
-        dateVersion nullable : true
         dateMaj nullable : true
         uniteActivite nullable : true
     }
@@ -28,7 +27,7 @@ class Pdp {
     
     
     def beforeInsert = {
-        dateVersion = new Date()
+        
         dateMaj = new Date()
         return true
     }

@@ -5,6 +5,7 @@ import application.PP.*
 
 class PicFamille {
     
+    static belongsTo = [pic : Pic]
     Ordonnancement ordo
     Float uniteActivite
     Integer version
@@ -25,7 +26,10 @@ class PicFamille {
         version nullable : true
         dateVersion nullable : true
         dateMaj nullable : true
+        pdp nullable : true
     }
+    
+    
     
     static mappedBy = [pdp : 'picFamille']
     

@@ -22,8 +22,9 @@ class PicService {
     
     def generationPicFamille(Pic pic) {
         def mesFamilles = Ordonnancement.list()
+        println("dans picservice")
         mesFamilles.each() {fam ->
-            def picFam = new PicFamille(ordo : fam, uniteActivite : 24)
+            def picFam = new PicFamille(pic : pic, ordo : fam, uniteActivite : 24)
             generationPdp(picFam)
             pic.addToPicFamille(picFam)
             .save()
@@ -34,8 +35,8 @@ class PicService {
     def generationPdp(PicFamille picFam) {
         def mois = 0
         while(mois++<12) {
-            def Float unite = picFam.uniteActivite / 12
-            def monPdp = new Pdp(mois : mois, uniteActivite : unite)
+            // def Float unite = picFam.uniteActivite / 12
+            def monPdp = new Pdp(picFamille : picFam , mois : mois, uniteActivite : mois)
             picFam.addToPdp(monPdp)
                 .save()
             monPdp.save()
