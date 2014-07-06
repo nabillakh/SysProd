@@ -3,6 +3,7 @@ package application.PP
 
 import groovy.transform.ToString
 import application.RH.*
+import application.CRM.*
 import application.communication.*
 
 
@@ -21,6 +22,8 @@ class Kanban {
     Phase phaseActuelle
     Famille famille 
     Effectif chefProjet
+    
+    Client client
     
     
     SortedSet of
@@ -56,6 +59,7 @@ class Kanban {
         chargePlanifiee nullable :true
         of nullable:true
         chefProjet nullable : true
+        client nullable : true
     }
     
    

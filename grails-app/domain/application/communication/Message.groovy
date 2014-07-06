@@ -16,11 +16,13 @@ class Message {
     Date date = new Date()
     
     String message
+    Boolean aValider
     
     static constraints = {
         recepteurs nullable : true
         kanban nullable : true
         commentaires nullable : true
+        aValider nullable : true
     }
     
     
