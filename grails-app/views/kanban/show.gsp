@@ -15,6 +15,11 @@
  
  <div id="page-content">
     <div class="fluid-container">
+      <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Les principales informations de vos projets sont accessibles sur cette page. Ne perdez plus de temps à chercher les données essentielles à l'avancement de vos tâches.
+						</div>
       
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">

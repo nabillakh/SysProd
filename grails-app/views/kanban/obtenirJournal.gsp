@@ -15,6 +15,11 @@
  
  <div id="page-content">
     <div class="fluid-container">
+      <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> L'ensemble des remarques, questions, actualités de vos projets sont synthétisées sur cette page.
+						</div>
       
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">

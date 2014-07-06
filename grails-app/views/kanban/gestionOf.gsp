@@ -96,6 +96,11 @@
                                 
                                 
 				<div id="page-content">
+                                  <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Affecter vos projets simplement avec ce module. Les tâches sont automatiquement pré ordonnancer mais vous avez la main pour réajuster au plus juste les données (dates, charge etc.)
+						</div>
 					<!-- page header -->
 					<h1 id="page-header">Gestion des activités et des affectations</h1>	
 

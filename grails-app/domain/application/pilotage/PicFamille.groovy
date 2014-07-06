@@ -13,9 +13,10 @@ class PicFamille {
     Date dateMaj
     
     static hasMany = [pdp : Pdp]   
+    static transients = ['chargePlanifie']
     
-    def chargePlanifie = {
-        return (ordo.getChargePlanifiee() * uniteActivite)
+    public Float getChargePlanifie() {
+        ordo.getChargeStandard() * uniteActivite
     }
     
     def restantAPlanifier = {

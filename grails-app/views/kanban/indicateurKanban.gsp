@@ -15,6 +15,11 @@
  
  <div id="page-content">
     <div class="fluid-container">
+      <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Où en est le projet? Combien de charge a été consommée? Quel est le point de sortie prévisionnel? Obtenez en un clic toutes les données d'avancement de vos projets.
+						</div>
       
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">

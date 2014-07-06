@@ -98,6 +98,11 @@
 
 
 				<div id="page-content">
+                                  <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Gagnez du temps pour vous imputer grâce à ce module qui pré rempli chaque semaine vos activités à valider !
+						</div>
 					<!-- page header -->
 					<h1 id="page-header">Feuille d'imputation</h1>	
 					

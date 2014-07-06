@@ -96,6 +96,11 @@
                                 
                                 
 				<div id="page-content">
+                                  <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Editez facilement les rensignements macro de vos projets ! La juste info le plus simplement possible.
+						</div>
 					<!-- page header -->
 					<h1 id="page-header">Edition du projet : ${kanbanInstance.nomKanban}</h1>	
 

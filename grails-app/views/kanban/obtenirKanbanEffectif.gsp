@@ -92,8 +92,14 @@
 
   <body>
   
- <g:render template="/menues/mainleft" />		
+ <g:render template="/menues/mainleft" />	
+
 <div id="page-content">
+  <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Cette page propose à vos collaborateurs d'accéder simplement à leur to do list complète
+						</div>
     <div class="fluid-container" style="margin-bottom:300px; ">
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">

@@ -10,16 +10,17 @@
 				
 				<!-- main content -->
 				<div id="page-content">
+                                  
+						<div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Votre messagerie est intégrée à votre environnement de travail. Ne naviguez plus entre plusieurs logiciels !
+						</div>
 					<!-- page header -->
 					<h1 id="page-header">Inbox</h1>	
 					
 					<div class="fluid-container">
 
-						<div class="alert adjusted alert-info">
-							<button class="close" data-dismiss="alert">×</button>
-							<i class="cus-exclamation"></i>
-							<strong>Info!</strong> Mobile version of this page is currently not supported.
-						</div>
 
                                           
 						<!-- NO WIDGETS ON THIS PAGE -->

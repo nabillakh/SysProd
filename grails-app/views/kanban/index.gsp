@@ -97,6 +97,11 @@
 
 
  <div id="page-content" >
+   <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Le portefeuille de projets de votre entreprise est synthétisé ici. Vous pouvez alors accéder rapidement à toutes les données et à tous les renseignements utiles à l'avancemet de votre activité
+						</div>
 					<!-- page header -->
 					<h1 id="page-header">Gestion du portefeuille</h1>	
 

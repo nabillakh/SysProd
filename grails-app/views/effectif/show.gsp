@@ -10,6 +10,12 @@
  <g:render template="/menues/mainleft" />		
 <div id="page-content">
     <div class="fluid-container">
+       <div class="alert adjusted alert-info">
+						<button class="close" data-dismiss="alert">×</button>
+						<i class="cus-exclamation"></i>
+                                                Ceci est la page de profil de ${effectifInstance?.prenom} ${effectifInstance?.nom} . Vous pouvez accéder
+                                                 aux messages de ce collaborateur, aux indicateurs le concernant et son portefeuille de projet.
+					</div>
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">
                                                     <article class="span3">

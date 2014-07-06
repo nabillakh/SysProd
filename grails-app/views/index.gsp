@@ -28,6 +28,14 @@
 					</sec:ifLoggedIn> -->
 					<div class="fluid-container">
 
+                                          <div class="alert adjusted alert-info">
+						<button class="close" data-dismiss="alert">×</button>
+						<i class="cus-exclamation"></i>
+						<strong>Bienvenue sur SysProd </strong> Sur cette page, il y a le news feed de votre evironnement de travail. Toute l'actualité de 
+                                                vos projets, de votre équipe et de vos collaborateurs y est indiquée en temps réel.
+					</div>
+                                          
+                                          
 						<!-- start icons -->
 						<div id="start">
 							<ul>

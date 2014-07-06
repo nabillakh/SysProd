@@ -187,9 +187,20 @@
 									<!-- end widget -->
 								</article>
                                                           <article>
+                                                              
+            <div class="span6"> 
+              <center><h5> Taux de VA par équipe </h5></center>
+              
+              <div id="deltaChargeCapa" class="chart" style="height:350px; margin:0;"></div>
+									        		
+            
+            </div>  
+                                                          </article>
+                                                          <article>
                                                             <g:each in="${pic2.picFamille}" status="p" var="pf">
                                                               ${pf.ordo.nom} 
-                                                              ${pf.uniteActivite} </br>
+                                                              ${pf.uniteActivite}
+                                                              ${pf.getChargePlanifie()}</br>
                                                             </g:each>
                                                           </article>
                                                           
