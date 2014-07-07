@@ -114,7 +114,7 @@ grails.project.dependency.resolution = {
         
         compile ':jms:1.1' 
         
-        compile ':searchable:0.6.6'
+        compile ':searchable:0.6.8'
         compile ':spring-security-core:1.2.7.3'
         test ':geb:0.9.2'
         test ':spock:0.7'

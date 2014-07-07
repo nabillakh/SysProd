@@ -9,6 +9,8 @@ import application.communication.*
 
 @ToString(includes='nomKanban')
 class Kanban {
+    
+    
      def kanbanService
     String nomKanban
     String description

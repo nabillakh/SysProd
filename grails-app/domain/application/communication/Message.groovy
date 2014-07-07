@@ -7,6 +7,8 @@ import application.communication.*
 
 
 class Message {
+        
+    static searchable = true 
     
     Effectif auteur
     Kanban kanban

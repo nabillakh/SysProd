@@ -69,9 +69,13 @@
 					
 					<!-- search box -->
 					<div class="main-search">
+                                        <form action="/SysProd/searchable" method="get" id="searchableForm" name="searchableForm" >
 						<label for="main-search"><i class="icon-search"></i></label>
-	                    <input id="main-search" type="text" placeholder="Recherche">
+	                    <input id="q" name="q" type="text" placeholder="Recherche">
+                            </form>
                 	</div>
+                                        
+                                        
 					<div class="divider"></div>
 					<!-- end search box -->
 										
