@@ -117,14 +117,14 @@ class ActiviteController {
     def chargePIC = {
         def pics = Pic.list()
         // hypothese nbannee = nb pic
-              
+              println("recherche de charge pic")
         def picLists = []
         pics.each {pic ->
             def picList = new LinkedHashMap()
             picList.put("annee",pic.annee.toString())
             
             pic.picFamille.each() { maPicFamille ->
-                 picList.put((maPicFamille.famille.nom.toString()),(maPicFamille.chargePlanifie()))
+                 picList.put((maPicFamille.ordo.nom.toString()),(maPicFamille.getChargePlanifie()))
             }
              picLists << (picList)
         }
@@ -148,6 +148,21 @@ class ActiviteController {
         [famInstanceList: famLists]
         render famLists as JSON
     }
+    
+      @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def listeFamillePIC = {
+        
+        def fams = Ordonnancement.list()
+        def famLists = []
+        fams.each{ fam ->
+            famLists.add(fam.nom.toString())
+        }
+        
+        [famInstanceList: famLists]
+        render famLists as JSON
+    }
+    
+    
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def barPIC = {
         def pics = Pic.list()

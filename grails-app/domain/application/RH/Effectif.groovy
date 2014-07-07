@@ -6,6 +6,7 @@ class Effectif {
 
 	transient springSecurityService
 
+    static searchable = true  
         String nom
         String prenom
         String mailEffectif

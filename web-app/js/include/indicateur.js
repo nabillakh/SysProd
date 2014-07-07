@@ -43,13 +43,13 @@
         
        if ($('#chargePIC').length){
            $.getJSON( "/SysProd/activite/chargePIC", function( data ) {
-               $.getJSON( "/SysProd/activite/listeFamille", function( fam ) {
+               $.getJSON( "/SysProd/activite/listeFamillePIC", function( fam ) {
                Morris.Bar({
 		  element: 'chargePIC',
-		  axes: false,
+		  axes: true,
 		  grid: false,
 		  data: data,
-		  xkey: 'famille',
+		  xkey: 'annee',
 		  ykeys: fam,
 		  labels: fam,
 		  stacked: true

@@ -25,7 +25,7 @@ class PicController {
         
         def mesFamilles = Famille.list()
         
-        respond Pic.list(params), model:[picInstanceCount: Pic.count(), mesFamilles : mesFamilles, year:year, pic1:pic1, pic2:pic2, pic3:pic3, pic4:pic4]
+        [mesFamilles : mesFamilles, year:year, pic1:pic1, pic2:pic2, pic3:pic3, pic4:pic4]
     }
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def show(Pic picInstance) {

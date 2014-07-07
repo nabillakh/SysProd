@@ -150,14 +150,17 @@
                                                                                                           <g:each in="${pic1.picFamille}" status="p" var="pf">
                                                                                                             
                                                                                                           <g:if test="${pf.ordo == ordo2}">
-                                                                                                           ${pf.uniteActivite} 1
+                                                                                                           ${pf.uniteActivite}
                                                                                                           </g:if>
+                                                                                                            <g:else>
+                                                                                                              non
+                                                                                                            </g:else>
                                                                                                           </g:each>
                                                                                                           </td>
                                                                                                           <td class="span2">
                                                                                                           <g:each in="${pic2.picFamille}" status="p2" var="pf">
                                                                                                           <g:if test="${pf.ordo == ordo2}">
-                                                                                                           ${pf.uniteActivite} 2
+                                                                                                           ${pf.uniteActivite}
                                                                                                           </g:if>
                                                                                                           </g:each></td>
                                                                                                           <td class="span2">

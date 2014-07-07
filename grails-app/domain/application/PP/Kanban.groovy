@@ -12,6 +12,7 @@ class Kanban {
     
     
      def kanbanService
+     
     String nomKanban
     String description
     
