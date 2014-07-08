@@ -207,6 +207,13 @@
                                                             </g:each>
                                                           </article>
                                                           
+                                                         
+                                                          <g:each in="${picInstanceList}" var="ok">   
+                                                           annee :  ${ok.annee} </br>
+                                                              <g:each in="${ok}" var="ok2"> 
+                                                              ${ok2.key} : ${ok2.value} </br>
+                                                          </g:each>
+                                                          </g:each>
                                                           
                                                           
 							</div>                                                    

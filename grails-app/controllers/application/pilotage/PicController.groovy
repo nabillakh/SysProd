@@ -25,7 +25,12 @@ class PicController {
         
         def mesFamilles = Famille.list()
         
-        [mesFamilles : mesFamilles, year:year, pic1:pic1, pic2:pic2, pic3:pic3, pic4:pic4]
+        
+        
+        def picLists = picService.planPluriAnnuel(pic1, pic2, pic3, pic4)
+               
+        
+        [picInstanceList: picLists, mesFamilles : mesFamilles, year:year, pic1:pic1, pic2:pic2, pic3:pic3, pic4:pic4]
     }
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def show(Pic picInstance) {

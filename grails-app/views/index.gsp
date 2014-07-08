@@ -255,9 +255,6 @@
 				</div>
 
 <g:render template="/menues/mainright" />
-
-
-
  
 </sec:ifLoggedIn>
   

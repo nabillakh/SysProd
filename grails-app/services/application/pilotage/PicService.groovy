@@ -54,4 +54,54 @@ class PicService {
         return picFamListe
     }  
     
+    def planPluriAnnuel(Pic pic1, Pic pic2, Pic pic3, Pic pic4) {
+        println("dans service planpluri")
+        def pics = Pic.list()
+        // hypothese nbannee = nb pic
+        def familles = Famille.list()
+        
+        def picLists = []
+        familles.each {famille ->
+            def picList = new LinkedHashMap()
+            picList.put("famille",famille.nom.toString())
+            famille.ordo.each {ordo ->
+                def picList2 = new LinkedHashMap()
+                picList2.put("ordo",ordo.nom.toString())
+                def pf1 = retourPicFamille(pic1,ordo)
+                picList2.put(pic1.annee,pf1.getChargePlanifie()) 
+                     
+                picList << picList2
+                
+            }
+            picLists <<picList
+        }
+            println(picLists)
+        picLists = []
+        
+        pics.each {pic ->
+            def picList = new LinkedHashMap()
+            picList.put("annee",pic.annee.toString())
+            
+            pic.picFamille.each() { maPicFamille ->
+                 picList.put((maPicFamille.ordo.nom.toString()),(maPicFamille.getChargePlanifie()))
+            }
+             picLists << (picList)
+        }
+        return picLists
+    }
+    
+    def PicFamille retourPicFamille(Pic pic, Ordonnancement ordo) {
+        println("mes ordo " + pic.picFamille*.ordo.id)
+        def picfamille = pic.picFamille.find { it.ordo == ordo }   
+        if(!picfamille) {
+            picfamille = new PicFamille(pic : pic, ordo : ordo, uniteActivite : 10).save(failOnError: true, flush : true)
+            pic.addToPicFamille(picfamille)
+            pic.save()
+        }
+        println("retourPicFamille" + pic)
+        println("retourPicFamille" + ordo)
+        println("retourPicFamille" + picfamille)
+        return picfamille
+    }
+    
 }

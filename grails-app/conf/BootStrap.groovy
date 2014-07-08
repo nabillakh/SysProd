@@ -120,22 +120,26 @@ class BootStrap {
         def pics = Pic.list()
         pics.each() { pic -> 
         def mesFamilles = Ordonnancement.list()
-        println(mesFamilles)
         mesFamilles.each() {fam ->
-            def picFam = new PicFamille(pic : pic, ordo : fam, uniteActivite : 24).save()
+            def picFam = new PicFamille(pic : pic, ordo : fam, uniteActivite : 24).save(failOnError: true, flush : true)
+            pic.addToPicFamille(picFam)
+            picFam.save(failOnError: true, flush : true)
+        }
+        def picfamilles = PicFamille.list()
+        picfamilles.each() {picFam ->
             def mois = 0
-        while(mois++<12) {
-            def Float unite = picFam.uniteActivite / 12
-            def monPdp = new Pdp(picFamille : picFam , mois : mois, uniteActivite : mois)
+            while(mois++<12) {
+                def Float unite = 5+mois
+                def monPdp = new Pdp(picFamille : picFam , mois : mois, uniteActivite : unite)
             picFam.addToPdp(monPdp)
-                .save()
-            monPdp.save()
+                .save(failOnError: true, flush : true)
+            monPdp.save(failOnError: true, flush : true)
             
         }
-            pic.addToPicFamille(picFam)
-            picFam.save()
-        }
-        pic.save()
+        picFam.save(failOnError: true, flush : true)
+    }
+        pic.save(failOnError: true, flush : true)
+        
         }
         // event
         

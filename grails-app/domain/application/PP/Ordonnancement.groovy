@@ -10,7 +10,6 @@ class Ordonnancement {
     Float chargeStandard
     
     static constraints = {
-        famille nullable:true
         phases nullable : true
     }
     
