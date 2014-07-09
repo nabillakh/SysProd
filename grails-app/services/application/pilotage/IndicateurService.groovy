@@ -261,6 +261,85 @@ class IndicateurService {
     
     
     
+    def vad(Date dateDebut, Date dateFin) {
+        
+                Calendar calDeb = Calendar.getInstance();
+                Calendar calFin = Calendar.getInstance();
+                calDeb.setTime(dateDebut);
+                calFin.setTime(dateFin);
+                
+        
+                def delta = 0
+                def query2 = Phase.whereAny {
+                    valeurAjoutee == true
+                }
+                def fams = query2.list()
+                
+                fams.each() {fam ->
+                    def query = OF.whereAny {
+                        phase == fam
+                    }
+                def ofList = query.list() // cherche juste avec phase vad
+            
+                delta +=   chargePlanifieeMoisOF(dateDebut, dateFin, ofList)
+                
+                }
+                
+                return delta  
+    }
+    
+    
+    def chargePlanifieeMoisOF(Date dateDebut,Date dateFin, ArrayList ofList) {
+        
+        def maCharge = 0
+        Calendar calDeb = Calendar.getInstance();
+            Calendar calFin = Calendar.getInstance();
+            calDeb.setTime(dateDebut);
+            calFin.setTime(dateFin);
+        
+        
+           ofList.each() { of ->
+            Date debutEvent = of.dateDebutPlanifie
+            Date finEvent = of.dateFinPlanifie
+            
+            Calendar calDebutEvent = Calendar.getInstance();
+            Calendar calFinEvent = Calendar.getInstance();
+            calDebutEvent.setTime(debutEvent);
+            calFinEvent.setTime(finEvent);          
+            
+            Float dureeOf = nbJoursOFPeriode(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent, of) 
+            
+            
+            
+            if((calDebutEvent.compareTo(calFin)<0)) {
+                if((calFinEvent.compareTo(calDeb)>0)) {
+                 Float deltaJour = nbJoursOFPeriode(calDeb, calFin, calDebutEvent, calFinEvent, of) 
+                 
+                maCharge = (of.chargePlanifiee / dureeOf) * deltaJour
+                println("charge pour l'of " + of.phase.nom + " est de " + maCharge + " le kanban " + of.kanban.nomKanban)
+                }
+            }
+        }
+        
+        return maCharge
+                    
+    }
+    
+    
+    
+    def nbJoursOFPeriode(Calendar calDeb, Calendar calFin, Calendar calDebutEvent, Calendar calFinEvent, OF of) {
+        
+        if((calDebutEvent.compareTo(calDeb)>0)) { 
+            calDeb = calDebutEvent
+        }
+        if((calFinEvent.compareTo(calFin)<0)) { 
+            calFin = calFinEvent
+        }
+        
+        def delta = calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1
+        
+        return delta
+    }
     
     
 }

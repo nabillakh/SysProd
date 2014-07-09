@@ -238,7 +238,9 @@ class ActiviteController {
                 chargesList.put("mois",i)
                 def fams2 = fams
                 def dateDebut = imputationService.premierJourMois(2014, i)
+                
                 def dateFin = imputationService.dernierJourMois(2014, i)
+                
                 
                 def delta = indicateurService.capacite(dateDebut, dateFin) 
                 
@@ -264,5 +266,37 @@ class ActiviteController {
         [famInstanceList: famLists]
         render famLists as JSON
     }
+    
+    
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def vadMensuelle = {
+                
+        def famLists = []
+            for(Integer i = 1; i<13;i++) {
+                def chargesList = new LinkedHashMap()
+                chargesList.put("mois",i)
+                def dateDebut = imputationService.premierJourMois(2014, i)
+                def dateFin = imputationService.dernierJourMois(2014, i)
+                
+                def delta = indicateurService.capacite(dateDebut, dateFin) 
+                println(i + "capacite = " + delta)
+                def vad = indicateurService.vad(dateDebut, dateFin) 
+                println("vad = " + vad)
+                def maVad = (Float)(vad / delta)
+                println("ma vad = " + maVad)
+                def txVad = (Math.round(maVad * 1000) / 10 )
+            
+                chargesList.put("vadPlan" ,txVad)
+                
+        
+                famLists << (chargesList)
+      
+        }
+        
+        [famInstanceList: famLists]
+        render famLists as JSON
+    }
+    
     
 }

@@ -90,8 +90,8 @@
               </article><article>                    
             <div class="span6"> 
               <center><h5> Evolution taux de VA </h5></center>
-              <div id="chargeCapa" style="height:350px; margin:0;"></div>
-									        		
+              	<div id="vadMensuelle" style="height:350px; margin:0;"></div>
+								        		
             
             </div>   
             <div class="span6"> 
@@ -148,4 +148,5 @@
     
     <!-- creer par NL pour gerer tous les graphiques -->
     <script src="${request.contextPath}/js/include/indicateur.js"></script>
+    <script src="${request.contextPath}/js/include/indicateur2.js"></script>
     

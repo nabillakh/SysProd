@@ -16,7 +16,7 @@ class Kanban {
     String nomKanban
     String description
     
-    Date dateLancement= new Date()
+    Date dateLancement
     Date dateFinPlanifie
     
     Float chargePlanifiee

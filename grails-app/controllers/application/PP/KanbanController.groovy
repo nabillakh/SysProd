@@ -36,7 +36,12 @@ class KanbanController {
     
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def create() {
-        respond new Kanban(params)
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
+        def maDate = new Date()
+        def dateDeb  = sdf.format(maDate)
+        
+        respond new Kanban(params) , model : [dateDeb : dateDeb]
     }
 
     @Transactional
@@ -71,9 +76,10 @@ class KanbanController {
         def nomKanban = params.nomKanban
         println("date dans input ")
         println(params.dateLivraison)
+        println(params.dateLancement)
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
         Date dateLivraison = sdf.parse(params.dateLivraison)
-        
+        Date dateLancement = sdf.parse(params.dateLancement)
         
         def description = params.description
         def famille = params.famille
@@ -87,6 +93,7 @@ class KanbanController {
             monKanban = new Kanban()        
             monKanban.nomKanban = nomKanban
             monKanban.dateFinPlanifie = dateLivraison
+            monKanban.dateLancement = dateLancement
             monKanban.description = description
             monKanban.chefProjet = Effectif.get(Integer.parseInt(chefProjet))
             monKanban.famille = Famille.get(Integer.parseInt(famille))
@@ -100,6 +107,7 @@ class KanbanController {
             println(monKanban.nomKanban)  
             monKanban.nomKanban = nomKanban
             monKanban.dateFinPlanifie = dateLivraison
+            monKanban.dateLancement = dateLancement
             monKanban.description = description
             monKanban.chefProjet = Effectif.get(Integer.parseInt(chefProjet))
             monKanban.famille = Famille.get(Integer.parseInt(famille))

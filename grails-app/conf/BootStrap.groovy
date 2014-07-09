@@ -76,8 +76,9 @@ class BootStrap {
         def monOrdo3 = new Ordonnancement(nom : "Absences", chargeStandard : 5, famille : maFamille3).save(failOnError: true, flush : true) 
         def monOrdo4 = new Ordonnancement(nom : "Management", chargeStandard : 50, famille : maFamille4).save(failOnError: true, flush : true) 
         
+        def date = new Date()
         
-        def monKanban = new Kanban( nomKanban : "developpement fonction 1" , description : "c'est un kanban", famille : maFamille)
+        def monKanban = new Kanban( nomKanban : "developpement fonction 1" , description : "c'est un kanban", dateLancement : date, famille : maFamille)
         
         
         ["Analyse":1, "Algorithme":2, "Developpement":3, "Test":4, "Mise en prod":5].each {nomA,numA -> 

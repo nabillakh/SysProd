@@ -194,7 +194,7 @@ class ImputationService {
         
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
-        calendar.set(Calendar.MONTH, mois);
+        calendar.set(Calendar.MONTH, mois-1);
         calendar.set(Calendar.YEAR, annee);
         // permet d'avoir le premier jour de la semaine de la date en cours
         Date premierJour = calendar.getTime();
@@ -218,7 +218,7 @@ class ImputationService {
         
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
-        calendar.set(Calendar.MONTH, mois +1);
+        calendar.set(Calendar.MONTH, mois );
         calendar.set(Calendar.YEAR, annee);
         
         calendar.add(Calendar.DATE, -1)
