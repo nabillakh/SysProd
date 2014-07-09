@@ -201,36 +201,15 @@ class IndicateurService {
             calDebutEvent.setTime(debutEvent);
             calFinEvent.setTime(finEvent);          
             
-            Float dureeKanban = nbJoursKanbanPeriode(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent, kanban) 
-            
-            
-            
-            if((calDebutEvent.compareTo(calFin)<0)) {
-                if((calFinEvent.compareTo(calDeb)>0)) {
-                 Float deltaJour = nbJoursKanbanPeriode(calDeb, calFin, calDebutEvent, calFinEvent, kanban) 
-                 
-                maCharge = (kanban.chargePlanifiee / dureeKanban) * deltaJour
-                }
-            }
+            Float dureeKanban = nbJoursEntrePeriodes(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent) 
+            Float deltaJour = nbJoursEntrePeriodes(calDeb, calFin, calDebutEvent, calFinEvent) 
+            maCharge += (kanban.chargePlanifiee / dureeKanban) * deltaJour
         }
         
         return maCharge
                     
     }
     
-    def nbJoursKanbanPeriode(Calendar calDeb, Calendar calFin, Calendar calDebutEvent, Calendar calFinEvent, Kanban kanban) {
-        
-        if((calDebutEvent.compareTo(calDeb)>0)) { 
-            calDeb = calDebutEvent
-        }
-        if((calFinEvent.compareTo(calFin)<0)) { 
-            calFin = calFinEvent
-        }
-        
-        def delta = calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1
-        
-        return delta
-    }
     
     def capacite(Date dateDebut, Date dateFin) {
                 def effectifs = Effectif.list()
@@ -261,14 +240,7 @@ class IndicateurService {
     
     
     
-    def vad(Date dateDebut, Date dateFin) {
-        
-                Calendar calDeb = Calendar.getInstance();
-                Calendar calFin = Calendar.getInstance();
-                calDeb.setTime(dateDebut);
-                calFin.setTime(dateFin);
-                
-        
+    def vad(Date dateDebut, Date dateFin) {        
                 def delta = 0
                 def query2 = Phase.whereAny {
                     valeurAjoutee == true
@@ -307,18 +279,11 @@ class IndicateurService {
             calDebutEvent.setTime(debutEvent);
             calFinEvent.setTime(finEvent);          
             
-            Float dureeOf = nbJoursOFPeriode(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent, of) 
-            
-            
-            
-            if((calDebutEvent.compareTo(calFin)<0)) {
-                if((calFinEvent.compareTo(calDeb)>0)) {
-                 Float deltaJour = nbJoursOFPeriode(calDeb, calFin, calDebutEvent, calFinEvent, of) 
-                 
-                maCharge = (of.chargePlanifiee / dureeOf) * deltaJour
-                println("charge pour l'of " + of.phase.nom + " est de " + maCharge + " le kanban " + of.kanban.nomKanban)
-                }
-            }
+            Float dureeOf = nbJoursEntrePeriodes(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent) 
+                 Float deltaJour = nbJoursEntrePeriodes(calDeb, calFin, calDebutEvent, calFinEvent) 
+                maCharge += (of.chargePlanifiee / dureeOf) * deltaJour
+               
+                    
         }
         
         return maCharge
@@ -327,7 +292,7 @@ class IndicateurService {
     
     
     
-    def nbJoursOFPeriode(Calendar calDeb, Calendar calFin, Calendar calDebutEvent, Calendar calFinEvent, OF of) {
+    def nbJoursEntrePeriodes(Calendar calDeb, Calendar calFin, Calendar calDebutEvent, Calendar calFinEvent) {
         
         if((calDebutEvent.compareTo(calDeb)>0)) { 
             calDeb = calDebutEvent
@@ -337,7 +302,9 @@ class IndicateurService {
         }
         
         def delta = calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1
-        
+        if(delta<0) {
+            delta = 0
+        }
         return delta
     }
     

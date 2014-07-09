@@ -180,11 +180,9 @@ class KanbanService {
     // permet de préordonnancer les of et de les étaler dans le temps
     void ordonnancementOF(Kanban kanban) {
         
-            def ofs = OF.findAll("from OF as b where b.kanban=?", [kanban])
+        def ofs = OF.findAll("from OF as b where b.kanban=?", [kanban])
         Date dateFin = kanban.getDateFinPlanifie()
-            println(dateFin)
         Date dateDeb = kanban.getDateLancement()
-            println(dateDeb)
         
         def delta = (dateFin.getTime() - dateDeb.getTime())/(1000*60*60*24)
             println(delta)
@@ -197,15 +195,16 @@ class KanbanService {
             println(charge)
         
         ofs.each() { of ->
-            d += ((of.chargePlanifiee * delta)/charge)
-            
-            def jours = Math.round(d)
             
             DateTime maDate = new DateTime(dateDeb)
+            def dateDebut = maDate.plusDays((int)Math.round(d))
+            d += ((of.chargePlanifiee * delta)/charge)   
+            DateTime maDate2 = new DateTime(dateDeb)         
+            def jours = Math.round(d)            
+            maDate2 = maDate2.plusDays((int)jours)
             
-            maDate = maDate.plusDays((int)jours)
-            
-            of.setDateFinPlanifie(maDate.toDate())
+            of.setDateDebutPlanifie(dateDebut.toDate())
+            of.setDateFinPlanifie(maDate2.toDate())
             of.save()
         }
         

@@ -33,7 +33,7 @@ class OF  implements Comparable {
     }
     
     
-    Date dateDebutPlanifie = new Date()
+    Date dateDebutPlanifie
     Date dateFinPlanifie
     
     static hasMany = [affectes : OFEffectif] 
@@ -43,6 +43,7 @@ class OF  implements Comparable {
         chargeImputee nullable : true
         affectes nullable : true
         dateFinPlanifie nullable : true
+        dateDebutPlanifie nullable : true
         ordre nullable : true
     }
     
