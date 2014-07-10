@@ -126,7 +126,21 @@ class ImputationController {
         Date premierJour = imputationService.premierJour(annee, semaine)
                
         
-        [kanbanInstanceList : kanbanInstanceList, semaine : semaine, annee : annee]
+        Date dernierJour = imputationService.dernierJour(annee, semaine)
+        
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(premierJour);
+        cal2.setTime(dernierJour);
+        // println("equals : " + (cal1.compareTo(cal2) > 0));
+        
+        // mettre imputation pour la semaine
+        def mesImputations = imputationService.monImputationEntreDates(premierJour, dernierJour)
+        def lignes = imputationService.monImputationParJour(premierJour, mesImputations)
+                
+        
+        
+        [kanbanInstanceList : kanbanInstanceList, semaine : semaine, annee : annee, lignes : lignes]
         
     }
     
