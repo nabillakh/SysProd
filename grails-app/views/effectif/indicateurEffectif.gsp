@@ -62,11 +62,55 @@
                                                 </section>
       <section>
       <div class="row-fluid">
+        <g:hiddenField name="monId" id="monId" value="${effectifInstance.id}"/>
+        <article>
+            <div class="span6">
+              <center><h5> Adéquation charge capacité </h5></center>
+              <div id="chargeCapaEffectif" style="height:350px; margin:0;"></div>
+									        		
+            
+            </div>
+            <div class="span6"> 
+              <center><h5> Delta charge capacité </h5></center>
+              <div id="deltaChargeCapa" class="chart" style="height:350px; margin:0;"></div>
+                                                      <g:hiddenField name="kanban" id="monKanban" value="ok"/>
+                                                      <g:hiddenField name="chargePlanifiee" id="chargePlanifiee" value="40"/>
+            </div>
+                                  <!-- new widget -->
+              </article><article>                    
+            <div class="span6"> 
+              <center><h5> Evolution taux de VA </h5></center>
+              	<div id="vadMensuelle" style="height:350px; margin:0;"></div>
+								        		
+            
+            </div>   
+            <div class="span6"> 
+              <center><h5> Taux de VA par équipe </h5></center><div id="chargeCapa2" style="height:350px; margin:0;"></div>
+									        		
+            
+            </div>     
+                   </article><article> 
+            <div class="span6"> 
+              <center><h5> Avancement de l'activité</h5></center><div id="avancementKanban" class="chart" style="height:350px; margin:0;"></div>
+									  
+									        		
+            
+            </div>             
+                     
+      
+            <div class="span6"> 
+              <center><h5>Avancement par équipe</h5></center><div id="chargePIC" class="chart" style="height:350px; margin:0;"></div>
+									</div>
+									
+									<!-- end widget -->
+									
+								</article>
         <article class="span12">
         
         <div id="temp">
           
       </div>
+          
         
 									    <!-- a modifier-->
 <div class="jarviswidget" id="contenu2" data-widget-collapsed="false">
@@ -130,4 +174,12 @@
   
 
 
-    <script src="${request.contextPath}/js/include/indicateur.js"></script> 
+ <script src="${request.contextPath}/js/include/amchart/amcharts.js"></script>
+    <script src="${request.contextPath}/js/include/amchart/serial.js"></script>
+    <script src="${request.contextPath}/js/include/amcharts/amcharts/themes/black.js"></script>
+    
+    
+    <!-- creer par NL pour gerer tous les graphiques -->
+    <script src="${request.contextPath}/js/include/indicateur.js"></script>
+    <script src="${request.contextPath}/js/include/indicateurEffectif.js"></script>
+    <script src="${request.contextPath}/js/include/indicateur2.js"></script>

@@ -5,7 +5,37 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
+    <style>.news-list {
+    padding: 0;
+}
+.news-list li {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: #fff;
+    margin: 0 10px 0 0;
+}
+.news-list.interested li {
+    background: #74ce9c;
+}
+.source-news h3 {
+    font-size: 13px;
+    margin: 0;
+}
+.interested-in {
+    background: #e9f5f1;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    padding: 13px 18px;
+    margin: 18px 0 0 0;
+}
+.interested-in h3 {
+    color: #74ce9c;
+    font-size: 13px;
+    margin: 0;
+}</style>
     <title>SysProd</title>
     <meta name="description" content="">
     <meta name="author" content="">
@@ -106,6 +136,9 @@
 
 					<div class="fluid-container">
                                             
+                                
+  
+  </div><!--/container-fluid-->
 												
 				<g:link  action="index" controller="kanban" ><i class="icon-star"></i>  Liste des kanbans </g:link></br>
                                 <g:link  action="show" controller="kanban" id="${kanbanInstance.id}" ><i class="icon-star"></i>  Afficher ce kanban </g:link>
@@ -126,7 +159,7 @@
 						<section id="widget-grid" class="">
 							<div class="row-fluid">
 
-								<article class="span12">
+								<article>
 									<!-- new widget -->
 									<div class="jarviswidget" id="widget-id-0">
 									    <header>
@@ -152,7 +185,7 @@
                                                                                       </div>
                                                                                     </div>                                                                                 
 
-                                                                                    <div class="control-group">
+                                                                                    <div class="control-group hidden">
                                                                                       <label for="affectes" class="control-label">
                                                                                         <g:message code="OF.affectes.label" default="Affectes" />
 
@@ -160,6 +193,29 @@
                                                                                         <g:select id="multiSelect" multiple="multiple"  id="affectes${i}"  name="affectes" from="${application.RH.Effectif.list()}" optionKey="id" required="" value="${mesofInstance?.affectes*.id}" class="span12 with-search"/>
                                                                                        </div>
                                                                                     </div>
+                                                                                    
+  <div class="control-group">
+    <ul id="categories-source${i}" class='news-list categories-sortable'>
+      Ressources affectables : 
+      <g:each in="${effectifs}" status="k" var="eff">    
+        
+      <g:if test="${mesofInstance.getEffectifsAffectes().find {it.id == eff.id}}">  
+        
+      </g:if>     
+        <g:else>
+      <li class="btn" id="${eff.id}">${eff.nom} </br> ${eff.emploi}</li>
+        </g:else>
+      </g:each>
+    </ul>     
+</div>
+<div class="control-group">
+    <ul id="categories-chosen${i}" class='news-list interested categories-sortable'>
+     Ressources affectées :   
+      <g:each in="${mesofInstance.getEffectifsAffectes()}" status="k" var="eff">  
+      <li class="btn" id="${eff.id}">${eff.nom} </br>  ${eff.emploi}</li>
+      </g:each>     
+    </ul>
+</div>
                                                                                     
                                                                                     <div class="control-group">
 
@@ -221,7 +277,14 @@
              var dateFinPlanifie = $('#dateFinPlanifie'+monId).val();
              var dateDebutPlanifie = $('#dateDebutPlanifie'+monId).val();
              var affectes = $('#affectes'+monId).val();
-             <g:remoteFunction controller="kanban" action="majOF"  params="\'monId=\' + id+ '&charge=\' + charge+ '&dateFinPlanifie=\' + dateFinPlanifie+ '&dateDebutPlanifie=\' + dateDebutPlanifie+ '&affectes=\' + affectes"/>;
+             var items = [];
+             $('#categories-chosen'+monId).children().each(function() {
+               var item = {eff : $(this).attr('id')};
+               items.push(item);
+             });
+             var jsonData = JSON.stringify(items);             
+             
+             <g:remoteFunction controller="kanban" action="majOF"  params="\'monId=\' + id+ '&charge=\' + charge+ '&dateFinPlanifie=\' + dateFinPlanifie+ '&dateDebutPlanifie=\' + dateDebutPlanifie+ '&affectes=\' + affectes+ '&jsonData=\' + jsonData"/>;
                 toastr.info('Activité mise à jour !');   }
            function pollMessages() {
              obtenirMessage();
@@ -277,6 +340,30 @@
     <script src="${request.contextPath}/js/include/amchart/amcharts.js"></script>
 	<script src="${request.contextPath}/js/include/amchart/amchart-draw1.js"></script>
 
+        
+        
+	<script type="text/javascript">
+        
+                                            $(function () {
+    var oldList, newList, item;
+    $(".categories-sortable").sortable({
+        connectWith: $('.categories-sortable'),
+        start: function (event, ui) {
+            item = ui.item;
+            newList = oldList = ui.item.parent();
+        },
+        stop: function (event, ui) {
+            console.log("Moved " + item.text() + " from " + oldList.attr('id') + " to " + newList.attr('id'));
+        },
+        change: function (event, ui) {
+            if (ui.sender) {
+                newList = ui.placeholder.parent();
+            }
+        },
+    })
+        .disableSelection();
+
+});</script>
 	<script type="text/javascript">
 		var ismobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));	
 	    if(!ismobile){
@@ -296,7 +383,9 @@
 
 	    	document.write('<script src="${request.contextPath}/js/include/responsive-tables.min.js"><\/script>');
 	    }
+            
 	</script>
+        
 
 	<!-- REQUIRED: iButton -->
     <script src="${request.contextPath}/js/include/jquery.ibutton.min.js"></script>

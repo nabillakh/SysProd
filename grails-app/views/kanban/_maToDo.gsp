@@ -23,8 +23,8 @@
                                                 
                                                        <g:each in="${maToDo}" status="i" var="monOF">
 		                <li>
-		                    <strong>${monOF.kanban.nomKanban} : </br> ${monOF.phase.nom}</strong><strong class="pull-right">${monOF.getChargeRealisee() / monOF.chargePlanifiee *100}%</strong>
-		                    <div class="progress progress-danger slim"><div class="bar" data-percentage=${monOF.getChargeRealisee() / monOF.chargePlanifiee *100}%></div></div>
+		                    <strong>${monOF.kanban.nomKanban} : </br> ${monOF.phase.nom}</strong><strong class="pull-right">${monOF.getChargeRealisee() / monOF.chargePlanifiee}%</strong>
+		                    <div class="progress progress-danger slim"><div class="bar" data-percentage=${monOF.getChargeRealisee() / monOF.chargePlanifiee}%></div></div>
 		                </li>
 		                
                                                        </g:each>

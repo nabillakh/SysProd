@@ -12,6 +12,7 @@ class Effectif {
         String mailEffectif
         Equipe equipe    
         String username
+        String emploi
 	String password
        	boolean enabled = true
 	boolean accountExpired =false

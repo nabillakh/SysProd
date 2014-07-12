@@ -11,6 +11,8 @@ import application.communication.*
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import org.codehaus.groovy.grails.web.json.JSONObject
+import groovy.json.JsonSlurper
+
 
 @Transactional(readOnly = false)
 class KanbanController {
@@ -143,9 +145,9 @@ class KanbanController {
         // appeller la fonction qui donne le dernier mail pour chaque conversation
         mesof.sort{a,b-> a.phase.ordre<=>b.phase.ordre}
           
+        def effectifs = Effectif.list()  
           
-          
-        [kanbanInstance:kanbanInstance,mesof:mesof,dateLIst:dateLIst]
+        [kanbanInstance:kanbanInstance,mesof:mesof,dateLIst:dateLIst, effectifs : effectifs]
     }
     
     // permet d'editer les OF d'un kanban
@@ -154,7 +156,6 @@ class KanbanController {
         // rapatriement et conversion des variables
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
         Date dateDebutPlanifie = sdf.parse(params.dateDebutPlanifie)
-        
         Date dateFinPlanifie = sdf.parse(params.dateFinPlanifie)
         def id = Long.parseLong(params.monId)
         
@@ -162,11 +163,17 @@ class KanbanController {
        def affectes = []
         def affect = params.affectes
         
-        List<String> items = Arrays.asList(affect.split("\\s*,\\s*"));
-        items.each() {aff->
-            def affs = Effectif.findById(Long.parseLong(aff))
-            affectes.add(affs)        
+        
+        def monJson = params.jsonData
+        def slurper = new JsonSlurper()
+        def result = slurper.parseText(monJson)
+            
+        result.each { data -> 
+            println("l'id ajoute est donc : " + data.eff)
+            def affs = Effectif.findById(Long.parseLong(data.eff))
+            affectes.add(affs)
         }
+        println(affectes)
         
         // recherche of
         def ancienOf = OF.findById(id) 
@@ -184,9 +191,11 @@ class KanbanController {
         // permet d'ajouter des effectifs sur l'of et envoie un message automatiquement
         affectes.each() {nvEff ->
             
-            if(ancienOf.affectes.find {it.effectif == nvEff.id}) {
+            if(ancienOf.affectes.find {it.effectif == nvEff}) {
+                println("ok")
             }   
             else {
+                println("no")
                 def nvOfEff = new OFEffectif(effectif : nvEff, of : ancienOf)
                 nvOfEff.save()
                 ancienOf.affectes.add(nvOfEff)
@@ -196,10 +205,21 @@ class KanbanController {
         
         // permet de supprimer des effectifs sur l'of et envoie un message automatiquement
         ancienOf.affectes.each() {ancienEff ->
-            if(affectes.find {it == ancienEff.effectif}) {
+            println("effectif dans ancienOf "+ancienEff.effectif)
+            
+            def ok = false
+            affectes.each() {afff ->
+                if(afff == ancienEff.effectif) {
+                    ok = true
+                }
+            }
+            if(ok) {
+                println("ok2")
             }   
             else {
-                ancienOf.removeFromAffectes(ancienEff)
+                println("no2")
+                ancienOf.affectes.remove(ancienEff)
+                ancienEff.delete()
                 messageService.posterMessageKanban("Vous avez été déchargé d'une activité" , ancienOf.kanban.id)
             }
         }
@@ -207,6 +227,13 @@ class KanbanController {
         
         
         ancienOf.save(flush:true)
+        ancienOf.affectes.each() {aff ->
+            aff.setPourcentageTache(1/ancienOf.affectes.size())
+            aff.save()
+        }
+        
+        println("les off eff sont : " + OFEffectif.list())
+        
         
     }
     

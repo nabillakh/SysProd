@@ -45,8 +45,8 @@ class BootStrap {
         def adminRole = new Droit(authority: 'ROLE_ADMIN').save(flush: true)
       def userRole = new Droit(authority: 'ROLE_USER').save(flush: true)
 
-      def testUser = new Effectif(username: 'test', entreprise : entreprise, password: 'test', nom : 'Lakhmissi', prenom : 'Nabil', equipe : monEquipe)
-      def testUser2 = new Effectif(username: 'test2', entreprise : entreprise, password: 'test2', nom : 'Yemmi', prenom : 'Youcef', equipe : monEquipe)
+      def testUser = new Effectif(emploi : 'developpeur', username: 'test', entreprise : entreprise, password: 'test', nom : 'Lakhmissi', prenom : 'Nabil', equipe : monEquipe)
+      def testUser2 = new Effectif(emploi : 'developpeur js', username: 'test2', entreprise : entreprise, password: 'test2', nom : 'Yemmi', prenom : 'Youcef', equipe : monEquipe)
       
         maCompetence.addToEffectifs(testUser)
         maCompetence.addToEffectifs(testUser2)

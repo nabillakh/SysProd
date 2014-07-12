@@ -17,7 +17,16 @@ class OF  implements Comparable {
     
     Long ordre
     
-    static transients = ['chargeRealisee','chargeAgenda', 'chargeRestantAPlanifier', 'chargeRestantARealiser']
+    static transients = ['effectifsAffectes' ,'chargeRealisee','chargeAgenda', 'chargeRestantAPlanifier', 'chargeRestantARealiser']
+    
+    public Effectif[] getEffectifsAffectes() {
+        def mesEffectifs = new ArrayList<Effectif>()
+        affectes.each() {aff -> 
+            mesEffectifs.add(aff.effectif)
+        }
+        
+        return mesEffectifs
+    }
     
     public Float getChargeRealisee() {
         kanbanService.chargeOFRealise(this)
