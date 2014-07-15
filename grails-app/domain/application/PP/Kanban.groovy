@@ -28,6 +28,7 @@ class Kanban {
     
     Client client
     
+    boolean fini
     
     SortedSet of
     static hasMany = [compteRendus : Message, of:OF]
@@ -63,6 +64,7 @@ class Kanban {
         of nullable:true
         chefProjet nullable : true
         client nullable : true
+        fini nullable : true
     }
     
    

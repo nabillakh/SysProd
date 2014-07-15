@@ -209,7 +209,7 @@
                                                                         }
                                                                 function maj() {
                                                                   obtenirMessage();
-                                                                  setTimeout('pollMessages()', 25000);
+                                                                  setTimeout('pollMessages()', 125000);
                                                                 }
                                                                 maj();
                                                                 $(document).ready(function() {

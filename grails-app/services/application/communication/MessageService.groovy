@@ -15,6 +15,15 @@ class MessageService {
         status.auteur = lookupCurrentPerson()
         status.save()
     }
+    void posterMessageCommentaire(String message, Long monId) {
+        def status = Message.get(monId)
+        
+        def com = new Commentaire(message : status, texte : message)
+        com.auteur = lookupCurrentPerson()
+        status.addToCommentaires(com)
+        com.save()
+        status.save()
+    }
     
     
     void posterMessageKanban(String message, Long kanban) {

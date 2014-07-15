@@ -45,6 +45,8 @@ class OF  implements Comparable {
     Date dateDebutPlanifie
     Date dateFinPlanifie
     
+    boolean fini
+    
     static hasMany = [affectes : OFEffectif] 
     
     static constraints = {
@@ -54,6 +56,7 @@ class OF  implements Comparable {
         dateFinPlanifie nullable : true
         dateDebutPlanifie nullable : true
         ordre nullable : true
+        fini nullable : true
     }
     
     int compareTo(obj) {

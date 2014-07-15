@@ -158,7 +158,7 @@ class KanbanService {
             def ofs = OF.findAll("from OF as b where b.kanban=?", [monKanban])
             if(!ofs)  {
                 montrerPhasesInitiales(monKanban).each() { maPhase ->
-                    def of = new OF(phase : maPhase, kanban : monKanban, ordre : maPhase.ordre)
+                    def of = new OF(phase : maPhase, kanban : monKanban, ordre : maPhase.ordre, fini : false)
                     chargeInitialeOF(of)
                     
                     if(maPhase.ordre == 1) {
@@ -265,7 +265,7 @@ class KanbanService {
         listeCharge.each() { monImputation ->
             // test si l'imput est déclarée comme realisee
             if(monImputation.realise) {
-                charge += monImputation.eventEffectif.event.durationMinutes /60
+                charge += monImputation.eventEffectif.event.durationMinutes /60 / 8
             }
         }
         return charge
@@ -312,7 +312,7 @@ class KanbanService {
         listeCharge = Imputation.findAll("from Imputation as b where b.of=?", [of])
         def charge = 0
         listeCharge.each() { monImputation ->
-            charge += monImputation.eventEffectif.event.durationMinutes / 60
+            charge += monImputation.eventEffectif.event.durationMinutes / 60 / 8
         }
         return charge
     }   
@@ -372,8 +372,4 @@ class KanbanService {
             return null
         }
     }
-    
-    
-    
-    
 }

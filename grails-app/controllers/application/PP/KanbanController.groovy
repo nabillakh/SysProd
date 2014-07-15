@@ -199,7 +199,7 @@ class KanbanController {
                 def nvOfEff = new OFEffectif(effectif : nvEff, of : ancienOf)
                 nvOfEff.save()
                 ancienOf.affectes.add(nvOfEff)
-                messageService.posterMessageKanban("Vous êtes chargé d'une nouvelle activité" , ancienOf.kanban.id)
+                messageService.posterMessageKanban("Vous êtes chargé d'une nouvelle activité : " + ancienOf.phase.nom + " sur le projet : " + ancienOf.kanban.nomKanban , ancienOf.kanban.id)
             }
         }
         
@@ -231,8 +231,6 @@ class KanbanController {
             aff.setPourcentageTache(1/ancienOf.affectes.size())
             aff.save()
         }
-        
-        println("les off eff sont : " + OFEffectif.list())
         
         
     }

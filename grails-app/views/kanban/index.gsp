@@ -135,6 +135,7 @@
 															<th>Phase du projet</th>
 															<th>Date de fin planifiée</th>
 															<th>Charge associée</th>
+															<th>En cours ?</th>
 														</tr>
 													</thead>
 													<tbody class="responsive"><g:each in="${kanbanInstanceList}" status="i" var="kanbanInstance">
@@ -167,6 +168,7 @@
                                                                                                           <td>${kanbanInstance.phaseActuelle?.nom}</td>
                                                                                                           <td><g:formatDate date="${kanbanInstance.dateFinPlanifie}" /></td>
                                                                                                           <td>${fieldValue(bean: kanbanInstance, field: "chargePlanifiee")}</td>
+                                                                                                          <td>${fieldValue(bean: kanbanInstance, field: "fini")}</td>
                                                                                                           </tr>
                                                                                                           </g:each>
 													</tbody>

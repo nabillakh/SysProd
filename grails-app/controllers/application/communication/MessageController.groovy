@@ -114,6 +114,17 @@ class MessageController {
     }
     
     
+    
+    def posterMessageCommentaire() {
+        def monId = Long.parseLong(params.monId)
+        println("l'id est " + monId)
+        def com = params.message
+        println("dans commentaire " + com + " : " + monId)
+        messageService.posterMessageCommentaire(com,monId)
+        render "<script>obtenirMessage()</script>"
+    }
+    
+    
     def obtenirMessage() {
         
         def mesMessages

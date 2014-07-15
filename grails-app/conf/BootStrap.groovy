@@ -78,7 +78,10 @@ class BootStrap {
         
         def date = new Date()
         
-        def monKanban = new Kanban( nomKanban : "developpement fonction 1" , description : "c'est un kanban", dateLancement : date, famille : maFamille)
+        def now2 = new DateTime()
+        def tomorrow2 = now2.plusDays(19)
+        Date fin = tomorrow2.toDate()
+        def monKanban = new Kanban(chefProjet : testUser , chargePlanifiee : 20 , fini: false, nomKanban : "developpement fonction 1" , description : "c'est un kanban", dateLancement : date, famille : maFamille, dateFinPlanifie : fin)
         
         
         ["Analyse":1, "Algorithme":2, "Developpement":3, "Test":4, "Mise en prod":5].each {nomA,numA -> 
@@ -108,7 +111,12 @@ class BootStrap {
         monOrdo.save(failOnError: true)
         monOrdo3.save(failOnError: true)
         monOrdo2.save(failOnError: true)
+        // monKanban.save()
+        
+        
+        // kanbanService.requeteCreation(monKanban) 
         monKanban.save(failOnError: true, flush : true)
+        
         
         def pic1 = new Pic(annee : 2013, archive : false, version : 0).save(failOnError: true, flush : true)
         

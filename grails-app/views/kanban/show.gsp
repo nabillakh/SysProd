@@ -23,10 +23,6 @@
       
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">
-                                                    <article class="span3">
-    <img src="${request.contextPath}/img/start-icons/coucou.jpg" alt="" style="width: 160px; height: 160px;">
-    
-                                                    </article>
                                                     <article class="span9">
                                                       
                                                       <center>
@@ -67,6 +63,14 @@
       
     </div>
                                                       </center>
+                                                    </article>
+                                                    <article class="span3">
+                                                      <div class="easypie">
+								<div class="percentage" data-percent=${kanbanInstance.getAvancementRealise()}>
+									<span>${kanbanInstance.getAvancementRealise()}</span>%
+								</div>
+							</div>
+    
                                                     </article>
                                                     
                                                     
@@ -170,10 +174,10 @@
                                                                                        </g:else></center></td>
                                                                                 </g:each></tr>
                                                                                 <tr> <td>Actif?</td><g:each in="${ofs}" status="i" var="ofInstance">
-                                                                                 <td>
-													<div class="switch switch-small" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
-													    <input type="checkbox" checked /> 
-													</div></td>
+                                                                                 <td><center>
+													<div class="switch switch-small" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>" onclick="valider()" >
+                                                                                                          <input id="fini" onclick="valider()" type="checkbox" checked /> 
+													</div></center></td>
                                                                                 </g:each>
                                                                                 </tr>
                                                                                 
@@ -191,20 +195,7 @@
 									</div></article>
                   
                                                    
-                         
-
-                                                    <article class="span3">
-                                                                                   
-                                                        </br>
-                                                        </br>
-                                                        </br>
-                                                      <!-- easy pie chart -->
-							<div class="easypie">
-								<div class="percentage" data-percent=${kanbanInstance.getAvancementRealise()}>
-									<span>${kanbanInstance.getAvancementRealise()}</span>%
-								</div>
-							</div>
-                                                    </article>   
+                           
   
   
         </div>
@@ -221,7 +212,11 @@
 									</div>
 
 							</div>
- 
+ <script>
+           function valider() {
+             alert("ok");
+           }
+         </script>
                                                                       
                                                           
                                                         

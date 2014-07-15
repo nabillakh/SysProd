@@ -183,39 +183,7 @@
                                                                                       <div class="controls"  size="16" >
                                                                                         <g:field name="chargePlanifiee"  id="chargeplanifiee${i}" value="${fieldValue(bean: mesofInstance, field: 'chargePlanifiee')}" />
                                                                                       </div>
-                                                                                    </div>                                                                                 
-
-                                                                                    <div class="control-group hidden">
-                                                                                      <label for="affectes" class="control-label">
-                                                                                        <g:message code="OF.affectes.label" default="Affectes" />
-
-                                                                                      </label>  <div class="controls"  size="16" >
-                                                                                        <g:select id="multiSelect" multiple="multiple"  id="affectes${i}"  name="affectes" from="${application.RH.Effectif.list()}" optionKey="id" required="" value="${mesofInstance?.affectes*.id}" class="span12 with-search"/>
-                                                                                       </div>
-                                                                                    </div>
-                                                                                    
-  <div class="control-group">
-    <ul id="categories-source${i}" class='news-list categories-sortable'>
-      Ressources affectables : 
-      <g:each in="${effectifs}" status="k" var="eff">    
-        
-      <g:if test="${mesofInstance.getEffectifsAffectes().find {it.id == eff.id}}">  
-        
-      </g:if>     
-        <g:else>
-      <li class="btn" id="${eff.id}">${eff.nom} </br> ${eff.emploi}</li>
-        </g:else>
-      </g:each>
-    </ul>     
-</div>
-<div class="control-group">
-    <ul id="categories-chosen${i}" class='news-list interested categories-sortable'>
-     Ressources affectées :   
-      <g:each in="${mesofInstance.getEffectifsAffectes()}" status="k" var="eff">  
-      <li class="btn" id="${eff.id}">${eff.nom} </br>  ${eff.emploi}</li>
-      </g:each>     
-    </ul>
-</div>
+                                                                                    </div>   
                                                                                     
                                                                                     <div class="control-group">
 
@@ -248,7 +216,31 @@
                                                                                           </div>
                                                                                         </div>
                                                                                       </div>
-                                                                                    </div>
+                                                                                    </div>                                                                              
+
+                                                                                    
+  <div class="control-group">
+    <ul id="categories-source${i}" class='news-list categories-sortable'>
+      Ressources affectables : 
+      <g:each in="${effectifs}" status="k" var="eff">    
+        
+      <g:if test="${mesofInstance.getEffectifsAffectes().find {it.id == eff.id}}">  
+        
+      </g:if>     
+        <g:else>
+      <li class="btn" id="${eff.id}">${eff.nom} </br> ${eff.emploi}</li>
+        </g:else>
+      </g:each>
+    </ul>     
+</div>
+<div class="control-group">
+    <ul id="categories-chosen${i}" class='news-list interested categories-sortable'>
+     Ressources affectées :   
+      <g:each in="${mesofInstance.getEffectifsAffectes()}" status="k" var="eff">  
+      <li class="btn" id="${eff.id}">${eff.nom} </br>  ${eff.emploi}</li>
+      </g:each>     
+    </ul>
+</div>
 
                                                                                   </fieldset>     
 

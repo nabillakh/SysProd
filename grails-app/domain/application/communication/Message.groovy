@@ -12,7 +12,7 @@ class Message {
     
     Effectif auteur
     Kanban kanban
-    
+    SortedSet commentaires
     static hasMany = [recepteurs : MessageEffectif, commentaires : Commentaire]
     
     Date date = new Date()
