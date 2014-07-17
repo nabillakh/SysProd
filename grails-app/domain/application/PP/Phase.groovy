@@ -7,6 +7,8 @@ import groovy.transform.ToString
 
 class Phase  implements Comparable {
 
+    transient effectifService
+    
     String nom
     Long ordre
     Float cleRepartition
@@ -17,6 +19,13 @@ class Phase  implements Comparable {
     
     static hasMany = [kanbans : Kanban]
     
+    static transients = ['affectables']
+    
+    public Effectif[] getAffectables() {
+        def mesEffectifs = effectifService.affectables(competence)
+        
+        return mesEffectifs
+    }
     
     static constraints = {
         valeurAjoutee nullable : true

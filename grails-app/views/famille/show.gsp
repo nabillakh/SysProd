@@ -112,6 +112,13 @@
          </br></g:each></td>
        
    </tr>
+   <tr>
+       <td><g:message code="famille.ordo.label" default="Activités : " /></td>
+       <td><g:each in="${familleInstance.ordo}" status="i" var="ordoInstance">
+         <span class="input-xlarge uneditable-input"> ${ordoInstance.phases}</span>
+         </br></g:each></td>
+       
+   </tr>
    
 </table></center>
                                                                                   

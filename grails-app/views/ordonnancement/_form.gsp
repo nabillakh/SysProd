@@ -2,15 +2,6 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: ordonnancementInstance, field: 'famille', 'error')} ">
-	<label for="famille">
-		<g:message code="ordonnancement.famille.label" default="Famille" />
-		
-	</label>
-	<g:select id="famille" name="famille.id" from="${application.PP.Famille.list()}" optionKey="id" value="${ordonnancementInstance?.famille?.id}" class="many-to-one" noSelection="['null': '']"/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: ordonnancementInstance, field: 'phases', 'error')} ">
 	<label for="phases">
 		<g:message code="ordonnancement.phases.label" default="Phases" />
@@ -35,6 +26,15 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="chargeStandard" value="${fieldValue(bean: ordonnancementInstance, field: 'chargeStandard')}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ordonnancementInstance, field: 'famille', 'error')} required">
+	<label for="famille">
+		<g:message code="ordonnancement.famille.label" default="Famille" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="famille" name="famille.id" from="${application.PP.Famille.list()}" optionKey="id" required="" value="${ordonnancementInstance?.famille?.id}" class="many-to-one"/>
 
 </div>
 

@@ -10,6 +10,12 @@
  <g:render template="/menues/mainleft" />		
 <div id="page-content">
     <div class="fluid-container">
+       <div class="alert adjusted alert-info">
+						<button class="close" data-dismiss="alert">×</button>
+						<i class="cus-exclamation"></i>
+                                                Ceci est la page de profil de ${effectifInstance?.prenom} ${effectifInstance?.nom} . Vous pouvez accéder
+                                                 aux messages de ce collaborateur, aux indicateurs le concernant et son portefeuille de projet.
+					</div>
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">
                                                     <article class="span3">
@@ -67,13 +73,63 @@
         <div id="temp">
           
       </div>
-        
+          
 									    <!-- a modifier-->
 <div class="jarviswidget" id="contenu2" data-widget-collapsed="false">
-mettre infos</div>
+  
+  <article>
+  <div class="jarviswidget" id="widget-id-12" data-widget-fullscreenbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-collapsed="false">
+									    <header>
+									        <h2>Informations générales</h2>                           
+									    </header>
+									    
+									    <!-- widget div-->
+									    <div>
+									        <!-- end widget edit box -->
+									                    
+									        <div class="inner-spacer widget-content-padding"> 
+                                                                                  <center>
+                                                                                  <table>
+   <tr>
+       <td>Nom : </td>
+       <td><span class="input-xlarge uneditable-input"> ${effectifInstance?.nom}</span></td>
+       
+   </tr>
+   <tr>
+       <td>Prénom : </td>
+       <td><span class="input-xlarge uneditable-input"> ${effectifInstance?.prenom}</span></td>
+       
+   </tr>
+   <tr>
+       <td>Emploi : </td>
+       <td><span class="input-xlarge uneditable-input"> ${effectifInstance?.emploi}</span></td>
+       
+   </tr>
+   <tr>
+       <td>Equipe : </td>
+       <td><span class="input-xlarge uneditable-input"> ${effectifInstance?.equipe.nom}</span></td>
+       
+   </tr>
+   <tr>
+       <td>Competence : </td>
+       <td><span class="input-xlarge uneditable-input"> ${effectifInstance?.competence.competence.nom}</span></td>
+       
+   </tr>
+   
+</table></center>
+                                                                                  
+											<!-- end content -->
+									        </div>
+									        
+									    </div>
+									    <!-- end widget div -->
+									</div>
+
+</article>
+        </div>
           
         
-        </article>       
+        </article>  
         
       </div>
       </section>

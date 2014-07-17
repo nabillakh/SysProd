@@ -222,7 +222,7 @@
   <div class="control-group">
     <ul id="categories-source${i}" class='news-list categories-sortable'>
       Ressources affectables : 
-      <g:each in="${effectifs}" status="k" var="eff">    
+      <g:each in="${mesofInstance.phase?.getAffectables()}" status="k" var="eff">    
         
       <g:if test="${mesofInstance.getEffectifsAffectes().find {it.id == eff.id}}">  
         

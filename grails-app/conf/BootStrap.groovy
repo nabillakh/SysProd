@@ -31,11 +31,7 @@ class BootStrap {
     
     private void createData() {
         
-        def maCompetence= new Competence( nom:"developpeur")
         
-        ["VBA", "Java", "PHP", "Python"].each {nomA -> 
-            def competence = new Competence(nom:nomA).save(failOnError: true)
-        }
         def entreprise = new Entreprise(nom:"GRTGaz", tempsTravailJour : 8).save()
         
         def monEquipe = new Equipe(nom:'dev', entreprise : entreprise).save(failOnError: true)
@@ -46,15 +42,13 @@ class BootStrap {
       def testUser = new Effectif(emploi : 'developpeur', username: 'test', entreprise : entreprise, password: 'test', nom : 'Lakhmissi', prenom : 'Nabil', equipe : monEquipe)
       def testUser2 = new Effectif(emploi : 'developpeur js', username: 'test2', entreprise : entreprise, password: 'test2', nom : 'Yemmi', prenom : 'Youcef', equipe : monEquipe)
       
-        maCompetence.addToEffectifs(testUser)
-        maCompetence.addToEffectifs(testUser2)
+      
         testUser.save(failOnError: true)   
-        testUser2.save(failOnError: true)   
+        testUser2.save(failOnError: true)
 
       EffectifDroit.create testUser, adminRole, true
       EffectifDroit.create testUser2, adminRole, true
                 
-        maCompetence.save(failOnError: true)
         def maConversation = new Conversation().save(flush:true)
         def monMail = new Mail(conversation : maConversation, author : testUser2, message:"okokokok", objet : "objet n1").save(failOnError: true,flush: true)
         maConversation.lastmail =monMail

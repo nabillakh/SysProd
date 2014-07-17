@@ -9,21 +9,20 @@ import application.RH.*
 class IndicateurService {
 
     def imputationService
+    def kanbanService
     
     def Date[] listeDate(Date deb, Date fin) {
-                println("dans service")
+        
             Calendar calDeb = Calendar.getInstance();
             Calendar calFin = Calendar.getInstance();
             calDeb.setTime(deb);
             calFin.setTime(fin);
             
-            
-        println(fin)
         
         def mesDate = []
         
         def delta = (fin.getTime() - deb.getTime())/(1000*60*60*24)
-            println((int)Math.round(delta))
+        
         
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
@@ -43,7 +42,7 @@ class IndicateurService {
         cal2.set(Calendar.SECOND, 0);
         cal2.set(Calendar.MILLISECOND, 0);
                 
-        println(jour)
+        
         cal2.add(Calendar.DATE,1)
         
         while((cal2.compareTo(calFin)<0)) {
@@ -196,7 +195,7 @@ class IndicateurService {
                
             Date debutEvent = kanban.dateLancement
             Date finEvent = kanban.dateFinPlanifie
-            println(debutEvent)
+            
             Calendar calDebutEvent = Calendar.getInstance();
             Calendar calFinEvent = Calendar.getInstance();
             calDebutEvent.setTime(debutEvent);
@@ -238,6 +237,52 @@ class IndicateurService {
                 }
                 
                 return delta  
+    }
+    
+    
+    def capaciteEffectif(Date dateDebut, Date dateFin, Effectif effectif) {
+        
+                Calendar calDeb = Calendar.getInstance();
+                Calendar calFin = Calendar.getInstance();
+                calDeb.setTime(dateDebut);
+                calFin.setTime(dateFin);
+                
+                def delta = (calFin.get(Calendar.DAY_OF_YEAR) - calDeb.get(Calendar.DAY_OF_YEAR) +1) 
+                def maCharge = 0
+                def query2 = Famille.whereAny {
+                    travaille == false
+                }
+                def fams = query2.list()
+                
+                fams.each() {fam ->
+                    def kanbanList = kanbanService.kanbanFamilleEffectif(fam,effectif)
+                    delta +=  - chargePlanifieeMois(dateDebut, dateFin, kanbanList)
+                
+                }
+                
+                return delta  
+    }
+    
+    
+    
+    def chargePlanifieeEffectif(Date dateDebut,Date dateFin, Effectif effectif, Famille famille) {
+        
+        def maCharge = 0
+        def kanbanList = kanbanService.kanbanFamilleEffectif(famille,effectif)
+        
+           kanbanList.each() { kanban ->
+               kanban.of.each() {of ->
+                   if(kanbanService.effectifDansOf(effectif, of)){
+                       def ofs = new ArrayList<OF>()
+                       ofs.add(of)
+                       def chargeOF = chargePlanifieeMoisOF(dateDebut,dateFin, ofs)
+                       maCharge += (chargeOF / of.affectes.size())
+                   }
+               }                    
+        }
+        
+        return maCharge
+                    
     }
     
     

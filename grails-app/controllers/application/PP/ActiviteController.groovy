@@ -55,19 +55,17 @@ class ActiviteController {
             monKanban.famille = Famille.get(Integer.parseInt(famille))
             monKanban.ordo = Ordonnancement.get(Integer.parseInt(ordo))
             monKanban.chargePlanifiee = chargePlanifiee 
-            println("1 nom du kanban: " + monKanban.nomKanban) 
-            println("1 id du kanban: " + monId) 
-            println("1 nom dde famille avec objet: " + monKanban.famille)
+            
             monKanban.save(flush : true)
         }
         else {
-            println("dans update") 
+            
             def monId2 = Long.parseLong(monId)
-            println("1 id du kanban: " + monId) 
+            
             monKanban = Kanban.get(monId2)
-            println("1 nom du kanban chargé: " + monKanban.nomKanban) 
+            
             monKanban.setNomKanban(nomKanban)
-            println("1 nom du kanban modifié 2: " + monKanban.nomKanban) 
+            
             monKanban.dateFinPlanifie = dateLivraison.toDate()
             monKanban.description = description
             monKanban.famille = Famille.get(Integer.parseInt(famille))
@@ -85,13 +83,12 @@ class ActiviteController {
         
     def obtenirOF()  {
         def monId = params.monId
-        println("obtenir of ok")
-        println(monId)
+        
         def monKanban = Kanban.get(monId)
-        println("kanban recuperer ? " + monKanban.nomKanban)
+        
         def mesOF = kanbanService.afficherOFKanban(monKanban)
         mesOF.each() {of -> 
-            println("OF recuperes : " + of.phase.nom)
+            
         }
         
        // render(template: '${request.contextPath}/activite/obtenirOF', model: 
@@ -117,7 +114,7 @@ class ActiviteController {
     def chargePIC = {
         def pics = Pic.list()
         // hypothese nbannee = nb pic
-              println("recherche de charge pic")
+        
         def picLists = []
         pics.each {pic ->
             def picList = new LinkedHashMap()
@@ -233,7 +230,7 @@ class ActiviteController {
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def chargeCapaFamille = {
         def kanbans = Kanban.list()
-        println(kanbans.size())
+        
         def query2 = Famille.whereAny {
             travaille == true
         }
@@ -286,11 +283,11 @@ class ActiviteController {
                 def dateFin = imputationService.dernierJourMois(2014, i)
                 
                 def delta = indicateurService.capacite(dateDebut, dateFin) 
-                println(i + "capacite = " + delta)
+                
                 def vad = indicateurService.vad(dateDebut, dateFin) 
-                println("vad = " + vad)
+                
                 def maVad = (Float)(vad / delta)
-                println("ma vad = " + maVad)
+                
                 def txVad = (Math.round(maVad * 1000) / 10 )
             
                 chargesList.put("vadPlan" ,txVad)
@@ -311,10 +308,9 @@ class ActiviteController {
     // envoie la liste de famille pour parising dans le graphe 1
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def chargeCapaFamilleEffectif = {
-        def idEffectif = params.monId
-        println("l'id du user est : " + idEffectif)
+        def idEffectif = params.monId        
         def monId = Long.parseLong(idEffectif)
-        
+        def effectif = Effectif.get(monId)
         def query2 = Famille.whereAny {
             travaille == true
         }
@@ -324,26 +320,14 @@ class ActiviteController {
             for(Integer i = 1; i<13;i++) {
                 def chargesList = new LinkedHashMap()
                 chargesList.put("mois",i)
-                def fams2 = fams
                 def dateDebut = imputationService.premierJourMois(2014, i)
                 
-                def dateFin = imputationService.dernierJourMois(2014, i)
-                
-                
-                def delta = indicateurService.capacite(dateDebut, dateFin) 
-                
-                chargesList.put("capacite" , Math.round(delta * 10) / 10)
-                fams2.each{ fam ->
-            
-             def query = Kanban.whereAny {
-                famille == fam
-            }
-            def kanbanList = query.list() // cherche juste la famille
-                
-            def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
-            
-                chargesList.put(fam.nom.toString(),Math.round(maCharge * 10) / 10)
-                
+                def dateFin = imputationService.dernierJourMois(2014, i)               
+                def capacite = indicateurService.capaciteEffectif(dateDebut, dateFin, effectif)
+                chargesList.put("capacite" , Math.round(capacite * 10) / 10)
+                fams.each{ fam ->
+                    def maCharge = indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)
+                    chargesList.put(fam.nom.toString(),Math.round(maCharge * 10) / 10)
                 
         }
         
@@ -357,5 +341,88 @@ class ActiviteController {
     
     
     
+    
+    // envoie data pour indicateur de 
+    @Secured(['IS_AUTHENTICATED_REMEMBERED'])
+    def deltaChargeEffectif = {
+        
+        def idEffectif = params.monId        
+        def monId = Long.parseLong(idEffectif)
+        def effectif = Effectif.get(monId)
+        def chargesList = []
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        def fams = query2.list()
+        for(Integer i = 1; i<13;i++) {
+            
+            def maCharge = 0
+            def chargeLists = new LinkedHashMap()
+            chargeLists.put("mois",i)
+            def dateDebut = imputationService.premierJourMois(2014, i)
+            def dateFin = imputationService.dernierJourMois(2014, i)
+            
+            def maCapa = indicateurService.capaciteEffectif(dateDebut, dateFin, effectif)
+            
+        fams.each() {fam->
+                    maCharge += indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)            
+            }
+        
+           def charge = maCapa - maCharge
+            chargeLists.put("charge", Math.round(charge*100)/100)
+            chargesList << (chargeLists)
+        }
+        
+        [chargesInstanceList: chargesList]
+        render chargesList as JSON
+    }
+    
+                
+                
+    
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def donutChargeEffectif = {
+        println("ok pour donut)")
+        def idEffectif = params.monId        
+        def monId = Long.parseLong(idEffectif)
+        def effectif = Effectif.get(monId)
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        
+        def fams = query2.list()
+        def famLists = []
+        def dateDebut = imputationService.premierJourMois(2014, 1)
+        def dateFin = imputationService.dernierJourMois(2014, 12)
+        def capacite = indicateurService.capaciteEffectif(dateDebut, dateFin, effectif)
+        def chargesList= new LinkedHashMap()
+                    
+        // chargesList.put("capacite" , Math.round(capacite * 10) / 10)
+        fams.each{ fam ->
+            chargesList = new LinkedHashMap()
+            def maCharge = indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)
+            if(maCharge>0){
+                chargesList.put("label",fam.nom.toString())
+                chargesList.put("value",Math.round(maCharge * 10) / 10)
+                famLists << (chargesList)
+                capacite += -maCharge
+            }
+        }
+        
+                    
+          chargesList = new LinkedHashMap()
+                chargesList.put("label","Libre")
+                chargesList.put("value",Math.round(capacite * 10) / 10)            
+            
+           famLists << (chargesList)
+        
+                
+      
+        
+        
+        [famInstanceList: famLists]
+        render famLists as JSON
+    }
     
 }

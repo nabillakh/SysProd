@@ -168,7 +168,7 @@ class ImputationController {
     
     def imputer() {
         
-        println("dans controleur")
+        
         def liste = params.liste
         String[] lignes = liste.split("/")
         
@@ -190,10 +190,10 @@ class ImputationController {
                     def monImput = Imputation.get(monId)
                     imputs.add(monImput)
                 }
-                    println(imputs)
+                
                     def chargeIni = imputs*.eventEffectif.event.dureeHeures.sum()
                     imputs.each() { imput ->
-                        println(imput)
+                        
                         def maCharge = imput.eventEffectif.event.dureeHeures
                         def chargeImp = maCharge  * charge / chargeIni
                         imput.tempsImpute = chargeImp

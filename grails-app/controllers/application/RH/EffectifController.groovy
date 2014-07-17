@@ -23,16 +23,15 @@ class EffectifController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", listEffectif:"GET"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Effectif.list(params), model:[effectifInstanceCount: Effectif.count()]
+        def effectifList = Effectif.list()
+        def equipeListe = Equipe.list()
+        [effectifList: effectifList, equipeListe : equipeListe]
     }
 
     def show(Effectif effectifInstance) {
       
         def per = effectifInstance
         
-        println('show effectif')
-        println(per)
         def kanbanInstanceList = kanbanService.listeKanbanEffectif(per)
         [kanbanInstanceList:kanbanInstanceList]
         respond effectifInstance

@@ -21,6 +21,7 @@ class KanbanController {
     def messageService
     def springSecurityService
     def indicateurService
+    def effectifService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "POST"]
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
@@ -49,17 +50,16 @@ class KanbanController {
     @Transactional
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def save(Kanban kanbanInstance) {
-        println("dans save")
-        println(params.dateLancement)
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
         Date dateFinPlanifie = sdf.parse(params.dateFinPlanifie)
         Date dateLancement = sdf.parse(params.dateLancement)
         kanbanInstance.setDateFinPlanifie(dateFinPlanifie)
         kanbanInstance.setDateLancement(dateLancement)
         
-        println(kanbanInstance.dateFinPlanifie)
+        
         kanbanInstance.save(flush: true)
-        println(kanbanInstance.id)
+        
         if (!kanbanInstance.save(flush: true)) {
             render(view: "create", model: [kanbanInstance: kanbanInstance])
             return
@@ -76,9 +76,7 @@ class KanbanController {
     
     def nouveauKanban() {
         def nomKanban = params.nomKanban
-        println("date dans input ")
-        println(params.dateLivraison)
-        println(params.dateLancement)
+        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
         Date dateLivraison = sdf.parse(params.dateLivraison)
         Date dateLancement = sdf.parse(params.dateLancement)
@@ -106,7 +104,7 @@ class KanbanController {
         else {
             
             monKanban = Kanban.get(monId)
-            println(monKanban.nomKanban)  
+            
             monKanban.nomKanban = nomKanban
             monKanban.dateFinPlanifie = dateLivraison
             monKanban.dateLancement = dateLancement
@@ -144,7 +142,7 @@ class KanbanController {
        
         // appeller la fonction qui donne le dernier mail pour chaque conversation
         mesof.sort{a,b-> a.phase.ordre<=>b.phase.ordre}
-          
+        
         def effectifs = Effectif.list()  
           
         [kanbanInstance:kanbanInstance,mesof:mesof,dateLIst:dateLIst, effectifs : effectifs]
@@ -170,11 +168,11 @@ class KanbanController {
         def result = slurper.parseText(monJson)
             
         result.each { data -> 
-            println("l'id ajoute est donc : " + data.eff)
+            
             def affs = Effectif.findById(Long.parseLong(data.eff))
             affectes.add(affs)
         }
-        println(affectes)
+        
         
         // recherche of
         def ancienOf = OF.findById(id) 
@@ -197,7 +195,9 @@ class KanbanController {
             }   
             else {
                 println("no")
-                def nvOfEff = new OFEffectif(effectif : nvEff, of : ancienOf)
+                def competenceEffectif =  effectifService.maCompetenceEffectif(ancienOf.phase.competence, nvEff)
+                println("competence deans of avant save " + ancienOf.phase.competence)
+                def nvOfEff = new OFEffectif(effectif : nvEff, of : ancienOf, competence : ancienOf.phase.competence)
                 nvOfEff.save()
                 ancienOf.affectes.add(nvOfEff)
                 messageService.posterMessageKanban("Vous êtes chargé d'une nouvelle activité : " + ancienOf.phase.nom + " sur le projet : " + ancienOf.kanban.nomKanban , ancienOf.kanban.id)
@@ -323,7 +323,7 @@ class KanbanController {
     
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def avancement= {
-        println("ok")
+        
         def monId = params.monId
         
         

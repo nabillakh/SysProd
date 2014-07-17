@@ -135,30 +135,34 @@ class KanbanService {
     // montre les phases auxquelles un kanban va passer dans l'ordo initial
     @Transactional
     Phase[] montrerPhasesInitiales(Kanban kanban) {
-        def ordo = kanban.getOrdo()
-                println("recherche de l'ordo du kanban : "+ordo.nom)
+        println("dans montrer phases")
+        println("mon ordo est " + kanban.ordo.phases)
+        def ordo = kanban.ordo
         try{
-            println("dans try")
+            
              return ordo.getPhases()
            // return Phase.findAll("from Phase as b where b.monOrdo=? order by b.ordre", [ordo])
-            println("liste de phases ok")
+           
             }
         catch (NullPointerException n) {
-            println("nullpointer")
+            
             return null
         }
     }        
     // creation d'of automatique apres chaque saisie de kanban 
     @Transactional
     void requeteCreation(Kanban monKanban){
-        
+        println("dans requete creation")
         try {
             def famille = monKanban.getFamille()
+            println(famille)
             // monKanban.setOrdo(famille.getOrdo())
             def ofs = OF.findAll("from OF as b where b.kanban=?", [monKanban])
+            
             if(!ofs)  {
                 montrerPhasesInitiales(monKanban).each() { maPhase ->
-                    def of = new OF(phase : maPhase, kanban : monKanban, ordre : maPhase.ordre, fini : false)
+                    println("competence a enregistrer" + maPhase.competence)
+                    def of = new OF(phase : maPhase, competence : maPhase.competence, kanban : monKanban, ordre : maPhase.ordre, fini : false)
                     chargeInitialeOF(of)
                     
                     if(maPhase.ordre == 1) {
@@ -185,14 +189,13 @@ class KanbanService {
         Date dateDeb = kanban.getDateLancement()
         
         def delta = (dateFin.getTime() - dateDeb.getTime())/(1000*60*60*24)
-            println(delta)
+       
         def d = 0
         
         def charge = 0
         ofs.each() {of ->
             charge += of.chargePlanifiee
         }
-            println(charge)
         
         ofs.each() { of ->
             
@@ -255,6 +258,7 @@ class KanbanService {
         }
         return charge
     }
+    
     //
     //// permet de charger la charge realise d'un OF en requetant les imputations associées
     // mettre periode temporelle
@@ -371,5 +375,30 @@ class KanbanService {
         catch (NullPointerException n) {
             return null
         }
+    }
+    
+    
+    
+    def kanbanFamilleEffectif(Famille famille , Effectif effectif) {
+        def kanbanEffectif = listeKanbanEffectif(effectif)
+        def maListe = []
+        kanbanEffectif.each() {kanban ->
+            if(kanban.famille == famille) {
+                maListe.add(kanban)
+            }
+        }
+        return maListe
+    }
+    
+    
+    def effectifDansOf(Effectif effectif, OF of) {
+        def rep = false
+        def maListe = of.affectes
+        maListe.each() {ofEffectif ->
+            if(ofEffectif.effectif == effectif) {
+                rep = true
+            }
+        }
+        return rep
     }
 }

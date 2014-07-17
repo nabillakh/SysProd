@@ -51,6 +51,7 @@ class AdminController {
       'E':'prenom',
       'F':'equipe',
       'G':'emploi',
+      'H':'competence',
      ]
     ]
     
@@ -144,8 +145,31 @@ class AdminController {
         }
         effectifList.each() {Map comp -> 
             def monEquipe = Equipe.findByNom(comp.equipe)
-            new Effectif(emploi : comp.emploi, username: comp.username, password: comp.password, nom : comp.nom, prenom : comp.prenom, equipe : monEquipe).save()
+            if(!Effectif.findByNom(comp.nom)) {
+                def effectif = new Effectif(emploi : comp.emploi, username: comp.username, password: comp.password, nom : comp.nom, prenom : comp.prenom, equipe : monEquipe).save()
+            }
+            
         }
+        
+        
+        competenceList.each() {Map comp -> 
+            new Competence(nom : comp.nom).save()
+        }
+            
+        effectifList.each() {Map comp2 -> 
+            def effectif = Effectif.findByNom(comp2.nom)
+            String delims = "[/]";
+            String[] competences = comp2.competence.split(delims);
+            competences.each() {compe ->    
+                
+                def competence = Competence.findByNom(compe)
+                def ce = new CompetenceEffectif(competence : competence, effectif: effectif)
+                ce.save(flush : true)
+            }
+                    
+        }
+        
+        
         familleList.each() {Map comp -> 
             new Famille(nom : comp.nom, travaille : comp.travaille).save()
         }
@@ -158,11 +182,11 @@ class AdminController {
         phaseList.each() {Map comp -> 
             def maCompetence = Competence.findByNom(comp.competence)      
             def monOrdo = Ordonnancement.findByNom(comp.ordo)
-            def phase = new Phase(valeurAjoutee : comp.valeurAjoutee, nom : comp.nom,ordre:comp.ordre, competence:maCompetence, cleRepartition : (comp.cleRepartition)).save()
-            println(monOrdo)
-            println(phase)
-            monOrdo.addToPhases(phase) 
+            println("ordo dans phase " + monOrdo)
+            def phase = new Phase(monOrdo : monOrdo, valeurAjoutee : comp.valeurAjoutee, nom : comp.nom,ordre:comp.ordre, competence:maCompetence, cleRepartition : (comp.cleRepartition)).save()
+            
             phase.save(failOnError: true)
+            monOrdo.addToPhases(phase)
             monOrdo.save()
         }
         kanbanList.each() {Map comp ->   
@@ -175,6 +199,7 @@ class AdminController {
             def monKanban = new Kanban(client : monClient, ordo : monOrdo, chefProjet : chefProjet , chargePlanifiee : comp.chargePlanifie , fini: comp.fini, nomKanban : comp.nomKanban , description : comp.description, dateLancement : dateLancement, famille : maFamille, dateFinPlanifie : dateFinPlanifie)
         
             monKanban.save(failOnError: true)
+            println("kanban : " + monKanban + " phases? " + monKanban.ordo.phases)
         }
                 
       redirect(action:"services")  
@@ -184,7 +209,7 @@ class AdminController {
         println("lancement des services")
         def kanbans = Kanban.list()
         kanbans.each() { kanban ->
-            kanbanService.requeteCreation(kanban)
+          kanbanService.requeteCreation(kanban)
         }
       redirect(view:"index")  
     }

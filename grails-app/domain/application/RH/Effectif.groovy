@@ -5,6 +5,7 @@ import application.PP.*
 class Effectif {
 
 	transient springSecurityService
+	transient kanbanService
 
     static searchable = true  
         String nom
@@ -19,7 +20,7 @@ class Effectif {
 	boolean accountLocked = false
 	boolean passwordExpired 
 
-        static hasMany = [mesOF : OFEffectif]
+        static hasMany = [mesOF : OFEffectif, competence : CompetenceEffectif]
         
 	static transients = ['springSecurityService', 'listeKanban']
         
@@ -37,6 +38,7 @@ class Effectif {
                 prenom nullable :true
                 equipe nullable : true
                 entreprise nullable :true
+                competence nullable : true
 	}
 
 	static mapping = {

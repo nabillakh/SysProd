@@ -178,7 +178,7 @@
 															<th>En cours ?</th>
 														</tr>
 													</thead>
-													<tbody class="responsive"><g:each in="${kanbanList}" status="i" var="kanbanInstance">
+													<tbody><g:each in="${kanbanList}" status="i" var="kanbanInstance">
                                                                                                             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                                                                                           <td><center>
                                                                                                             

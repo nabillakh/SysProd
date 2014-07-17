@@ -29,13 +29,13 @@ class FamilleController {
     }
     
     def projetFamille(Famille familleInstance) {
-        println("famille : " + familleInstance)
+        
         def kanbanList = kanbanService.projetsFamille(familleInstance)
         [familleInstance: familleInstance, kanbanList : kanbanList]
         
     }
     def indicateurFamille(Famille familleInstance) {
-        println("famille : " + familleInstance)
+        
         
         def kanbanList = kanbanService.projetsFamille(familleInstance)
         def kanbansFinis = familleService.projetsFinis(familleInstance)
@@ -144,13 +144,13 @@ class FamilleController {
         
         // hypothese nbannee = nb pic
         def monId = Long.parseLong(params.monId)
-              println("recherche de clients "+monId)
+        
               def maFamille = Famille.get(monId)
-              println(maFamille)
+              
         
         def ArrayList<Kanban> kanbansFinis = familleService.projetsFinis(maFamille)
         def ArrayList<Kanban> kanbans = kanbanService.projetsFamille(maFamille)
-        println(kanbansFinis.size())
+        
         def clients = []
         kanbansFinis.each() {kanban ->
             clients.add(kanban.client)
@@ -165,7 +165,7 @@ class FamilleController {
             mesClients.put("client",client.nom.toString())
             mesClients.put("volume",listeClient.size())
             mesClients.put("volume total",listeClient2.size())
-            println("volumes des clients "  + listeClient.size())
+            
              volumeClient << (mesClients)
         }
         
@@ -180,13 +180,13 @@ class FamilleController {
     def prodClient = {
         // hypothese nbannee = nb pic
         def monId = Long.parseLong(params.monId)
-              println("recherche de clients "+monId)
+        
               def maFamille = Famille.get(monId)
-              println(maFamille)
+              
         
         def ArrayList<Kanban> kanbansFinis = familleService.projetsFinis(maFamille)
         def ArrayList<Kanban> kanbans = kanbanService.projetsFamille(maFamille)
-        println(kanbansFinis.size())
+        
         def clients = []
         kanbansFinis.each() {kanban ->
             clients.add(kanban.client)
@@ -205,15 +205,15 @@ class FamilleController {
             chargeFacturee += kanban.chargePlanifiee
         }
         
-        chargeRealisee = Math.round(chargeRealisee/kanbansFinis.size()*100)/100
-        chargeFacturee = Math.round(chargeFacturee/kanbansFinis.size()*100)/100
+        chargeRealisee = Math.round(chargeRealisee/listeClient.size()*100)/100
+        chargeFacturee = Math.round(chargeFacturee/listeClient.size()*100)/100
             
             
             def mesClients = new LinkedHashMap()
             mesClients.put("client",client.nom.toString())
             mesClients.put("charge facturee",chargeFacturee)
             mesClients.put("charge realisee",chargeRealisee)
-            println("volumes des clients "  + listeClient.size())
+            
              volumeClient << (mesClients)
         }
         

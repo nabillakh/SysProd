@@ -24,9 +24,9 @@
 			<thead>
 					<tr>
 					
-						<th><g:message code="ordonnancement.famille.label" default="Famille" /></th>
-					
 						<g:sortableColumn property="chargeStandard" title="${message(code: 'ordonnancement.chargeStandard.label', default: 'Charge Standard')}" />
+					
+						<th><g:message code="ordonnancement.famille.label" default="Famille" /></th>
 					
 						<g:sortableColumn property="nom" title="${message(code: 'ordonnancement.nom.label', default: 'Nom')}" />
 					
@@ -36,9 +36,9 @@
 				<g:each in="${ordonnancementInstanceList}" status="i" var="ordonnancementInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${ordonnancementInstance.id}">${fieldValue(bean: ordonnancementInstance, field: "famille")}</g:link></td>
+						<td><g:link action="show" id="${ordonnancementInstance.id}">${fieldValue(bean: ordonnancementInstance, field: "chargeStandard")}</g:link></td>
 					
-						<td>${fieldValue(bean: ordonnancementInstance, field: "chargeStandard")}</td>
+						<td>${fieldValue(bean: ordonnancementInstance, field: "famille")}</td>
 					
 						<td>${fieldValue(bean: ordonnancementInstance, field: "nom")}</td>
 					

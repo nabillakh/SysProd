@@ -7,7 +7,16 @@
 		<g:message code="competence.effectifs.label" default="Effectifs" />
 		
 	</label>
-	<g:select name="effectifs" from="${application.RH.Effectif.list()}" multiple="multiple" optionKey="id" size="5" value="${competenceInstance?.effectifs*.id}" class="many-to-many"/>
+	
+<ul class="one-to-many">
+<g:each in="${competenceInstance?.effectifs?}" var="e">
+    <li><g:link controller="competenceEffectif" action="show" id="${e.id}">${e?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="competenceEffectif" action="create" params="['competence.id': competenceInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'competenceEffectif.label', default: 'CompetenceEffectif')])}</g:link>
+</li>
+</ul>
+
 
 </div>
 

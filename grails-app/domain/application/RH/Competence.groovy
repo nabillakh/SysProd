@@ -8,8 +8,10 @@ class Competence {
     
     String nom
     
-    static hasMany = [effectifs : Effectif]
+    static hasMany = [effectifs : CompetenceEffectif]
     
     static constraints = {
     }
+    
+    static mappedBy = [effectifs : 'competence']
 }
