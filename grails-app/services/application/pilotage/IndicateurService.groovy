@@ -193,9 +193,10 @@ class IndicateurService {
         
         
            kanbanList.each() { kanban ->
+               
             Date debutEvent = kanban.dateLancement
             Date finEvent = kanban.dateFinPlanifie
-            
+            println(debutEvent)
             Calendar calDebutEvent = Calendar.getInstance();
             Calendar calFinEvent = Calendar.getInstance();
             calDebutEvent.setTime(debutEvent);
@@ -204,6 +205,7 @@ class IndicateurService {
             Float dureeKanban = nbJoursEntrePeriodes(calDebutEvent, calFinEvent, calDebutEvent, calFinEvent) 
             Float deltaJour = nbJoursEntrePeriodes(calDeb, calFin, calDebutEvent, calFinEvent) 
             maCharge += (kanban.chargePlanifiee / dureeKanban) * deltaJour
+            
         }
         
         return maCharge

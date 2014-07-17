@@ -154,8 +154,8 @@
                                                                                                                                                                                
                                                                                         </br>
                                                                                         <div class="btn-group">
-                                                                                          <g:link  action="index" controller="kanban"  class="btn">Annuler</g:link> 
-                                                                                          <g:submitButton  class="btn btn-primary" name="create" value="Créer" />
+                                                                                          <g:link  action="index" controller="kanban"  class="btn  btn-small">Annuler</g:link> 
+                                                                                          <g:submitButton  class="btn btn-primary  btn-small" name="create" value="Créer" />
                                                                                         </div>
                                                                                         
                                                                                         

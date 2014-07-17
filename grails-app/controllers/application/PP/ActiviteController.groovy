@@ -136,7 +136,10 @@ class ActiviteController {
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def listeFamille = {
         
-        def fams = Famille.list()
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        def fams = query2.list()
         def famLists = []
         fams.each{ fam ->
             
@@ -229,7 +232,8 @@ class ActiviteController {
     // envoie la liste de famille pour parising dans le graphe 1
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def chargeCapaFamille = {
-        
+        def kanbans = Kanban.list()
+        println(kanbans.size())
         def query2 = Famille.whereAny {
             travaille == true
         }
@@ -241,8 +245,7 @@ class ActiviteController {
                 def fams2 = fams
                 def dateDebut = imputationService.premierJourMois(2014, i)
                 
-                def dateFin = imputationService.dernierJourMois(2014, i)
-                
+                def dateFin = imputationService.dernierJourMois(2014, i)    
                 
                 def delta = indicateurService.capacite(dateDebut, dateFin) 
                 
@@ -253,6 +256,7 @@ class ActiviteController {
                 famille == fam
             }
             def kanbanList = query.list() // cherche juste la famille
+            
                 
             def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
             

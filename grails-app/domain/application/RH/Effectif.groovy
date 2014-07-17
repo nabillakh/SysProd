@@ -36,6 +36,7 @@ class Effectif {
                 nom nullable : true
                 prenom nullable :true
                 equipe nullable : true
+                entreprise nullable :true
 	}
 
 	static mapping = {

@@ -24,9 +24,9 @@ class KanbanController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "POST"]
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Kanban.list(params), model:[kanbanInstanceCount: Kanban.count()]
+    def index() {
+        
+        respond Kanban.list(), model:[kanbanInstanceCount: Kanban.count()]
     }
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def show(Kanban kanbanInstance) {
@@ -158,8 +158,9 @@ class KanbanController {
         Date dateDebutPlanifie = sdf.parse(params.dateDebutPlanifie)
         Date dateFinPlanifie = sdf.parse(params.dateFinPlanifie)
         def id = Long.parseLong(params.monId)
+               
         
-        def charge = Float.parseFloat(params.charge)
+        def charge = Float.parseFloat(params.charge.replaceAll(",", "."))
        def affectes = []
         def affect = params.affectes
         

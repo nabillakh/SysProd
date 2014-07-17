@@ -2,146 +2,160 @@
 
   <head>
 		<meta name="layout" content="main"/>
-		<title>Sysprod</title>
+		<title>Gestion de la famille ${familleInstance?.nom}</title>
+                <g:javascript library="jquery" plugin="jquery" />
+                
+                
   </head>
 
  
- <g:render template="/menues/mainleft" />		
-                    <div id="page-content">
-					<!-- page header -->
-					<h1 id="page-header"> Famille  </h1>	
-					
-					<div class="fluid-container">
-						
-						<!-- widget grid -->
-						<section id="widget-grid" class="">
-							
+ <g:render template="/menues/mainleft" />
 
-							<!-- row-fluid -->
-							
-							<div class="row-fluid">
-								<article class="span12">
-                                                                   
-									<!-- new widget -->
-									<table>
-									<!-- new widget -->
-									<tr><td style=" width:500px;"><div class="jarviswidget" id="widget-id-1">
-									    <header>
-									        <h2> Fiche de famille : </h2>                           
-									    </header>
-									    <!-- wrap div -->
-									    <div>
-									    
-									        <div class="jarviswidget-editbox">
-									            <div>
-									                <label>Title:</label>
-									                <input type="text" />
-									            </div>
-									            <div>
-									                <label>Styles:</label>
-									                <span data-widget-setstyle="purple" class="purple-btn"></span>
-									                <span data-widget-setstyle="navyblue" class="navyblue-btn"></span>
-									                <span data-widget-setstyle="green" class="green-btn"></span>
-									                <span data-widget-setstyle="yellow" class="yellow-btn"></span>
-									                <span data-widget-setstyle="orange" class="orange-btn"></span>
-									                <span data-widget-setstyle="pink" class="pink-btn"></span>
-									                <span data-widget-setstyle="red" class="red-btn"></span>
-									                <span data-widget-setstyle="darkgrey" class="darkgrey-btn"></span>
-									                <span data-widget-setstyle="black" class="black-btn"></span>
-									            </div>
-									        </div>
+
+ 
+ <div id="page-content">
+    <div class="fluid-container">
+      <div class="alert adjusted alert-info">
+							<button class="close" data-dismiss="alert">×</button>
+							<i class="cus-exclamation"></i>
+							<strong>Info!</strong> Les principales informations sur vos familles d'activités sont accessibles sur cette page.
+						</div>
+      
+						<section id="widget-grid" class="well light">
+                                                  <div class="row-fluid">
+                                                    <article class="span12">
+                                                      
+                                                      <center>
+    <h4> Famille d'activité : ${familleInstance?.nom} </h4> 
+    
+    
+    <div id="start">
+      <ul>
+        
+      <li>
+        <g:link controller ="famille" action ="show" id ="${familleInstance.id}" title="Informations">
+          <img src="${request.contextPath}/img/start-icons/mass.png" alt="">
+          <span>Informations</span>
+        </g:link>
+      </li>
             
-									        <div class="inner-spacer"> 
-									        <!-- content goes here -->
-                                                                                <center>
-                                                                                    <g:if test="${familleInstance?.nom}">
-                                                                                <div class="control-group"style=" text-align: left;">
-                                                                                  <label class="control-label"  for="description">
-                                                                                   <g:message code="famille.nom.label" default="Nom : " /><g:fieldValue bean="${familleInstance}" field="nom"/>
-                                                                                  </label>
-                                                                                </div>
-                                                                                 </g:if>
-                                                                                 <g:if test="${familleInstance?.ordo}">
-                                                                                     <g:each in="${familleInstance.ordo}" var="o">
-                                                                                <div class="control-group" style=" text-align: left;">
-                                                                                  <label class="control-label"  for="Ordonnancement">
-                                                                                  <g:link controller="ordonnancement" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link>
-                                                                                  </label>
-                                                                                </div>
-                                                                                </g:each>
-                                                                                </g:if>
-                                                                                 
-                                                                               
-                                                                                
-                                                                                  </center>
-                                                                                </div>
-                                                                              
-                                                                              
-                                                                              
-										    <!-- end content-->
-									    </div>
-									    <!-- end wrap div -->
-									</div></td>
-                                                                          <td style=" width:500px;"> <div class="jarviswidget" id="widget-id-1">
+        <li>
+          
+        <g:link controller ="famille" action ="projetFamille" id="${familleInstance.id}" title="Projets">
+          <img src="${request.contextPath}/img/start-icons/orders.png" alt="">
+          <span>Projets associés</span>
+        </g:link>
+      </li>
+      <li>
+        
+        <g:link controller ="famille" action ="indicateurFamille" id="${familleInstance.id}" title="Indicateurs">
+          <img src="${request.contextPath}/img/start-icons/stats.png" alt="">
+          <span>Indicateurs</span>
+        </g:link>
+      </li>
+      </ul>
+      
+    </div>
+                                                      </center>
+                                                    </article>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                  </div>
+                                                  
+                                                </section>
+      <section>
+                                                  
+      <div class="row-fluid">
+        <article class="span12">
+        
+        <div id="temp">
+          
+      </div>
+          
+									    <!-- a modifier-->
+<div class="jarviswidget" id="contenu2" data-widget-collapsed="false">
+  
+  <article>
+  <div class="jarviswidget" id="widget-id-12" data-widget-fullscreenbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-collapsed="false">
 									    <header>
-									        <h2>Fiche de famille : </h2>                           
+									        <h2>Informations générales</h2>                           
 									    </header>
-									    <!-- wrap div -->
-									    <div>
 									    
-									        <div class="jarviswidget-editbox">
-									            <div>
-									                <label>Title:</label>
-									                <input type="text" />
-									            </div>
-									            <div>
-									                <label>Styles:</label>
-									                <span data-widget-setstyle="purple" class="purple-btn"></span>
-									                <span data-widget-setstyle="navyblue" class="navyblue-btn"></span>
-									                <span data-widget-setstyle="green" class="green-btn"></span>
-									                <span data-widget-setstyle="yellow" class="yellow-btn"></span>
-									                <span data-widget-setstyle="orange" class="orange-btn"></span>
-									                <span data-widget-setstyle="pink" class="pink-btn"></span>
-									                <span data-widget-setstyle="red" class="red-btn"></span>
-									                <span data-widget-setstyle="darkgrey" class="darkgrey-btn"></span>
-									                <span data-widget-setstyle="black" class="black-btn"></span>
-									            </div>
+									    <!-- widget div-->
+									    <div>
+									        <!-- end widget edit box -->
+									                    
+									        <div class="inner-spacer widget-content-padding"> 
+                                                                                  <center>
+                                                                                  <table>
+   <tr>
+       <td><g:message code="famille.nom.label" default="Description : " /></td>
+       <td><span class="input-xlarge uneditable-input"> ${familleInstance?.nom}</span></td>
+       
+   </tr>
+   <tr>
+       <td><g:message code="famille.travaille.label" default="Famille travaillée : " /></td>
+       <td><span class="input-xlarge uneditable-input"> ${familleInstance?.travaille}</span></td>
+       
+   </tr>
+   <tr>
+       <td><g:message code="famille.ordo.label" default="Nombre de types de livrables : " /></td>
+       <td><span class="input-xlarge uneditable-input"> ${familleInstance?.ordo.size()}</span></td>
+       
+   </tr>
+   <tr>
+       <td><g:message code="famille.ordo.label" default="Livrables associés : " /></td>
+       <td><g:each in="${familleInstance.ordo}" status="i" var="ordoInstance">
+         <span class="input-xlarge uneditable-input"> ${ordoInstance.nom.toString()}</span>
+         </br></g:each></td>
+       
+   </tr>
+   
+</table></center>
+                                                                                  
+											<!-- end content -->
 									        </div>
-            
-									        <div class="inner-spacer"> 
-									        <!-- content goes here -->
-                                                                                <center>
-                                                                                 <g:if test="${familleInstance?.ordo}">
-                                                                                     <g:each in="${familleInstance.ordo}" var="o">
-                                                                                <div class="control-group" style=" text-align: left;">
-                                                                                  <label class="control-label"  for="Ordonnancement">
-                                                                                  <g:link controller="ordonnancement" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link>
-                                                                                  </label>
-                                                                                </div>
-                                                                                </g:each>
-                                                                                </g:if>
-                                                                                 <g:if test="${familleInstance?.nom}">
-                                                                                <div class="control-group"style=" text-align: left;">
-                                                                                  <label class="control-label"  for="description">
-                                                                                    <g:message code="famille.nom.label" default="Nom : " />
-                                                                                  </label>
-                                                                                </div>
-                                                                                 </g:if>
-                                                                               
-                                                                                
-                                                                                  </center>
-                                                                                </div>
-                                                                              
-                                                                              
-                                                                              
-										    <!-- end content-->
+									        
 									    </div>
-									    <!-- end wrap div -->
-									</div></td></tr></table>
-                                                                   
-                                                                   
-                                                                            <g:link  action="activite" controller="administration"  class="btn medium">Retour</g:link>
-                                                                            
+									    <!-- end widget div -->
+									</div>
+
+</article>
+        </div>
+          
+        
+        </article>       
+        
+      </div>
+                                                </section>
+      
+      
+      
+									    <!-- end widget div -->
+									</div>
+
+							</div>
+ <script>
+           function valider() {
+             alert("ok");
+           }
+         </script>
                                                                       
-							
-<g:render template="/menues/mainright" />
+                                                          
+                                                        
+                                                        				<!-- end main content -->
+			
+				<g:render template="/menues/mainright" />
+
+
+    
+    <script src="${request.contextPath}/js/include/amchart/amcharts.js"></script>
+    <script src="${request.contextPath}/js/include/amchart/serial.js"></script>
+    <script src="${request.contextPath}/js/include/amcharts/amcharts/themes/black.js"></script>
+    
+    
+    <!-- creer par NL pour gerer tous les graphiques -->
+    <script src="${request.contextPath}/js/include/indicateur.js"></script>
+    

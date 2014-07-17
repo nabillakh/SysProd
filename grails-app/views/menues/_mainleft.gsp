@@ -119,12 +119,15 @@
 							<li class="">
 								<g:link  action="index" controller="mail"> <i class="icon-envelope"></i>Boite de réception</g:link>
 							</li>
+                                                        <li class="">
+								<g:link  action="index" controller="event"><i class="cus-calendar-2"></i>Mon agenda </g:link>
+							</li>
 							<li class="">
 								<a href="javascript:void(0)"><i class="cus-briefcase"></i>Suvi d'activités<!--<span class="badge">3</span>--></a>
 								<ul>
                                                                         
                                                                         <li>
-                                                                                <g:link controller="kanban" action="obtenirKanbanEffectif" id="${sec.loggedInUserInfo(field:"id")}" > Mon activité </g:link>
+                                                                                <g:link controller="kanban" action="obtenirKanbanEffectif" id="${sec.loggedInUserInfo(field:"id")}" > Mes activités </g:link>
 									</li>
                                                                         <li>
                                                                                 <g:link  action="index" controller="kanban"> Portefeuille de projets </g:link>
@@ -135,22 +138,49 @@
 								</ul>
 							</li>
                                                         <li class="">
-								<a href="javascript:void(0)"><i class="cus-chart-bar"></i>Pilotage</a>
+								<a href="javascript:void(0)"><i class="cus-chart-bar"></i>Gestion opérationnelle</a>
 								<ul>
                                                                         
+                                                                        <li>
+                                                                                <g:link  action="index" controller="pic"> Planification pluri-annuel </g:link>
+									</li><!--
 									<li>
                                                                                 <g:link   controller="effectif" action="indicateurEffectif" id="${sec.loggedInUserInfo(field:"id")}" > Mes indicateurs </g:link>
+									</li> -->
+									<li>
+                                                                                <g:link  action="index" controller="famille"> Gestion des processus </g:link>
 									</li>
 									<li>
-                                                                                <g:link  action="index" controller="pdp"> Plan annuel </g:link>
-									</li>
-                                                                        <li>
-                                                                                <g:link  action="index" controller="pic"> Plan pluri-annuel </g:link>
+                                                                                <g:link  action="index" controller="pdp"> Tableau de bord opérationnel </g:link>
 									</li>
 								</ul>
 							</li>
                                                         <li class="">
-								<g:link  action="index" controller="event"> <i class="cus-calendar-2"></i> Mon agenda </g:link>
+								<a href="javascript:void(0)"><i class="cus-chart-organisation"></i>Gestion des ressources</a>
+								<ul>
+                                                                        
+                                                                        <li>
+                                                                                <g:link  action="index" controller="effectif"> Liste des effectifs </g:link>
+									</li>
+                                                                        <li>
+                                                                                <g:link  action="index" controller="competence"> Gestion des compétences </g:link>
+									</li>
+									<li>
+                                                                                <g:link   controller="client" action="tableaudebord"> Tableau de bord RH </g:link>
+									</li>
+								</ul>
+							</li>
+                                                        <li class="">
+								<a href="javascript:void(0)"><i class="cus-coins"></i>Gestion clientèle</a>
+								<ul>
+                                                                        
+                                                                        <li>
+                                                                                <g:link  action="index" controller="client"> Liste des clients </g:link>
+									</li>
+									<li>
+                                                                                <g:link   controller="client" action="tableaudebord"> Tableau de bord clients </g:link>
+									</li>
+								</ul>
 							</li>
                                                         
 

@@ -153,8 +153,10 @@
                                                                                       <fieldset class="aside-buttons">
                                                                                         </br>
                                                                                         <div class="btn-group">
-                                                                                          <g:link  action="index" controller="kanban"  class="btn">Annuler</g:link> 
-                                                                                          <g:submitButton  class="btn btn-primary" name="create" value="Mettre à jour" />
+                                                                                          <center>
+                                                                                          <g:link  action="index" controller="kanban"  class="btn  btn-small">Annuler</g:link> 
+                                                                                          <g:submitButton  class="btn btn-primary btn-small" name="create" value="Mettre à jour" />
+                                                                                          </center>
                                                                                         </div>
                                                                                         
                                                                                       </fieldset>

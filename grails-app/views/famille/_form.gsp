@@ -20,6 +20,15 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: familleInstance, field: 'travaille', 'error')} ">
+	<label for="travaille">
+		<g:message code="famille.travaille.label" default="Travaille" />
+		
+	</label>
+	<g:checkBox name="travaille" value="${familleInstance?.travaille}" />
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: familleInstance, field: 'nom', 'error')} ">
 	<label for="nom">
 		<g:message code="famille.nom.label" default="Nom" />

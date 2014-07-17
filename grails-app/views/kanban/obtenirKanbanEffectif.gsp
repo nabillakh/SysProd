@@ -218,6 +218,7 @@
         </article>       
         
       </div>
+                                                        <g:link  action="create" controller="Kanban" class="btn btn-primary medium pull-right" >Ajouter un projet</g:link>
       </section>
   <script>
                                                           function voir(monId) {

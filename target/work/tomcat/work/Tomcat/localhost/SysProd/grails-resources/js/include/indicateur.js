@@ -184,9 +184,7 @@
         
         
 	// bar graph color
-	if ($('#1barPIC').length){ 
-		    
-                
+	if ($('#1barPIC').length){                
                 
 		Morris.Bar({
 		  element: '1barPIC',

@@ -9,5 +9,6 @@ class Equipe {
     
     static constraints = {
         effectifs nullable : true
+        entreprise nullable : true
     }
 }

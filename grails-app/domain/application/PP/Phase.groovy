@@ -21,8 +21,8 @@ class Phase  implements Comparable {
     static constraints = {
         valeurAjoutee nullable : true
         kanbans nullable : true
-        cleRepartition nullable : true
         competence nullable : true
+        monOrdo nullable : true
     }
     
     static mappedBy = [kanbans : 'phaseActuelle']

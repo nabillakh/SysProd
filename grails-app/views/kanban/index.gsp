@@ -136,6 +136,7 @@
 															<th>Date de fin planifiée</th>
 															<th>Charge associée</th>
 															<th>En cours ?</th>
+															<th>ordo</th>
 														</tr>
 													</thead>
 													<tbody class="responsive"><g:each in="${kanbanInstanceList}" status="i" var="kanbanInstance">
@@ -169,6 +170,7 @@
                                                                                                           <td><g:formatDate date="${kanbanInstance.dateFinPlanifie}" /></td>
                                                                                                           <td>${fieldValue(bean: kanbanInstance, field: "chargePlanifiee")}</td>
                                                                                                           <td>${fieldValue(bean: kanbanInstance, field: "fini")}</td>
+                                                                                                          <td>${kanbanInstance.ordo.nom}</td>
                                                                                                           </tr>
                                                                                                           </g:each>
 													</tbody>
@@ -190,7 +192,7 @@
 							</div>
 
 							<!-- end row-fluid -->
-                                                        <g:link  action="create" controller="Kanban" class="btn btn-primary medium pull-right" >Ajouter un Kanban</g:link>
+                                                        <g:link  action="create" controller="Kanban" class="btn btn-primary medium pull-right" >Ajouter un projet</g:link>
                                                         
                                                         
                                                         
