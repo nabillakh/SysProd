@@ -340,6 +340,47 @@ class ActiviteController {
     }
     
     
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def chargeCapaFamilleEquipe = {
+        def idEquipe = params.monId        
+        def monId = Long.parseLong(idEquipe)
+        def equipe = Equipe.get(monId)
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        
+        def fams = query2.list()
+        def famLists = []
+            for(Integer i = 1; i<13;i++) {
+                def chargesList = new LinkedHashMap()
+                chargesList.put("mois",i)
+                def dateDebut = imputationService.premierJourMois(2014, i)
+                
+                def dateFin = imputationService.dernierJourMois(2014, i)               
+                def capacite = 0
+                equipe.effectifs.each() {effectif ->
+                    capacite += indicateurService.capaciteEffectif(dateDebut, dateFin, effectif)
+                }
+                chargesList.put("capacite" , Math.round(capacite * 10) / 10)
+                fams.each{ fam ->      
+                    def maCharge = 0
+                    equipe.effectifs.each() {effectif ->
+                        maCharge += indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)
+                    }
+                    chargesList.put(fam.nom.toString(),Math.round(maCharge * 10) / 10)
+                
+        }
+        
+                famLists << (chargesList)
+      
+        }
+        
+        [famInstanceList: famLists]
+        render famLists as JSON
+    }
+    
+    
     
     
     // envoie data pour indicateur de 
@@ -367,6 +408,49 @@ class ActiviteController {
         fams.each() {fam->
                     maCharge += indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)            
             }
+        
+           def charge = maCapa - maCharge
+            chargeLists.put("charge", Math.round(charge*100)/100)
+            chargesList << (chargeLists)
+        }
+        
+        [chargesInstanceList: chargesList]
+        render chargesList as JSON
+    }
+    
+                
+          
+    
+    // envoie data pour indicateur de 
+    @Secured(['IS_AUTHENTICATED_REMEMBERED'])
+    def deltaChargeEquipe = {
+        
+        def idEffectif = params.monId        
+        def monId = Long.parseLong(idEffectif)
+        def equipe = Equipe.get(monId)
+        def chargesList = []
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        def fams = query2.list()
+        for(Integer i = 1; i<13;i++) {
+            
+            def maCharge = 0
+            def chargeLists = new LinkedHashMap()
+            chargeLists.put("mois",i)
+            def dateDebut = imputationService.premierJourMois(2014, i)
+            def dateFin = imputationService.dernierJourMois(2014, i)
+            
+            def maCapa = 0
+            equipe.effectifs.each() {effectif ->
+                maCapa += indicateurService.capaciteEffectif(dateDebut, dateFin, effectif)
+            }
+            
+        fams.each() {fam->
+            equipe.effectifs.each() {effectif ->
+                maCharge += indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)  
+            }   
+        }
         
            def charge = maCapa - maCharge
             chargeLists.put("charge", Math.round(charge*100)/100)
@@ -421,6 +505,157 @@ class ActiviteController {
       
         
         
+        [famInstanceList: famLists]
+        render famLists as JSON
+    }       
+                
+    
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def donutChargeEquipe = {
+        println("ok pour donut)")
+        def idEffectif = params.monId        
+        def monId = Long.parseLong(idEffectif)
+        def equipe = Equipe.get(monId)
+        def query2 = Famille.whereAny {
+            travaille == true
+        }
+        
+        def fams = query2.list()
+        def famLists = []
+        def dateDebut = imputationService.premierJourMois(2014, 1)
+        def dateFin = imputationService.dernierJourMois(2014, 12)       
+                def capacite = 0
+                equipe.effectifs.each() {effectif ->
+                    capacite += indicateurService.capaciteEffectif(dateDebut, dateFin, effectif)
+                }
+        def chargesList= new LinkedHashMap()
+                    
+        // chargesList.put("capacite" , Math.round(capacite * 10) / 10)
+        fams.each{ fam ->
+            chargesList = new LinkedHashMap()         
+                def maCharge = 0
+                equipe.effectifs.each() {effectif ->
+                    maCharge += indicateurService.chargePlanifieeEffectif(dateDebut,dateFin, effectif, fam)
+                    println("la charge est : " + maCharge)
+                }
+            if(maCharge>0){
+                chargesList.put("label",fam.nom.toString())
+                chargesList.put("value",Math.round(maCharge * 10) / 10)
+                famLists << (chargesList)
+                capacite += -maCharge
+            }
+        }
+        
+                    
+          chargesList = new LinkedHashMap()
+                chargesList.put("label","Libre")
+                chargesList.put("value",Math.round(capacite * 10) / 10)            
+            
+           famLists << (chargesList)
+        
+                      
+        
+        [famInstanceList: famLists]
+        render famLists as JSON
+    }
+    
+    
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def donutCompetenceEffectif = {
+        
+        def idEffectif = params.monId        
+        def monId = Long.parseLong(idEffectif)
+        def effectif = Effectif.get(monId)
+        
+        def mesOfs = kanbanService.mesOF(effectif)
+        println("liste des ofs " + mesOfs)
+        def competences = []
+        mesOfs.each() {monOf ->
+            competences.add(monOf.phase.competence)
+        }
+        competences.unique()
+        def famLists = []
+        def dateDebut = imputationService.premierJourMois(2014, 1)
+        def dateFin = imputationService.dernierJourMois(2014, 12)
+        
+        def chargesList= new LinkedHashMap()
+        
+        
+            def maCharge2 = 0
+            mesOfs.each() {of->
+                maCharge2 += indicateurService.chargePlanifieeEffectifOf(dateDebut,dateFin, of)
+            }
+        
+                    
+        // chargesList.put("capacite" , Math.round(capacite * 10) / 10)
+        competences.each{ fam ->
+            chargesList = new LinkedHashMap()
+            def maCharge = 0
+            mesOfs.each() {of->
+                if(of.phase.competence == fam) {
+                        maCharge += indicateurService.chargePlanifieeEffectifOf(dateDebut,dateFin, of)
+                    }
+            }
+            if(maCharge>0){
+                chargesList.put("label",fam.nom.toString())
+                chargesList.put("value",Math.round((maCharge/maCharge2)*100*100)/100)
+                famLists << (chargesList)
+            }
+        }
+                
+        [famInstanceList: famLists] 
+        render famLists as JSON
+    
+    }
+    // envoie la liste de famille pour parising dans le graphe 1
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def donutCompetenceEquipe = {
+        
+        def idEffectif = params.monId        
+        def monId = Long.parseLong(idEffectif)
+        def equipe = Equipe.get(monId)
+        def mesOfs = []
+        
+        def dateDebut = imputationService.premierJourMois(2014, 1)
+        def dateFin = imputationService.dernierJourMois(2014, 12)
+        def maCharge2 = 0
+        equipe.effectifs.each() { effectif ->
+            kanbanService.mesOF(effectif).each() {of ->
+                mesOfs.add(of)
+                // mulitplier par le nombre deffectif de lequipe dans l'of
+                maCharge2 += indicateurService.chargePlanifieeEffectifOf(dateDebut,dateFin, of)
+            }
+        }
+        
+        println("liste des ofs " + mesOfs)
+        def competences = []
+        mesOfs.each() {monOf ->
+            competences.add(monOf.phase.competence)
+        }
+        competences.unique()
+        def famLists = []
+        
+        def chargesList= new LinkedHashMap()
+        
+                    
+        // chargesList.put("capacite" , Math.round(capacite * 10) / 10)
+        competences.each{ fam ->
+            chargesList = new LinkedHashMap()
+            def maCharge = 0
+            mesOfs.each() {of->
+                if(of.phase.competence == fam) {
+                    maCharge += indicateurService.chargePlanifieeEffectifOf(dateDebut,dateFin, of)
+                }
+            }
+            if(maCharge>0){
+                chargesList.put("label",fam.nom.toString())
+                chargesList.put("value",Math.round((maCharge/maCharge2)*100*100)/100)
+                famLists << (chargesList)
+            }
+        } 
+                
         [famInstanceList: famLists]
         render famLists as JSON
     }

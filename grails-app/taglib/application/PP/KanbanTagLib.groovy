@@ -14,8 +14,12 @@ class KanbanTagLib {
         
        
         def per = Effectif.get(springSecurityService.principal.id)
-       def mesOF = kanbanService.mesOF(per)
-       
+       def mesOF = []
+       def mesOfs = kanbanService.mesOF(per)
+       mesOfs.each() {of ->
+            if(!of.kanban.fini) {
+                mesOF.add(of)
+            }}
         mesOF.eachWithIndex { OF, counter ->
             out << g.render(template: '/kanban/minikanban', model: [mesOF : mesOF, ofCounter: counter])
         }

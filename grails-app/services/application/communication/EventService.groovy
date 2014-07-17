@@ -41,7 +41,13 @@ class EventService {
         catch (NullPointerException n){
         }
         
-        return lesOF
+        def mesOf = []
+        lesOF.each() {of->
+            if(!of.kanban.fini) {
+                mesOf.add(of)
+            }}
+        
+        return mesOf
     }
     
     

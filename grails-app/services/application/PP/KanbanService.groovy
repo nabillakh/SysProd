@@ -391,6 +391,7 @@ class KanbanService {
     }
     
     
+    
     def effectifDansOf(Effectif effectif, OF of) {
         def rep = false
         def maListe = of.affectes

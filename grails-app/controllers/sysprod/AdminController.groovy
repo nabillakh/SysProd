@@ -9,10 +9,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import application.RH.*
 import application.PP.*
 import application.CRM.*
+import java.util.Random
 
 class AdminController {
     def excelImportService
     def kanbanService
+    def effectifService
     
     def index() {
     }
@@ -182,7 +184,6 @@ class AdminController {
         phaseList.each() {Map comp -> 
             def maCompetence = Competence.findByNom(comp.competence)      
             def monOrdo = Ordonnancement.findByNom(comp.ordo)
-            println("ordo dans phase " + monOrdo)
             def phase = new Phase(monOrdo : monOrdo, valeurAjoutee : comp.valeurAjoutee, nom : comp.nom,ordre:comp.ordre, competence:maCompetence, cleRepartition : (comp.cleRepartition)).save()
             
             phase.save(failOnError: true)
@@ -199,7 +200,6 @@ class AdminController {
             def monKanban = new Kanban(client : monClient, ordo : monOrdo, chefProjet : chefProjet , chargePlanifiee : comp.chargePlanifie , fini: comp.fini, nomKanban : comp.nomKanban , description : comp.description, dateLancement : dateLancement, famille : maFamille, dateFinPlanifie : dateFinPlanifie)
         
             monKanban.save(failOnError: true)
-            println("kanban : " + monKanban + " phases? " + monKanban.ordo.phases)
         }
                 
       redirect(action:"services")  
@@ -211,6 +211,28 @@ class AdminController {
         kanbans.each() { kanban ->
           kanbanService.requeteCreation(kanban)
         }
+        
+        def ofs = OF.list()        
+                
+        ofs.each() {of->
+            Random randomizer = new Random();
+            def effectifs = of.phase.getAffectables()
+            def list = new ArrayList<Effectif>();
+            effectifs.each() {effe ->
+                list.add(effe)
+            }
+            String eff = randomizer.nextInt(list.size());
+            println("random : " + eff)
+            Effectif effectif = list.get(Integer.parseInt(eff))
+            println("effectif : " + effectif)
+            def competenceEffectif =  effectifService.maCompetenceEffectif(of.phase.competence, effectif)
+            def nvOfEff = new OFEffectif(effectif : effectif, of : of, competence : of.phase.competence)
+            nvOfEff.save()
+            of.affectes.add(nvOfEff)
+            of.save()
+        }
+        
+        
       redirect(view:"index")  
     }
 }

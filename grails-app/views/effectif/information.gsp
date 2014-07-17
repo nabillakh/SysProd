@@ -53,7 +53,7 @@
       </li>
       <li>
         
-        <g:link controller="effectif" action="indicateurEffectif" id="${effectifInstance.id}" title="Indicateurs">
+        <g:link controller="effectif" action="indicateurEquipe" id="${effectifInstance.id}" title="Indicateurs">
           <img src="${request.contextPath}/img/start-icons/stats.png" alt="">
           <span>Indicateurs</span>
         </g:link>

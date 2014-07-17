@@ -36,13 +36,11 @@ class EffectifController {
         [kanbanInstanceList:kanbanInstanceList]
         respond effectifInstance
     }
-def listEffectif(){
     
-    def user = Effectif.list()
- 
+    def listEffectif(){
+        def user = Effectif.list()
         render user as JSON
-        
-}
+    }
     def create() {
         respond new Effectif(params)
     }

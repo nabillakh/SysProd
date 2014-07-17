@@ -112,7 +112,7 @@
 			                                        <div class="widget-content-padding">
                                                                   <g:each in="${kanbanInstance.of}" status="k" var="ofInstance">
 			                                            <div class="semi-block">
-			                                                <strong>${ofInstance.phase.nom}</strong><strong class="pull-right">${ofInstance.chargeAgenda / ofInstance.chargePlanifiee * 100} %</strong>
+			                                                <strong>${ofInstance.phase.nom}</strong><strong class="pull-right">${Math.round(ofInstance.chargeAgenda / ofInstance.chargePlanifiee * 1000) /10 } %</strong>
 			                                                <div class="progress progress-info value"><div class="bar" data-percentage="40" data-amount-part="${ofInstance.chargeAgenda}" data-amount-total="${ofInstance.chargePlanifiee}">456 / 631</div></div>
 			                                            </div>
                                                                   </g:each>
@@ -137,7 +137,6 @@
                                                       <g:hiddenField name="chargePlanifiee" id="chargePlanifiee" value="${kanbanInstance.chargePlanifiee}"/>
                                                       
                                                                         
-                                                      <div id="chargePIC"></div>
                                                                       </div>  
 
   

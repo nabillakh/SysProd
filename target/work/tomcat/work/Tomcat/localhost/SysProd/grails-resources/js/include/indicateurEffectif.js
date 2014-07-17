@@ -211,20 +211,20 @@ if ($('#chargeCapaEffectif').length) {
           // var z = $('#projetTotal').val();
            
            
-         var donutCharge;
+         var donutCharge2;
     
-        var monId3 = $('#monId').val();
+        var monId4 = $('#monId').val();
         
-	var donut =  $.ajax({
+	var donut2 =  $.ajax({
                    type:'GET',
-                   url: '/SysProd/activite/donutChargeEffectif',
+                   url: '/SysProd/activite/donutCompetenceEffectif',
                    async: false,
                    global: false,
                    data : {
-                     monId : monId3, 
+                     monId : monId4, 
                    },
                    success: function(data) {
-                       donutCharge = data;
+                       donutCharge2 = data;
                    }, 
                            error:function(){
                        alert("Error loading chart avancement charge capa");
@@ -234,8 +234,8 @@ if ($('#chargeCapaEffectif').length) {
            
 		Morris.Donut({
 		  element: 'donutCompetence',
-		  data: donutCharge,
-		  formatter: function (x) { return parseInt(x ) + " jours"}
+		  data: donutCharge2,
+		  formatter: function (x) { return parseInt(x ) + " %"}
 		});
             }
             

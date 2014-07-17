@@ -99,14 +99,13 @@ class IndicateurService {
                 calMax.setTime(dateMax);   
                 calMax.add(Calendar.DATE,1)
                 def charge2 = kanban.eventEffectif.event.dureeHeures
+                println("ma charge " + charge2)
             if((calDebutEvent.compareTo(cal2)<0)&&(calFinEvent.compareTo(cal)>0)) {
                     charge += charge2
             }
             else {
                 
-            }
-            
-            
+            }           
             }
         return charge
     }
@@ -280,6 +279,22 @@ class IndicateurService {
                    }
                }                    
         }
+        
+        return maCharge
+                    
+    }
+    
+    
+    
+    
+    def chargePlanifieeEffectifOf(Date dateDebut,Date dateFin, OF of) {
+        
+        def maCharge = 0
+        
+        def ofs = new ArrayList<OF>()
+        ofs.add(of)
+        def chargeOF = chargePlanifieeMoisOF(dateDebut,dateFin, ofs)
+        maCharge += (chargeOF / of.affectes.size())
         
         return maCharge
                     

@@ -107,26 +107,32 @@ def springSecurityService
     
     
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
+    def information() {
+        
+        def monEquipe = Equipe.get(Integer.parseInt(params.id))
+        // def kanbanInstanceList = kanbanService.listeKanbanEffectif(monEffectif)
+        [equipeInstance : monEquipe]
+    }
+    
+    @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def obtenirKanbanEquipe() {
-        println(params.equipe + "dans  equipe ")
+        println(params.id + "dans  equipe ")
+        def equipeInstance = Equipe.get(Long.parseLong(params.id))
         
-        def kanbanInstanceList = []
-       def  kanbanListParticipants = []
-        def query = Effectif.whereAny {                
-            equipe { params.equipe }
-           }
-        def malisteEffectif = query.list()
-        println(malisteEffectif + " participants ")
+        def kanbanInstanceList = equipeInstance.getListeKanban()
         
-           malisteEffectif.each() {user -> 
-                 
-                kanbanListParticipants = kanbanService.listeKanbanEffectif(user)
-                println( kanbanListParticipants + "  kanban participants ")
-             kanbanInstanceList.addAll(kanbanListParticipants);
-              println( kanbanListParticipants + "  tout le monde ")
-        }
-        kanbanInstanceList.unique()
-       [kanbanInstanceList:kanbanInstanceList]
+       [kanbanInstanceList:kanbanInstanceList, equipeInstance : equipeInstance]
+       
+    }
+    
+    @Secured(['IS_AUTHENTICATED_REMEMBERED'])
+    def indicateurEquipe() {
+        println(params.id + "dans  equipe ")
+        def equipeInstance = Equipe.get(Long.parseLong(params.id))
+        
+        def kanbanInstanceList = equipeInstance.getListeKanban()
+        
+       [kanbanInstanceList:kanbanInstanceList, equipeInstance : equipeInstance]
        
     }
 
