@@ -230,7 +230,7 @@ class ActiviteController {
     @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
     def chargeCapaFamille = {
         def kanbans = Kanban.list()
-        
+        def effectifs = Effectif.list()
         def query2 = Famille.whereAny {
             travaille == true
         }
@@ -248,15 +248,15 @@ class ActiviteController {
                 
                 chargesList.put("capacite" , Math.round(delta * 10) / 10)
                 fams2.each{ fam ->
-            
-             def query = Kanban.whereAny {
-                famille == fam
-            }
-            def kanbanList = query.list() // cherche juste la famille
-            
+                    def kanbanList = new ArrayList<Kanban>()
+                    def query = Kanban.whereAny {
+                        famille == fam
+                    }
+                    
+                kanbanList = query.list() // cherche juste la famille
                 
-            def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
-            
+                def maCharge = indicateurService.chargePlanifieeMois(dateDebut,dateFin, kanbanList)
+                println(maCharge)
                 chargesList.put(fam.nom.toString(),Math.round(maCharge * 10) / 10)
                 
                 
@@ -568,8 +568,13 @@ class ActiviteController {
         def idEffectif = params.monId        
         def monId = Long.parseLong(idEffectif)
         def effectif = Effectif.get(monId)
-        
-        def mesOfs = kanbanService.mesOF(effectif)
+        def mesOfs = []
+        def mesOf = kanbanService.mesOF(effectif)
+        mesOf.each() { off ->
+            if(off.kanban.famille.operationnel) {
+                mesOfs.add(off)
+            }
+        }
         println("liste des ofs " + mesOfs)
         def competences = []
         mesOfs.each() {monOf ->
@@ -623,9 +628,10 @@ class ActiviteController {
         def maCharge2 = 0
         equipe.effectifs.each() { effectif ->
             kanbanService.mesOF(effectif).each() {of ->
+                if(of.kanban.famille.operationnel) {
                 mesOfs.add(of)
                 // mulitplier par le nombre deffectif de lequipe dans l'of
-                maCharge2 += indicateurService.chargePlanifieeEffectifOf(dateDebut,dateFin, of)
+                maCharge2 += indicateurService.chargePlanifieeEffectifOf(dateDebut,dateFin, of) }
             }
         }
         
@@ -650,6 +656,7 @@ class ActiviteController {
                 }
             }
             if(maCharge>0){
+                println(fam)
                 chargesList.put("label",fam.nom.toString())
                 chargesList.put("value",Math.round((maCharge/maCharge2)*100*100)/100)
                 famLists << (chargesList)

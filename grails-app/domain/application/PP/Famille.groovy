@@ -12,6 +12,7 @@ class Famille {
     static hasMany = [ordo : Ordonnancement]
     
     boolean travaille
+    boolean operationnel
     
     static transients = ['chargePlanifiee', 'nbProjets']
     
@@ -27,5 +28,6 @@ class Famille {
     static constraints = {
         ordo nullable : true
         travaille nullable : true
+        operationnel nullable : true
     }
 }

@@ -148,6 +148,31 @@ class KanbanController {
         [kanbanInstance:kanbanInstance,mesof:mesof,dateLIst:dateLIst, effectifs : effectifs]
     }
     
+    
+    def gestionOf2(Kanban kanbanInstance) {
+        def dateLIst = []
+        def mesof = new ArrayList<OF>()
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
+        kanbanInstance.of.each() {of -> 
+            mesof.add(of)
+            def datedeb = sdf.format(of.dateDebutPlanifie)
+             def datefin = sdf.format(of.dateFinPlanifie)
+            dateLIst << [
+                id: of.id,    
+                start:datedeb,
+                end: datefin,
+                ]
+        }
+            
+       
+        // appeller la fonction qui donne le dernier mail pour chaque conversation
+        mesof.sort{a,b-> a.phase.ordre<=>b.phase.ordre}
+        
+        def effectifs = Effectif.list()  
+          
+        [kanbanInstance:kanbanInstance,mesof:mesof,dateLIst:dateLIst, effectifs : effectifs]
+    }
+    
     // permet d'editer les OF d'un kanban
     def majOF() {  
         
@@ -436,6 +461,32 @@ class KanbanController {
         render famLists as JSON
     }
     
+    
+    
+    
+    @Secured(['IS_AUTHENTICATED_REMEMBERED']) 
+    def diffOF = {
+        // hypothese nbannee = nb pic
+        def monId = Long.parseLong(params.monId)
+        
+        def kanban = Kanban.get(monId)
+        
+        
+        def mesofs = []
+        kanban.of.each() {of ->
+            
+            def monOf = new LinkedHashMap()
+            monOf.put("Phase",of.phase.nom.toString())
+            monOf.put("charge facturee",Math.round(10 * of.chargePlanifiee)/10)
+            monOf.put("charge realisee",Math.round(10 * of.getChargeRealisee())/10)
+            
+             mesofs << (monOf)
+        }
+        
+        
+        [mesofs: mesofs]
+        render mesofs as JSON
+    }
     
        
 }

@@ -120,6 +120,9 @@
         
        }
        
+       
+       
+       
              
        
        
@@ -763,6 +766,41 @@ function zoomChart(){
 		  stacked: true
 		});
             }
+            
+            
+            
+       if ($('#prodPhase').length){
+           
+           var clients;
+           var monId = $('#monId').val();
+           var json_client =  $.ajax({
+                   type:'GET',
+                   url: '/SysProd/kanban/diffOF',
+                   async: false,
+                   global: false,
+                   data : {
+                     monId : monId
+                   },
+                   success: function(data) {
+                       clients = data;
+                   }, 
+                           error:function(){
+                       alert("Error loading chart avancement charge capa");
+                   }
+               });
+           
+               Morris.Bar({
+		  element: 'prodPhase',
+		  axes: true,
+		  grid: false,
+		  data: clients,
+		  xkey: 'Phase',
+		  ykeys: ['charge facturee','charge realisee'],
+		  labels: ['Facturée','Réalisée'],
+                  
+	});
+        
+       }
             
             
   

@@ -23,10 +23,6 @@
       
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">
-                                                    <article class="span3">
-    <img src="${request.contextPath}/img/start-icons/coucou.jpg" alt="" style="width: 160px; height: 160px;">
-    
-                                                    </article>
                                                     <article class="span9">
                                                       
                                                       <center>
@@ -49,13 +45,6 @@
         </g:link>
       </li>
       
-        <li>
-          
-        <a href="javascript:voirProjets(${kanbanInstance.id})" title="Projets">
-          <img src="${request.contextPath}/img/start-icons/orders.png" alt="">
-          <span>Projets en cours</span>
-        </a>
-      </li>
       <li>
         
         <g:link controller ="kanban" action ="indicateurKanban" id="${kanbanInstance.id}" title="Indicateurs">
@@ -67,6 +56,14 @@
       
     </div>
                                                       </center>
+                                                    </article>
+                                                    <article class="span3">
+                                                      <div class="easypie">
+								<div class="percentage" data-percent=${kanbanInstance.getAvancementRealise()}>
+									<span>${Math.round(kanbanInstance.getAvancementRealise()*10)/10}</span>%
+								</div>
+							</div>
+    
                                                     </article>
                                                     
                                                     

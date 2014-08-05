@@ -233,4 +233,52 @@ class EventController {
             redirect action: "list"
         
     }
+    
+    
+    
+    def eventServices = {
+        
+      redirect(view:"index")
+    }
+    
+    
+    def event2 = {
+        
+        def ofs = OF.list()        
+               println(ofs) 
+        ofs.each() {of->
+            DateTime debut = new DateTime(of.dateDebutPlanifie)
+            DateTime fin = new DateTime(of.dateFinPlanifie)
+            def jours = new ArrayList<Integer>();
+            for(int i=1;i<Math.round(of.chargePlanifiee * 2 + 1);i++){
+                jours.add(i)
+            }
+            
+            Random randomizer = new Random();
+            def eff = (randomizer.nextInt(jours.size()));
+            
+            for(int i=1;i<eff + 1;i++){
+                def debut2 = debut.plusDays(i)
+                def start = debut2.plusHours(9)
+                def startTime = start.toDate()
+                def endTime = start.plusHours(8).toDate()
+            println("debut : " + startTime)
+            println("debut : " + endTime)
+            Event eventInstance = new Event() 
+            eventInstance.startTime = startTime
+            eventInstance.endTime = endTime
+            eventInstance.title = of.kanban.nomKanban + " : " + of.phase.nom
+            eventInstance.save(failOnError: true, flush : true)
+            println(eventInstance)
+            of.affectes.each() { aff ->
+                def eventEffectif = eventService.organiserEventEffectif(aff.effectif,eventInstance)
+                eventService.imputation(eventEffectif, of)                
+            }
+            
+            }
+            
+        }
+                
+      redirect(action:"eventServices")  
+    }
 }

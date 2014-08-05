@@ -222,4 +222,9 @@ class FamilleController {
         render volumeClient as JSON
     }
     
+    
+    def formOrdo() {
+        
+    }
+    
 }

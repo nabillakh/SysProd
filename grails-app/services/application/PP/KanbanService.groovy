@@ -135,8 +135,7 @@ class KanbanService {
     // montre les phases auxquelles un kanban va passer dans l'ordo initial
     @Transactional
     Phase[] montrerPhasesInitiales(Kanban kanban) {
-        println("dans montrer phases")
-        println("mon ordo est " + kanban.ordo.phases)
+        
         def ordo = kanban.ordo
         try{
             
@@ -152,16 +151,16 @@ class KanbanService {
     // creation d'of automatique apres chaque saisie de kanban 
     @Transactional
     void requeteCreation(Kanban monKanban){
-        println("dans requete creation")
+        
         try {
             def famille = monKanban.getFamille()
-            println(famille)
+            
             // monKanban.setOrdo(famille.getOrdo())
             def ofs = OF.findAll("from OF as b where b.kanban=?", [monKanban])
             
             if(!ofs)  {
                 montrerPhasesInitiales(monKanban).each() { maPhase ->
-                    println("competence a enregistrer" + maPhase.competence)
+                    
                     def of = new OF(phase : maPhase, competence : maPhase.competence, kanban : monKanban, ordre : maPhase.ordre, fini : false)
                     chargeInitialeOF(of)
                     

@@ -48,7 +48,7 @@ class Kanban {
         chargePlanifiee - chargeRealisee
     }
     public Float getAvancementRealise() {
-        chargeRealisee / chargePlanifiee * 100
+        this.getChargeRealisee() / chargePlanifiee * 100
     }
     public Float getAvancementAgenda() {
         chargeRealisee / chargeAgenda * 100

@@ -135,7 +135,7 @@
                                                                                                                     <td><center><g:link action="show" controller="effectif" id="${effectifInstance.id}">${fieldValue(bean: effectifInstance, field: "nom")}</g:link></center></td>
                                                                                                                 
                                                                                                                 <td><center>${effectifInstance.prenom}</center></td>
-                                                                                                                <td><center><g:link action="show" controller="equipe" id="${effectifInstance.equipe.id}">${effectifInstance.equipe.nom}</g:link></center></td>
+                                                                                                                <td><center><g:link action="show" controller="equipe" id="${effectifInstance.equipe?.id}">${effectifInstance.equipe?.nom}</g:link></center></td>
                                                                                                                 
                                                                                                                 <td><center>${effectifInstance.emploi}</center></td>
                                                                                                                 <td><center>${effectifInstance?.getListeKanban().size()}</center></td>

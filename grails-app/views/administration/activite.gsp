@@ -11,41 +11,8 @@
    				
      <!-- main content --><div id="page-content">
 					<!-- page header -->
-					<h1 id="page-header">Management des activités</h1>	
-                                        <!-- images avec données macro -->
-                                        <div id="start">
-							<ul>
-								<li>
-									<label>246 </label>
-									<a href="javascript:void(0)" title="">
-										<img src="${request.contextPath}/img/start-icons/orders.png" alt="">
-										<span>Projets en cours</span>
-									</a>
-								</li>
-								<li>
-									<a href="javascript:void(0)" title="">
-										<img src="${request.contextPath}/img/start-icons/orders.png" alt="">
-										<span>Projets cloturés</span>
-									</a>
-								</li>
-								<li>
-									<label>new</label>
-									<a href="javascript:void(0)" title="">
-										<img src="${request.contextPath}/img/start-icons/stats.png" alt="">
-										<span>Indicateurs</span>
-									</a>
-								</li>
-								<li>
-									<label>657</label>
-									<a href="javascript:void(0)" title="">
-										<img src="${request.contextPath}/img/start-icons/pending-message.png" alt="">
-										<span>Projets en retard</span>
-									</a>
-								</li>
-							</ul>
-
-						</div>
-					
+					<h1 id="page-header">Management des activités</h1>
+                                        		
                                         
                                         
                                         <div class="row-fluid">
@@ -180,7 +147,7 @@
                                                                                                             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                                                                                               <td><g:link action="show" controller="phase" id="${phaseInstance.id}">${fieldValue(bean: phaseInstance, field: "nom")}</g:link></td>
                                                                                                           <td>${phaseInstance.monOrdo.nom}</td>
-                                                                                                          <td>${phaseInstance.competence.nom}</td>
+                                                                                                          <td>${phaseInstance.competence?.nom}</td>
                                                                                                           <td>${phaseInstance.kanbans.size()}</td>
                                                                                                           </tr>
                                                                                                           </g:each>
@@ -243,6 +210,8 @@
 							</div>
                                         
                                         
+                                                        <g:link  action="create" controller="Famille" class="btn btn-primary medium pull-right" >Ajouter une famille</g:link>
+                                                        
                                         <!-- fin tableau superieru -->
                                         
 						<!-- end widget grid -->

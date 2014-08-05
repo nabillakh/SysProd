@@ -62,6 +62,18 @@ class EventService {
         println("mon event effectif :" + eventEffectif.id)
         return eventEffectif
     }
+    
+    private EventEffectif organiserEventEffectif(Effectif per, Event e) {        
+        def eventEffectif = new EventEffectif(event : e, recepteur : per, participe : true)
+        println(per)
+        println(e)
+        e.setOrganisateur(per)
+        e.addToParticipants(eventEffectif)
+        e.save(flush:true)
+        eventEffectif.save()
+        println("mon event effectif :" + eventEffectif.id)
+        return eventEffectif
+    }
 
      // liste d'event concernant le principal
      

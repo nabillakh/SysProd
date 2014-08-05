@@ -23,10 +23,6 @@
       
 						<section id="widget-grid" class="well light">
                                                   <div class="row-fluid">
-                                                    <article class="span3">
-    <img src="${request.contextPath}/img/start-icons/coucou.jpg" alt="" style="width: 160px; height: 160px;">
-    
-                                                    </article>
                                                     <article class="span9">
                                                       
                                                       <center>
@@ -49,13 +45,6 @@
         </g:link>
       </li>
       
-        <li>
-          
-        <a href="javascript:voirProjets(${kanbanInstance.id})" title="Projets">
-          <img src="${request.contextPath}/img/start-icons/orders.png" alt="">
-          <span>Projets en cours</span>
-        </a>
-      </li>
       <li>
         
         <g:link controller ="kanban" action ="indicateurKanban" id="${kanbanInstance.id}" title="Indicateurs">
@@ -68,6 +57,16 @@
     </div>
                                                       </center>
                                                     </article>
+                                                    <article class="span3">
+                                                      <div class="easypie">
+								<div class="percentage" data-percent=${kanbanInstance.getAvancementRealise()}>
+									<span>${Math.round(kanbanInstance.getAvancementRealise()*10)/10}</span>%
+								</div>
+							</div>
+    
+                                                    </article>
+                                                    
+                                                    
                                                     
                                                     
                                                   </div>
@@ -78,15 +77,12 @@
       <div class="row-fluid">
         <article class="span12">
         
-        <div id="temp">
-          
-      </div>
 <div id="contenu2">
   
       
-  <div class="span6">
+  <div class="span12">
 									    <header>
-									        <h4>Avancement du projet</h4>                           
+                                                                              <center><h4>Avancement du projet</h4></center>                           
 									    </header>
     
                                                                                   <div id="avancementKanban" class="chart" style="height:350px; margin:0;"></div>
@@ -96,10 +92,10 @@
         
 		
           </div>
-  
+  </article> <article>
   <div class="span6">
 									    <header>
-									        <h4>avancement par phase</h4>                           
+                                                                              <center><h4>Avancement par phase</h4></center>                           
 									    </header>
 									<!-- new widget -->
 									    <div>
@@ -127,14 +123,13 @@
         
   <div class="span6">
 									    <header>
-									        <h4>Avancement du projet</h4>                           
+                                                                              <center><h4>Comparaison planifié/réalisé par phase</h4></center>
 									    </header>
 									<!-- new widget -->
 							                        
                                                                         
-                                                      <div id="avancementOf"></div>
-                                                      <g:hiddenField name="kanban" id="monKanban" value="${kanbanInstance.nomKanban}"/>
-                                                      <g:hiddenField name="chargePlanifiee" id="chargePlanifiee" value="${kanbanInstance.chargePlanifiee}"/>
+                                                      <div id="prodPhase"></div>
+                                                      <g:hiddenField name="monId" id="monId" value="${kanbanInstance.id}"/>
                                                       
                                                                         
                                                                       </div>  

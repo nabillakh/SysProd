@@ -45,13 +45,6 @@
         </g:link>
       </li>
       
-        <li>
-          
-        <a href="javascript:voirProjets(${kanbanInstance.id})" title="Projets">
-          <img src="${request.contextPath}/img/start-icons/orders.png" alt="">
-          <span>Projets en cours</span>
-        </a>
-      </li>
       <li>
         
         <g:link controller ="kanban" action ="indicateurKanban" id="${kanbanInstance.id}" title="Indicateurs">
@@ -67,7 +60,7 @@
                                                     <article class="span3">
                                                       <div class="easypie">
 								<div class="percentage" data-percent=${kanbanInstance.getAvancementRealise()}>
-									<span>${kanbanInstance.getAvancementRealise()}</span>%
+									<span>${Math.round(kanbanInstance.getAvancementRealise()*10)/10}</span>%
 								</div>
 							</div>
     

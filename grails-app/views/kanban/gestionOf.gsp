@@ -132,18 +132,23 @@
 							<strong>Info!</strong> Affecter vos projets simplement avec ce module. Les tâches sont automatiquement pré ordonnancer mais vous avez la main pour réajuster au plus juste les données (dates, charge etc.)
 						</div>
 					<!-- page header -->
+                                        
+                                        
+                                        
+                 
+                                        
+                                        
+                                        
 					<h1 id="page-header">Gestion des activités et des affectations</h1>	
 
 					<div class="fluid-container">
                                             
                                 
   
-  </div><!--/container-fluid-->
+  <!--/container-fluid-->
 												
 				<g:link  action="index" controller="kanban" ><i class="icon-star"></i>  Liste des kanbans </g:link></br>
                                 <g:link  action="show" controller="kanban" id="${kanbanInstance.id}" ><i class="icon-star"></i>  Afficher ce kanban </g:link>
-												
-                                        
 				
 												
                                                   <g:each in="${mesof}" status="i" var="mesofInstance">
@@ -161,7 +166,7 @@
 
 								<article>
 									<!-- new widget -->
-									<div class="jarviswidget" id="widget-id-0">
+									<div class="jarviswidget" id="widget-id-${i+5}" data-widget-editbutton="false">
 									    <header>
 									        <h2>${mesofInstance?.phase?.nom}</h2>                           
 									    </header>
@@ -258,7 +263,7 @@
                                                         </div>
                                                   </g:each>
 						<!-- end widget grid -->
-					</div>	
+					
                                         
                                                 </section>	
 				</div>

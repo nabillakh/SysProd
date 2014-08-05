@@ -18,6 +18,7 @@ class IndicateurService {
             calDeb.setTime(deb);
             calFin.setTime(fin);
             
+            calFin.add(Calendar.DATE,1)  
         
         def mesDate = []
         
@@ -182,7 +183,7 @@ class IndicateurService {
     
     
     def chargePlanifieeMois(Date dateDebut,Date dateFin, ArrayList kanbanList) {
-        
+        println("dans charge planifiee mois")
         def maCharge = 0
         Calendar calDeb = Calendar.getInstance();
             Calendar calFin = Calendar.getInstance();
@@ -234,7 +235,7 @@ class IndicateurService {
                 delta +=  - chargePlanifieeMois(dateDebut, dateFin, kanbanList)
                 
                 }
-                
+                delta = delta * 5 / 7
                 return delta  
     }
     
@@ -258,6 +259,7 @@ class IndicateurService {
                     delta +=  - chargePlanifieeMois(dateDebut, dateFin, kanbanList)
                 
                 }
+                delta = delta * 5 / 7
                 
                 return delta  
     }

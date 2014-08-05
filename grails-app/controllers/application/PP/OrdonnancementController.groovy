@@ -20,7 +20,16 @@ class OrdonnancementController {
     }
 
     def create() {
+        println("ok dans create")
         respond new Ordonnancement(params)
+    }
+
+    def creerOrdo() {
+        println("creerOrdo ok")
+        def ordonnancementInstance = new Ordonnancement()
+        println(ordonnancementInstance)
+        render "<script>obtenirFormulaireOrdo()</script>"
+        [ordonnancementInstance : ordonnancementInstance]
     }
 
     @Transactional

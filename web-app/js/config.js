@@ -2404,7 +2404,18 @@ buttonText: {
             
 		if ($('#uislider-demo').length) {
                     
-                    
+                        var chartData2 = $.ajax({
+                            type:'GET',
+                            url: '/SysProd/kanban/avancement',
+                            async: false,
+                            global: false,
+                            success: function(data) {
+                                json = data;
+                            }, 
+                           error:function(){
+                       alert("Error loading chart avancement kanban");
+                   }
+               });
                     
 			$("#slider-range").slider({
 			    range: true,
@@ -2412,13 +2423,13 @@ buttonText: {
 			    max: 500,
 			    values: [176, 329],
 			    slide: function(event, ui) {
-			        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+			        $("#amount").val("Du : " + ui.values[0] + " au " + ui.values[1]);
 			
 			        $('#slider-range .ui-slider-handle:first').html('<div class="tooltip top slider-tip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + ui.values[0] + '</div></div>');
 			        $('#slider-range .ui-slider-handle:last').html('<div class="tooltip top slider-tip"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + ui.values[1] + '</div></div>');
 			    }
 			});
-			$("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+			$("#amount").val("Du " + $("#slider-range").slider("values", 0) + " au " + $("#slider-range").slider("values", 1));
 
 				
 			$( "#slider-range-min" ).slider({
@@ -2687,6 +2698,39 @@ buttonText: {
 						width : $percent + '%'
 					});
 				}
+			});
+		}
+                
+                
+                
+	if ($('#gestionOF').length) {
+			$('#gestionOF').bootstrapWizard({
+				'tabClass' : 'nav',
+				'debug' : false,
+                                'clickableSteps' : true,
+				onShow : function(tab, navigation, index) {
+					//console.log('onShow');
+				},
+				onNext : function(tab, navigation, index) {
+					//console.log('onNext');
+                                        
+					if (index == 1) {
+                                        }	
+                                        	
+				},
+				onPrevious : function(tab, navigation, index) {
+					//console.log('onPrevious');
+				},
+				onLast : function(tab, navigation, index) {
+					//console.log('onLast');
+				},
+				onTabClick : function(tab, navigation, index) {
+					//console.log('onTabClick');
+					// alert('on tab click disabled');
+					return false;
+				},
+				onTabShow : function(tab, navigation, index) {
+                            }
 			});
 		}
         

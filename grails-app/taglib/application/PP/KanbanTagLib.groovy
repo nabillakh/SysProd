@@ -29,6 +29,7 @@ class KanbanTagLib {
     
     def maToDo = eventService.maToDo()
     def maCharge = kanbanService.chargeEffectifRealise()
+    def maCharge2 = kanbanService.chargeEffectifRealise()
     maToDo.eachWithIndex { Of, counter ->
             out << g.render(template: '/kanban/maToDo', model: [maToDo : maToDo, ofCounter: counter, maCharge : maCharge])      
         }

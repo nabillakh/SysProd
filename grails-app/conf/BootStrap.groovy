@@ -34,7 +34,7 @@ class BootStrap {
         
         def entreprise = new Entreprise(nom:"GRTGaz", tempsTravailJour : 8).save()
         
-        def monEquipe = new Equipe(nom:'dev', entreprise : entreprise).save(failOnError: true)
+        def monEquipe = new Equipe(nom:'Service dev', entreprise : entreprise).save(failOnError: true)
         
         def adminRole = new Droit(authority: 'ROLE_ADMIN').save(flush: true)
       def userRole = new Droit(authority: 'ROLE_USER').save(flush: true)
