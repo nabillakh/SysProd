@@ -34,7 +34,9 @@ class KanbanController {
         def ofs = kanbanService.montrerOF(kanbanInstance)
         ofs.sort{a,b-> a.phase.ordre<=>b.phase.ordre}
         def mesCR = kanbanService.afficherCRKanban(kanbanInstance)
-        [kanbanInstance:kanbanInstance, ofs : ofs, mesCR : mesCR]
+        def mesEffectifs = kanbanService.effectifKanban(kanbanInstance)
+        
+        [kanbanInstance:kanbanInstance, ofs : ofs, mesCR : mesCR, mesEffectifs : mesEffectifs]
     }
     
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
@@ -490,8 +492,12 @@ class KanbanController {
     }
     
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
-    def listeKanbans = {        
-        def kanbans = Kanban.list()
+    def listeKanbans = {
+        // filtre les absences et management notamment
+        def query = Kanban.whereAny {                
+           famille.operationnel == true
+           }
+        def kanbans = query.list()
         println("dans le controleur")
         
         def mesKanbans = []

@@ -400,5 +400,16 @@ class KanbanService {
             }
         }
         return rep
+    } 
+    def effectifKanban(Kanban kanban) {
+        def rep = []
+        def maListe = kanban.of
+        maListe.each() {of ->
+            of.affectes.each() {aff ->
+                rep.add(aff.effectif)
+            }
+        }
+        rep.unique()
+        return rep
     }
 }
