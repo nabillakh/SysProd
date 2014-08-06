@@ -74,9 +74,10 @@ class KanbanController {
         redirect(action:"index")
     }
     
-    def nouveauKanban() {
+    def nouveauKanban = {
+        println("dans nv k")
         def nomKanban = params.nomKanban
-        
+        println("dans nv k")
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
         Date dateLivraison = sdf.parse(params.dateLivraison)
         Date dateLancement = sdf.parse(params.dateLancement)
@@ -486,6 +487,33 @@ class KanbanController {
         
         [mesofs: mesofs]
         render mesofs as JSON
+    }
+    
+    @Secured(['IS_AUTHENTICATED_REMEMBERED'])
+    def listeKanbans = {        
+        def kanbans = Kanban.list()
+        println("dans le controleur")
+        
+        def mesKanbans = []
+        
+        kanbans.each() {kanban ->
+            
+            def monKanban = new LinkedHashMap()
+            monKanban.put("id",kanban.id.toString())
+            monKanban.put("nom",kanban.nomKanban.toString())
+            monKanban.put("description",kanban.description.toString())
+            monKanban.put("charge",kanban.chargePlanifiee.toString())
+            monKanban.put("datedefin",kanban.dateFinPlanifie.toString())
+            monKanban.put("encours",kanban.fini.toString())
+            monKanban.put("ordo",kanban.ordo.toString())
+            
+            
+              mesKanbans << (monKanban)
+        }
+        
+        
+        [mesKanbans : mesKanbans]
+        render mesKanbans  as JSON
     }
     
        
