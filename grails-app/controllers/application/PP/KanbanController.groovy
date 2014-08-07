@@ -522,5 +522,9 @@ class KanbanController {
         render mesKanbans  as JSON
     }
     
+    def gantt = {
+        
+    }
+    
        
 }

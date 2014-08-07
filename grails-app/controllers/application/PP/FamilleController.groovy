@@ -223,8 +223,90 @@ class FamilleController {
     }
     
     
-    def formOrdo() {
+    // c'est ganttordonnancement
+    def gantFamille = {
+        
+        def maFamille = Famille.get(2)
+        
+        def gantt = new LinkedHashMap()
+        def task = []
+       // def ordonnancement = []
+        def phase = new LinkedHashMap()
+        def id = 0
+        maFamille.ordo.each() {ordo ->
+            phase = new LinkedHashMap()
+            id += -1
+            phase.put("id",id)
+            phase.put("name",ordo.nom + ordo.phases.size())
+            phase.put("code",-id)
+            phase.put("level",1)
+            phase.put("status","STATUS_ACTIVE")
+            phase.put("canWrite",true)
+            phase.put("start",1396994400000)
+            phase.put("duration",ordo.chargeStandard * 2)
+            phase.put("end",1399672799999)
+            phase.put("startIsMilestone",false)
+            phase.put("endIsMilestone",false)
+            phase.put("collapsed",false)
+            phase.put("assigs",[])
+        //phase.put("depends","2:5")
+            phase.put("description",ordo.id)
+            phase.put("progress",0)
+            phase.put("hasChild",true)
+            task << (phase)
+            
+            def date = 1396994400000
+                def delta = (1399672799999 - 1396994400000)/4
+            ordo.phases.each() {maPhase ->
+                phase = new LinkedHashMap() 
+                id += -1
+                phase.put("id",id)
+                phase.put("name",maPhase.nom)
+                phase.put("code",-id)
+                phase.put("level",2)
+                phase.put("status","STATUS_ACTIVE")
+                phase.put("canWrite",true)
+                phase.put("start",date)
+                date += delta
+                phase.put("duration",ordo.chargeStandard * maPhase.cleRepartition)
+                phase.put("end",delta)
+                phase.put("startIsMilestone",false)
+                phase.put("endIsMilestone",false)
+                phase.put("collapsed",true)
+                phase.put("assigs",[])
+//                if(maPhase.ordre == 4 ) {
+//                    phase.put("depends",[2])
+//                }
+                phase.put("description",maPhase.id)
+                phase.put("progress",0)
+                phase.put("hasChild",true)
+                task << (phase)
+            }
+            
+    }
+        
+        
+        gantt.put("tasks" , task) 
+        gantt.put("selectedRow" , 0)
+        gantt.put("canWrite",true)
+        gantt.put("canWriteOnParent",true)
+        
+        
+        [gantt: gantt]
+        render gantt as JSON
+    }
+    def saveGantt() {
+        def converter = JSON.parse(params.json);
+        println(converter.tasks)
+        
+        converter.tasks.each() {
+            if(it.level==0){
+                println(it.name + it.code)
+                
+                def ordo = Ordonnancement.get(it.code)
+                println(ordo)
+            }
+        }
         
     }
-    
 }
