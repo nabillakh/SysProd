@@ -226,7 +226,7 @@ class FamilleController {
     // c'est ganttordonnancement
     def gantFamille = {
         
-        def maFamille = Famille.get(2)
+        def maFamille = Famille.get(1)
         
         def gantt = new LinkedHashMap()
         def task = []
@@ -238,7 +238,7 @@ class FamilleController {
             id += -1
             phase.put("id",id)
             phase.put("name",ordo.nom + ordo.phases.size())
-            phase.put("code",-id)
+            phase.put("code",ordo.id)
             phase.put("level",1)
             phase.put("status","STATUS_ACTIVE")
             phase.put("canWrite",true)
@@ -262,7 +262,7 @@ class FamilleController {
                 id += -1
                 phase.put("id",id)
                 phase.put("name",maPhase.nom)
-                phase.put("code",-id)
+                phase.put("code", maPhase.id)
                 phase.put("level",2)
                 phase.put("status","STATUS_ACTIVE")
                 phase.put("canWrite",true)

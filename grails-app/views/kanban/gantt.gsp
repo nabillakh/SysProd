@@ -362,18 +362,18 @@ Storage.prototype.getObject = function(key) {
 
 function loadFromLocalStorage() {
   
-  var ret;
-  if (localStorage) {
-    if (localStorage.getObject("teamworkGantDemo")) {
-      ret = localStorage.getObject("teamworkGantDemo");
-    }
-  } else {
-    $("#taZone").show();
-  }
-  if (!ret || !ret.tasks || ret.tasks.length == 0){
-    // modifier par nl pour recuperer données dans serveur
-    ret = json_ordo()
-   // ret = JSON.parse($("#ta").val());
+  var ret = json_ordo()
+     // if (localStorage) {
+       // if (localStorage.getObject("teamworkGantDemo")) {
+         // ret = localStorage.getObject("teamworkGantDemo");
+ //       }
+   //   } else {
+     //   $("#taZone").show();
+      //}
+      if (!ret || !ret.tasks || ret.tasks.length == 0){
+        // modifier par nl pour recuperer données dans serveur
+        ret = json_ordo()
+       // ret = JSON.parse($("#ta").val());
 
 
     //actualiza data

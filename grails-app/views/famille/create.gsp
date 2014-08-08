@@ -127,22 +127,22 @@
                                                                                     <g:if test="${flash.message}">
                                                                                       <div class="message" role="status">${flash.message}</div>
                                                                                     </g:if>
-                                                                                    <g:form url="[resource:familleInstance, action:'save']" >
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
+                                                                                    <g:form url="[resource:familleInstance, action:'save']" > 
+                                                                                         <fieldset class="form">
+                                                                                                <g:render template="form"/>
+                                                                                              </fieldset> 
                                                                                       <fieldset class="aside-buttons">
                                                                                         </br>
                                                                                         <div class="btn-group">
                                                                                           <center>
                                                                                           <g:link  action="index" controller="famille"  class="btn  btn-small">Annuler</g:link> 
-                                                                                          <g:submitButton  class="btn btn-primary btn-small" name="create" value="Mettre à jour" />
+                                                                                          <g:submitButton  class="btn btn-primary btn-small" name="create" value="Mettre à jour Famille" />
                                                                                           </center>
                                                                                         </div>
                                                                                         
                                                                                       </fieldset>
-                                                                                      
-                                                                                    </g:form>
+                                                                                     
+                                                                                    </g:form> 
                                                                                   </div>
                                                                                   
                                                                                   
@@ -167,22 +167,27 @@
 						<!-- end widget grid -->
 					</div>		
 				</div>
- 
- 
- 
- 
-     <!-- main content -->
-     
-       
-  <script type="text/javascript">
+ <!--
+ <script type="text/javascript">
+         
   function creerOrdo() {
-    
-         $('nouveauOrdo').html(('ok')); 
-                 
-         <g:remoteFunction controller = "Ordonnancement" action="formOrdo" update="nouveauOrdo"/>
+    <!--var TestVar = form.inputbox.value;
+    alert ("You typed: " + TestVar);
+  alert("ok");
+
   }
   
   </script>
+ 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script> 
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideDown("slow");
+  });
+});
+</script> -->
+  
                
 <g:render template="/menues/mainright" />
 
